@@ -71,7 +71,7 @@ h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:700;line-height:1.14;let
 
 /* ---- тёмный hero с частицами: первый экран, дальше сайт «бумажный» ---- */
 .hero-sky{position:relative;color:var(--paper);border-bottom:1px solid var(--rule);overflow:hidden;
-  background:radial-gradient(1100px 600px at 72% 18%,#2c4055 0%,#1d2b3a 45%,#141d27 100%)}
+  background:#141d27}
 .hero-sky canvas{position:absolute;inset:0;width:100%;height:100%}
 .hero-sky .wrap{position:relative;z-index:1;display:block;min-height:min(86vh,720px);
   padding-top:96px;padding-bottom:150px;max-width:1240px}
@@ -87,7 +87,18 @@ h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:700;line-height:1.14;let
   font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8FA2B5;text-decoration:none}
 .hero-scroll::after{content:'';display:block;width:1px;height:34px;background:linear-gradient(#8FA2B5,transparent);margin:10px auto 0}
 .hero-scroll:hover{color:var(--paper)}
-@media(max-width:880px){.hero-sky .wrap{min-height:78vh;padding-top:64px;padding-bottom:120px}}
+@media(max-width:880px){.hero-sky .wrap{min-height:78vh;padding-top:64px;padding-bottom:150px}}
+
+/* переключатель сезонов */
+.seasons{position:absolute;right:32px;bottom:26px;z-index:2;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.seasons-now{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#9FB3C8;margin-right:6px}
+.seasons button{font:inherit;font-size:12px;font-weight:500;padding:6px 13px;border-radius:999px;cursor:pointer;
+  color:rgba(244,237,231,.7);background:rgba(244,237,231,.08);border:1px solid rgba(244,237,231,.18);
+  transition:.18s;backdrop-filter:blur(4px)}
+.seasons button:hover{color:var(--paper);border-color:rgba(244,237,231,.5)}
+.seasons button[aria-pressed="true"]{background:var(--accent-bright);border-color:var(--accent-bright);color:#fff}
+@media(max-width:880px){.seasons{right:20px;left:20px;bottom:64px;justify-content:flex-start}}
+@media(max-width:520px){.seasons-now{width:100%;margin-bottom:2px}}
 @media(prefers-reduced-motion:no-preference){
   .hero-sky [data-rise]{opacity:0;transform:translateY(22px);
     animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
@@ -385,6 +396,28 @@ section{padding:78px 0}
 .gi-group i{display:block;font-style:normal;font-size:14px;color:var(--ink-muted);margin-top:3px}
 .gi-meta{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);margin-top:7px}
 .gi-meta em{font-style:normal;color:var(--accent)}
+
+/* ---- хронология: столбцы по месяцам ---- */
+.tl{list-style:none;display:flex;align-items:flex-end;gap:10px;height:300px;padding-top:30px}
+.tl-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+  height:100%;position:relative}
+.tl-n{font-family:var(--serif);font-size:15px;color:var(--navy);margin-bottom:6px}
+.tl-bar{display:block;width:100%;max-width:52px;background:var(--navy);transition:background .2s;min-height:4px}
+.tl-col:hover .tl-bar{background:var(--accent)}
+.tl-m{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-muted);
+  margin-top:10px;text-align:center;line-height:1.3}
+.tl-m b{display:block;font-weight:400;opacity:.6}
+.tl-pop{list-style:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--paper);padding:12px 16px;min-width:210px;z-index:20;
+  opacity:0;visibility:hidden;transition:opacity .18s;font-size:13px;line-height:1.5;
+  box-shadow:0 14px 34px rgba(20,17,15,.25)}
+.tl-col:hover .tl-pop,.tl-col:focus-within .tl-pop{opacity:1;visibility:visible}
+.tl-pop a{color:var(--paper);text-decoration:none;white-space:nowrap}
+.tl-pop a:hover{color:#FF7A73}
+@media(max-width:760px){.tl{height:220px;gap:5px}.tl-n{font-size:12px}.tl-m{font-size:9px}
+  .tl-pop{display:none}}
+
+.ch-meta{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-muted);margin-top:16px}
 
 /* ---- результаты поиска ---- */
 .sr{list-style:none;margin-top:24px;border-top:1px solid var(--rule)}

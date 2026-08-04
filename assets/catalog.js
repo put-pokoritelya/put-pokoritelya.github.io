@@ -327,6 +327,7 @@
     els.forEach(function (el) { el.textContent = el.dataset.n; });
     return;
   }
+  els.forEach(function (el) { el.textContent = '0'; });
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;

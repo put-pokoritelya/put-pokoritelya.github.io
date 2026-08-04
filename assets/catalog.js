@@ -1,3 +1,11 @@
+/* Согласование числительных по-русски: 1 запись, 2 записи, 5 записей. */
+function plural(n, one, few, many) {
+  n = Math.abs(n | 0);
+  if (n % 10 === 1 && n % 100 !== 11) return one;
+  if (n % 10 >= 2 && n % 10 <= 4 && !(n % 100 >= 12 && n % 100 <= 14)) return few;
+  return many;
+}
+
 /* Фильтры каталога. Карточки уже отрендерены в HTML — JS только прячет лишние,
    поэтому без JS каталог остаётся полным и рабочим. Состояние живёт в URL. */
 (function () {
@@ -37,7 +45,7 @@
       c.hidden = !ok;
       if (ok) shown++;
     });
-    count.textContent = shown ? 'Выпусков: ' + shown : '';
+    count.textContent = shown ? shown + ' ' + plural(shown, 'выпуск', 'выпуска', 'выпусков') : '';
     var empty = document.getElementById('empty');
     if (empty) empty.hidden = shown > 0;
 
@@ -190,7 +198,7 @@
       var bn = b.t.toLowerCase().indexOf(words[0]) > -1 ? 0 : 1;
       return an - bn;
     });
-    count.textContent = hits.length ? 'Найдено: ' + hits.length : '';
+    count.textContent = hits.length ? hits.length + ' ' + plural(hits.length, 'результат', 'результата', 'результатов') : '';
     empty.hidden = hits.length > 0;
     out.innerHTML = hits.slice(0, 60).map(function (it) {
       return '<li class="sr-item"><a href="../' + it.u + '">' +
@@ -240,7 +248,7 @@
       c.hidden = !ok;
       if (ok) shown++;
     });
-    count.textContent = (parts.length || query) ? 'Найдено: ' + shown : '';
+    count.textContent = (parts.length || query) ? shown + ' ' + plural(shown, 'цитата', 'цитаты', 'цитат') : '';
     empty.hidden = shown > 0;
   }
 

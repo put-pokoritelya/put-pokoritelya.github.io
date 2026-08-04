@@ -231,6 +231,156 @@
   }
 })();
 
+/* Созвездие героев: 3D-сфера с настоящей перспективой, вращается сама,
+   тянется за курсором. Точки — герои, дуги — соседи по части книги.
+   Данные зашиты в страницу при сборке; наведение показывает имя,
+   клик открывает выпуск. Проекция и сортировка по глубине — вручную,
+   без библиотек: три десятка строк математики дешевле мегабайта Three.js. */
+(function () {
+  var cv = document.getElementById('globe');
+  if (!cv) return;
+  var data = JSON.parse(document.getElementById('globe-data').textContent);
+  var ctx = cv.getContext('2d');
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, H, R, rx = -0.25, ry = 0, drag = null, spin = 0.0016, hot = null;
+
+  // равномерное распределение по сфере — спираль Фибоначчи
+  var pts = data.map(function (d, i) {
+    var t = 1 - 2 * (i + 0.5) / data.length;
+    var r = Math.sqrt(1 - t * t), a = Math.PI * (3 - Math.sqrt(5)) * i;
+    return { x: Math.cos(a) * r, y: t, z: Math.sin(a) * r, d: d };
+  });
+
+  function resize() {
+    var dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight; R = Math.min(W, H) * 0.36;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function project(p) {
+    var cy = Math.cos(ry), sy = Math.sin(ry);
+    var x1 = p.x * cy - p.z * sy, z1 = p.x * sy + p.z * cy;
+    var cx = Math.cos(rx), sx = Math.sin(rx);
+    var y1 = p.y * cx - z1 * sx, z2 = p.y * sx + z1 * cx;
+    var k = 2.6 / (2.6 - z2);                    // перспектива: ближние крупнее
+    return { sx: W / 2 + x1 * R * k, sy: H / 2 + y1 * R * k, k: k, z: z2 };
+  }
+
+  function frame() {
+    if (!drag && !still) ry += spin;
+    ctx.clearRect(0, 0, W, H);
+    var sp = pts.map(function (p) { var q = project(p); q.p = p; return q; });
+
+    for (var i = 0; i < sp.length; i++) {          // дуги между соседями по части
+      var a = sp[i];
+      for (var j = i + 1; j < sp.length; j++) {
+        var b = sp[j];
+        if (a.p.d.g !== b.p.d.g) continue;
+        var dx = a.sx - b.sx, dy = a.sy - b.sy;
+        if (dx * dx + dy * dy > 26000) continue;
+        ctx.strokeStyle = 'rgba(159,179,200,' + (0.16 * Math.min(a.k, b.k) / 1.6) + ')';
+        ctx.beginPath(); ctx.moveTo(a.sx, a.sy); ctx.lineTo(b.sx, b.sy); ctx.stroke();
+      }
+    }
+    sp.sort(function (a, b) { return a.z - b.z; });  // дальние рисуем первыми
+    sp.forEach(function (q) {
+      var near = (q.z + 1) / 2;
+      var r = 1.6 + near * 3.4;
+      var on = hot === q.p;
+      ctx.beginPath(); ctx.arc(q.sx, q.sy, on ? r + 2 : r, 0, 6.283);
+      ctx.fillStyle = on ? '#DE2E26'
+        : q.p.d.b ? 'rgba(222,46,38,' + (0.35 + near * 0.6) + ')'
+                  : 'rgba(244,237,231,' + (0.2 + near * 0.65) + ')';
+      ctx.fill();
+    });
+    if (hot) {
+      var q = sp.filter(function (s) { return s.p === hot; })[0];
+      ctx.font = '600 14px Inter,sans-serif';
+      var w = ctx.measureText(hot.d.n).width;
+      ctx.fillStyle = 'rgba(20,29,39,.92)';
+      ctx.fillRect(q.sx + 12, q.sy - 26, w + 20, 30);
+      ctx.fillStyle = '#F4EDE7';
+      ctx.fillText(hot.d.n, q.sx + 22, q.sy - 6);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function pick(ev) {
+    var r = cv.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top;
+    var best = null, bd = 18 * 18;
+    pts.forEach(function (p) {
+      var q = project(p), dx = q.sx - mx, dy = q.sy - my, d = dx * dx + dy * dy;
+      if (d < bd) { bd = d; best = p; }
+    });
+    return best;
+  }
+
+  cv.addEventListener('pointerdown', function (ev) { drag = { x: ev.clientX, y: ev.clientY }; });
+  addEventListener('pointerup', function () { drag = null; });
+  cv.addEventListener('pointermove', function (ev) {
+    if (drag) {
+      ry += (ev.clientX - drag.x) * 0.006;
+      rx = Math.max(-1.2, Math.min(1.2, rx + (ev.clientY - drag.y) * 0.006));
+      drag = { x: ev.clientX, y: ev.clientY };
+      hot = null; cv.style.cursor = 'grabbing';
+      return;
+    }
+    hot = pick(ev);
+    cv.style.cursor = hot ? 'pointer' : 'grab';
+  });
+  cv.addEventListener('pointerleave', function () { hot = null; });
+  cv.addEventListener('click', function (ev) {
+    var p = pick(ev);
+    if (p) location.href = p.d.u;
+  });
+
+  addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(frame);
+})();
+
+/* Полоса прочитанного: показывается только там, где есть длинный текст —
+   на страницах глав. Считается по позиции самой статьи, а не всей страницы,
+   чтобы блоки после текста не смазывали прогресс. */
+(function () {
+  var bar = document.getElementById('readbar');
+  var art = document.querySelector('.ch-body');
+  if (!bar || !art) return;
+  function upd() {
+    var r = art.getBoundingClientRect();
+    var total = r.height - window.innerHeight;
+    var done = total > 0 ? Math.min(Math.max(-r.top / total, 0), 1) : 0;
+    bar.style.width = (done * 100).toFixed(1) + '%';
+  }
+  addEventListener('scroll', upd, { passive: true });
+  addEventListener('resize', upd);
+  upd();
+})();
+
+/* Меню закрывается при клике мимо и при переходе по ссылке. */
+(function () {
+  var m = document.querySelector('.menu');
+  if (!m) return;
+  document.addEventListener('click', function (ev) {
+    if (m.open && !m.contains(ev.target)) m.open = false;
+  });
+  m.addEventListener('click', function (ev) {
+    if (ev.target.closest('.menu-panel a')) m.open = false;
+  });
+})();
+
+/* Клавиша «/» ставит курсор в поиск — привычка тех, кто много читает. */
+(function () {
+  addEventListener('keydown', function (ev) {
+    if (ev.key !== '/' || ev.metaKey || ev.ctrlKey) return;
+    var t = ev.target.tagName;
+    if (t === 'INPUT' || t === 'TEXTAREA') return;
+    var f = document.getElementById('q') || document.getElementById('qq');
+    if (f) { ev.preventDefault(); f.focus(); }
+  });
+})();
+
 /* Небо над хребтом: частицы-звёзды с линиями-связями и силуэт горного
    хребта — путь покорителя. Чистый canvas, без библиотек. При
    prefers-reduced-motion рисуется один статичный кадр. */

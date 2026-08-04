@@ -231,6 +231,118 @@
   }
 })();
 
+/* Небо над хребтом: частицы-звёзды с линиями-связями и силуэт горного
+   хребта — путь покорителя. Чистый canvas, без библиотек. При
+   prefers-reduced-motion рисуется один статичный кадр. */
+(function () {
+  var cv = document.getElementById('sky');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, H, dpr, pts, ridge, mouse = { x: -1e4, y: -1e4 };
+
+  function ridgeY(x) { // силуэт хребта: сумма синусов, главная вершина на 62% ширины
+    var t = x / W;
+    return H - H * (0.16 + 0.10 * Math.sin(t * 5.1 + 0.6)
+                         + 0.13 * Math.exp(-Math.pow((t - 0.62) * 5.2, 2))
+                         + 0.05 * Math.sin(t * 11.3));
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ridge = [];
+    for (var x = 0; x <= W; x += 6) ridge.push([x, ridgeY(x)]);
+    var n = Math.min(150, Math.floor(W / 9));
+    pts = [];
+    for (var i = 0; i < n; i++) pts.push({
+      x: Math.random() * W,
+      y: Math.random() * H * 0.86,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.16,
+      r: Math.random() * 1.5 + 0.5,
+    });
+    if (still) frame();
+  }
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    var i, j, p, q;
+    for (i = 0; i < pts.length; i++) {
+      p = pts[i];
+      if (!still) {
+        p.x += p.vx; p.y += p.vy;
+        var dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
+        if (d2 < 16900) { p.x += dx / Math.sqrt(d2) * 0.6; p.y += dy / Math.sqrt(d2) * 0.6; }
+        if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
+        if (p.y < -10) p.y = H * 0.86; if (p.y > H * 0.9) p.y = -10;
+      }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 6.283);
+      ctx.fillStyle = 'rgba(244,237,231,' + (0.25 + p.r * 0.25) + ')';
+      ctx.fill();
+    }
+    ctx.lineWidth = 1;
+    for (i = 0; i < pts.length; i++) for (j = i + 1; j < pts.length; j++) {
+      p = pts[i]; q = pts[j];
+      var ddx = p.x - q.x, ddy = p.y - q.y, dd = ddx * ddx + ddy * ddy;
+      if (dd < 10000) {
+        ctx.strokeStyle = 'rgba(159,179,200,' + (0.14 * (1 - dd / 10000)) + ')';
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+      }
+    }
+    // хребет: заливка-силуэт и красная нить пути к вершине
+    ctx.beginPath(); ctx.moveTo(0, H);
+    for (i = 0; i < ridge.length; i++) ctx.lineTo(ridge[i][0], ridge[i][1]);
+    ctx.lineTo(W, H); ctx.closePath();
+    ctx.fillStyle = 'rgba(12,18,25,.72)'; ctx.fill();
+    ctx.beginPath();
+    for (i = 0; i < ridge.length; i++) i ? ctx.lineTo(ridge[i][0], ridge[i][1] - 1) : ctx.moveTo(ridge[i][0], ridge[i][1] - 1);
+    ctx.strokeStyle = 'rgba(222,46,38,.8)'; ctx.lineWidth = 1.6; ctx.stroke();
+    var peak = ridge.reduce(function (a, b) { return b[1] < a[1] ? b : a; });
+    ctx.beginPath(); ctx.arc(peak[0], peak[1] - 4, 3, 0, 6.283);
+    ctx.fillStyle = '#DE2E26'; ctx.fill();
+    if (!still) requestAnimationFrame(frame);
+  }
+
+  cv.parentNode.addEventListener('pointermove', function (ev) {
+    var r = cv.getBoundingClientRect();
+    mouse.x = ev.clientX - r.left; mouse.y = ev.clientY - r.top;
+  });
+  cv.parentNode.addEventListener('pointerleave', function () { mouse.x = mouse.y = -1e4; });
+  window.addEventListener('resize', resize);
+  resize();
+  if (!still) requestAnimationFrame(frame);
+})();
+
+/* Счётчики: числа набегают при появлении в кадре. Без JS в разметке нули,
+   поэтому данные зашиты в data-n и подставляются сразу же как фолбэк. */
+(function () {
+  var els = [].slice.call(document.querySelectorAll('[data-n]'));
+  if (!els.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      !('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.textContent = el.dataset.n; });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      var end = +en.target.dataset.n, t0 = null;
+      (function tick(t) {
+        if (!t0) t0 = t;
+        var k = Math.min((t - t0) / 900, 1);
+        en.target.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
+        if (k < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    });
+  }, { threshold: 0.6 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+
 /* Ротация цитаты на главной: пул зашит в страницу при сборке,
    при каждом открытии показывается случайная. Без JS остаётся первая. */
 (function () {

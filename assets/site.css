@@ -48,6 +48,34 @@ h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:700;line-height:1.14;let
   .nav a{white-space:nowrap}.hdr .wrap{gap:14px}}
 @media(max-width:520px){.logo{font-size:17px}}
 
+/* ---- тёмный hero с частицами: первый экран, дальше сайт «бумажный» ---- */
+.hero-sky{position:relative;color:var(--paper);border-bottom:1px solid var(--rule);overflow:hidden;
+  background:radial-gradient(1100px 600px at 72% 18%,#2c4055 0%,#1d2b3a 45%,#141d27 100%)}
+.hero-sky canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-sky .wrap{position:relative;z-index:1;display:block;min-height:min(86vh,720px);
+  padding-top:96px;padding-bottom:150px;max-width:1240px}
+.hero-sky .rubric{color:#9FB3C8}
+.hero-sky .rubric::after{background:var(--accent-bright)}
+.hero-sky h1{font-size:clamp(52px,8.5vw,120px);line-height:1.02;letter-spacing:-.015em}
+.hero-sky .lede{color:#C9D4DF;font-size:clamp(17px,1.6vw,21px);max-width:52ch}
+.hero-sky .btn{border-color:var(--paper);color:var(--paper)}
+.hero-sky .btn-primary{background:var(--accent-bright);border-color:var(--accent-bright);color:#fff}
+.hero-sky .btn-primary:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
+.hero-sky .btn-ghost:hover{border-color:var(--accent-bright);color:var(--accent-bright)}
+.hero-scroll{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:1;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8FA2B5;text-decoration:none}
+.hero-scroll::after{content:'';display:block;width:1px;height:34px;background:linear-gradient(#8FA2B5,transparent);margin:10px auto 0}
+.hero-scroll:hover{color:var(--paper)}
+@media(max-width:880px){.hero-sky .wrap{min-height:78vh;padding-top:64px;padding-bottom:120px}}
+@media(prefers-reduced-motion:no-preference){
+  .hero-sky [data-rise]{opacity:0;transform:translateY(22px);
+    animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+  .hero-sky [data-rise="2"]{animation-delay:.15s}
+  .hero-sky [data-rise="3"]{animation-delay:.3s}
+  .hero-sky [data-rise="4"]{animation-delay:.45s}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+
 /* ---- hero ---- */
 .hero{border-bottom:1px solid var(--rule);overflow:hidden}
 .hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;

@@ -152,6 +152,72 @@
   });
 })();
 
+/* Поиск по всему сайту. Индекс подгружается один раз при первом вводе,
+   дальше всё считается в браузере — сервер не нужен. Запрос живёт в адресе,
+   поэтому результатом можно поделиться ссылкой. */
+(function () {
+  var input = document.getElementById('gq');
+  if (!input) return;
+  var out = document.getElementById('gq-out');
+  var count = document.getElementById('gq-count');
+  var empty = document.getElementById('gq-empty');
+  var idx = null, timer = null;
+
+  function esc(s) {
+    return s.replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+  function mark(text, words) {                 // подсветка совпадений
+    var safe = esc(text);
+    words.forEach(function (w) {
+      safe = safe.replace(new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'),
+                          '<mark>$1</mark>');
+    });
+    return safe;
+  }
+
+  function render(q) {
+    var words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!words.length) { out.innerHTML = ''; count.textContent = ''; empty.hidden = true; return; }
+    var hits = idx.filter(function (it) {
+      var hay = (it.t + ' ' + it.s + ' ' + it.x).toLowerCase();
+      return words.every(function (w) { return hay.indexOf(w) > -1; });
+    });
+    // заголовок важнее описания: сначала то, где совпало прямо в названии
+    hits.sort(function (a, b) {
+      var an = a.t.toLowerCase().indexOf(words[0]) > -1 ? 0 : 1;
+      var bn = b.t.toLowerCase().indexOf(words[0]) > -1 ? 0 : 1;
+      return an - bn;
+    });
+    count.textContent = hits.length ? 'Найдено: ' + hits.length : '';
+    empty.hidden = hits.length > 0;
+    out.innerHTML = hits.slice(0, 60).map(function (it) {
+      return '<li class="sr-item"><a href="../' + it.u + '">' +
+        '<span class="sr-kind">' + it.k + '</span>' +
+        '<b>' + mark(it.t, words) + '</b>' +
+        '<i>' + esc(it.s) + '</i></a></li>';
+    }).join('');
+    history.replaceState(null, '', q ? '?q=' + encodeURIComponent(q) : location.pathname);
+  }
+
+  function run() {
+    var q = input.value.trim();
+    if (idx) return render(q);
+    fetch('index.json').then(function (r) { return r.json(); })
+      .then(function (d) { idx = d; render(q); })
+      .catch(function () { count.textContent = 'Не удалось загрузить индекс поиска.'; });
+  }
+
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(run, 120);             // не считаем на каждое нажатие
+  });
+
+  var start = new URLSearchParams(location.search).get('q');
+  if (start) { input.value = start; run(); }
+})();
+
 /* Интерактив ленты цитат: поиск, фильтр по частям, перемешивание,
    копирование и ссылка на конкретную цитату. */
 (function () {

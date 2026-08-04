@@ -708,31 +708,11 @@ function plural(n, one, few, many) {
   else requestAnimationFrame(frame);
 })();
 
-/* Счётчики: числа набегают при появлении в кадре. Без JS в разметке нули,
-   поэтому данные зашиты в data-n и подставляются сразу же как фолбэк. */
+/* Счётчики — это содержательные данные, поэтому они видны сразу и не
+   подменяются нулями во время загрузки или чтения вспомогательными технологиями. */
 (function () {
   var els = [].slice.call(document.querySelectorAll('[data-n]'));
-  if (!els.length) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      !('IntersectionObserver' in window)) {
-    els.forEach(function (el) { el.textContent = el.dataset.n; });
-    return;
-  }
-  els.forEach(function (el) { el.textContent = '0'; });
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (!en.isIntersecting) return;
-      io.unobserve(en.target);
-      var end = +en.target.dataset.n, t0 = null;
-      (function tick(t) {
-        if (!t0) t0 = t;
-        var k = Math.min((t - t0) / 900, 1);
-        en.target.textContent = Math.round(end * (1 - Math.pow(1 - k, 3)));
-        if (k < 1) requestAnimationFrame(tick);
-      })(performance.now());
-    });
-  }, { threshold: 0.6 });
-  els.forEach(function (el) { io.observe(el); });
+  els.forEach(function (el) { el.textContent = el.dataset.n; });
 })();
 
 /* Ротация цитаты на главной: пул зашит в страницу при сборке,

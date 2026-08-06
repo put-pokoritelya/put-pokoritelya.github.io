@@ -187,22 +187,6 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
   .hero-sky [data-rise="2"]{animation-delay:.15s}
   .hero-sky [data-rise="3"]{animation-delay:.3s}
   .hero-sky [data-rise="4"]{animation-delay:.45s}
-  @media(prefers-reduced-motion:no-preference){
-  .hero-sky [data-rise]{opacity:0;transform:translateY(22px);
-    animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
-  .hero-sky [data-rise="2"]{animation-delay:.15s}
-  .hero-sky [data-rise="3"]{animation-delay:.3s}
-  .hero-sky [data-rise="4"]{animation-delay:.45s}
-}
-@keyframes rise{to{opacity:1;transform:none}}
-}
-
-@media(prefers-reduced-motion:no-preference){
-  .hero-sky [data-rise]{opacity:0;transform:translateY(22px);
-    animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
-  .hero-sky [data-rise="2"]{animation-delay:.15s}
-  .hero-sky [data-rise="3"]{animation-delay:.3s}
-  .hero-sky [data-rise="4"]{animation-delay:.45s}
 }
 @keyframes rise{to{opacity:1;transform:none}}
 .lede{font-size:19px;color:var(--ink-muted);max-width:46ch;margin-top:22px}

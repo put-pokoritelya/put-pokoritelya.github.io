@@ -346,75 +346,194 @@ function plural(n, one, few, many) {
   });
 })();
 
-/* Схема связей на первом экране: узлы-герои в решётке, соединения — между
-   соседями по части книги. Это не декорация: сетка узлов ровно та, что в
-   данных. Гор нет — метафора восхождения ушла в типографику и ритм. */
+/* Хребет в четырёх сезонах. Небо, склоны, снеговая линия и осадки
+   меняются по кругу: зима → весна → лето → осень. Всё рисуется в canvas,
+   переходы — линейная интерполяция палитр, поэтому смена плавная и
+   не требует ни картинок, ни библиотек. Сезон можно переключить вручную. */
 (function () {
-  var cv = document.getElementById('lattice');
+  var cv = document.getElementById('sky');
   if (!cv) return;
   var ctx = cv.getContext('2d');
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W, H, t = 0, nodes = [], COLS = 9, ROWS = 7;
 
-  function build() {
-    nodes = [];
-    for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) {
-      nodes.push({
-        gx: c / (COLS - 1), gy: r / (ROWS - 1),
-        ph: Math.random() * 6.28,                 // своя фаза дыхания
-        on: Math.random() < 0.22,                 // подсвеченные узлы
-      });
-    }
+  var SEASONS = [
+    { k: 'winter', name: 'Зима',
+      sky: [[14, 26, 42], [44, 72, 102]],        // от зенита к горизонту
+      rock: [22, 32, 44], snow: [236, 244, 250],
+      line: 0.10,                                 // доля высоты, ниже которой снега нет
+      star: [226, 238, 250], fall: 'snow' },
+    { k: 'spring', name: 'Весна',
+      sky: [[20, 40, 58], [78, 116, 132]],
+      rock: [46, 66, 54], snow: [232, 240, 244],
+      line: 0.52, star: [206, 226, 232], fall: 'haze' },
+    { k: 'summer', name: 'Лето',
+      sky: [[16, 44, 70], [64, 128, 158]],
+      rock: [40, 72, 50], snow: [240, 246, 248],
+      line: 0.88, star: [214, 232, 240], fall: 'warm' },
+    { k: 'autumn', name: 'Осень',
+      sky: [[34, 30, 44], [116, 84, 58]],
+      rock: [74, 56, 38], snow: [238, 240, 242],
+      line: 0.66, star: [236, 214, 190], fall: 'leaf' },
+  ];
+  var HOLD = 9000, FADE = 2600;                   // держим сезон / плавный переход
+
+  var W, H, dpr, pts, ridge, mouse = { x: -1e4, y: -1e4 };
+  var idx = 0, t0 = performance.now(), manual = false, label;
+
+  function ridgeY(x) {                            // силуэт хребта
+    // Слева хребет прижат к низу, вершина смещена вправо: текст первого
+    // экрана живёт в левой колонке, и склон не должен в него въезжать.
+    var t = x / W;
+    var ramp = 0.35 + 0.65 * t * t;
+    var h = 0.20 + 0.10 * Math.sin(t * 4.6 + 0.8)
+                 + 0.16 * Math.exp(-Math.pow((t - 0.74) * 4.6, 2))
+                 + 0.04 * Math.sin(t * 10.7);
+    return H - H * h * ramp;
   }
 
   function resize() {
-    var dpr = Math.min(devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = cv.clientWidth; H = cv.clientHeight;
     cv.width = W * dpr; cv.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ridge = [];
+    for (var x = 0; x <= W; x += 5) ridge.push([x, ridgeY(x)]);
+    var n = Math.min(130, Math.floor(W / 11));
+    pts = [];
+    for (var i = 0; i < n; i++) pts.push({
+      x: Math.random() * W, y: Math.random() * H * 0.86,
+      vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.16,
+      r: Math.random() * 1.5 + 0.5, s: Math.random(),
+    });
   }
 
-  function frame() {
-    ctx.clearRect(0, 0, W, H);
-    var pad = 10, w = W - pad * 2, h = H - pad * 2;
+  function mix(a, b, k) { return a.map(function (v, i) { return v + (b[i] - v) * k; }); }
+  function rgb(c, a) {
+    return 'rgba(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ',' + a + ')';
+  }
 
-    nodes.forEach(function (n) {
-      n.x = pad + n.gx * w;
-      n.y = pad + n.gy * h;
-      if (!still) n.a = 0.35 + 0.4 * (0.5 + 0.5 * Math.sin(t / 40 + n.ph));
-      else n.a = 0.6;
-    });
+  function palette(now) {                          // текущая палитра с учётом перехода
+    var a = SEASONS[idx], b = SEASONS[(idx + 1) % SEASONS.length];
+    var dt = now - t0, k = 0;
+    if (!manual && !still) {
+      if (dt > HOLD + FADE) { idx = (idx + 1) % SEASONS.length; t0 = now; dt = 0; }
+      k = dt > HOLD ? (dt - HOLD) / FADE : 0;
+      a = SEASONS[idx]; b = SEASONS[(idx + 1) % SEASONS.length];
+    }
+    if (label) label.textContent = (k > 0.5 ? b : a).name;
+    return {
+      sky0: mix(a.sky[0], b.sky[0], k), sky1: mix(a.sky[1], b.sky[1], k),
+      rock: mix(a.rock, b.rock, k), snow: mix(a.snow, b.snow, k),
+      star: mix(a.star, b.star, k),
+      line: a.line + (b.line - a.line) * k,
+      fall: k > 0.5 ? b.fall : a.fall, fk: k,
+    };
+  }
 
-    ctx.lineWidth = 1;                            // связи по горизонтали и вертикали
-    for (var i = 0; i < nodes.length; i++) {
-      var a = nodes[i];
-      for (var j = i + 1; j < nodes.length; j++) {
-        var b = nodes[j];
-        var dx = Math.abs(a.gx - b.gx), dy = Math.abs(a.gy - b.gy);
-        var near = (dx < 1.01 / (COLS - 1) && dy < 0.01) || (dy < 1.01 / (ROWS - 1) && dx < 0.01);
-        if (!near) continue;
-        var lit = a.on && b.on;
-        ctx.strokeStyle = lit ? 'rgba(218,52,51,' + (0.5 * Math.min(a.a, b.a)) + ')'
-                              : 'rgba(27,28,26,' + (0.13 * Math.min(a.a, b.a)) + ')';
+  function frame(now) {
+    var p = palette(now || performance.now());
+
+    var g = ctx.createLinearGradient(0, 0, 0, H);   // небо
+    g.addColorStop(0, rgb(p.sky0, 1));
+    g.addColorStop(1, rgb(p.sky1, 1));
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+    var i, j, q;
+    for (i = 0; i < pts.length; i++) {              // осадки и частицы
+      var pt = pts[i];
+      if (!still) {
+        if (p.fall === 'snow') { pt.x += pt.vx * 0.6; pt.y += 0.35 + pt.r * 0.35; }
+        else if (p.fall === 'leaf') { pt.x += Math.sin(pt.y / 40 + pt.s * 6) * 0.5; pt.y += 0.28 + pt.r * 0.2; }
+        else if (p.fall === 'warm') { pt.x += pt.vx; pt.y -= 0.06 + pt.r * 0.05; }
+        else { pt.x += pt.vx * 0.8; pt.y += pt.vy * 0.5; }
+        var dx = pt.x - mouse.x, dy = pt.y - mouse.y, d2 = dx * dx + dy * dy;
+        if (d2 < 16900) { pt.x += dx / Math.sqrt(d2) * 0.7; pt.y += dy / Math.sqrt(d2) * 0.7; }
+        if (pt.x < -10) pt.x = W + 10; if (pt.x > W + 10) pt.x = -10;
+        if (pt.y > H * 0.9) pt.y = -10; if (pt.y < -12) pt.y = H * 0.86;
+      }
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, pt.r * (p.fall === 'snow' ? 1.35 : 1), 0, 6.283);
+      ctx.fillStyle = rgb(p.star, 0.22 + pt.r * 0.28);
+      ctx.fill();
+    }
+
+    ctx.lineWidth = 1;                              // связи между частицами
+    for (i = 0; i < pts.length; i++) for (j = i + 1; j < pts.length; j++) {
+      var a = pts[i], b = pts[j];
+      var ddx = a.x - b.x, ddy = a.y - b.y, dd = ddx * ddx + ddy * ddy;
+      if (dd < 9000) {
+        ctx.strokeStyle = rgb(p.star, 0.1 * (1 - dd / 9000));
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
     }
 
-    nodes.forEach(function (n) {                  // сами узлы
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, n.on ? 3.2 : 2, 0, 6.283);
-      ctx.fillStyle = n.on ? 'rgba(218,52,51,' + (0.55 + n.a * 0.45) + ')'
-                           : 'rgba(27,28,26,' + (0.2 + n.a * 0.35) + ')';
-      ctx.fill();
-    });
+    ctx.beginPath();                                // склон
+    ctx.moveTo(0, H);
+    for (i = 0; i < ridge.length; i++) ctx.lineTo(ridge[i][0], ridge[i][1]);
+    ctx.lineTo(W, H); ctx.closePath();
+    ctx.fillStyle = rgb(p.rock, 0.94); ctx.fill();
 
-    t++;
+    // снеговая линия: чем ниже line, тем больше снега — зимой почти до подошвы
+    var top = Math.min.apply(null, ridge.map(function (r) { return r[1]; }));
+    var snowY = top + (H - top) * p.line;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    for (i = 0; i < ridge.length; i++) ctx.lineTo(ridge[i][0], ridge[i][1]);
+    ctx.lineTo(W, H); ctx.closePath();
+    ctx.clip();
+    var sg = ctx.createLinearGradient(0, top, 0, snowY);
+    sg.addColorStop(0, rgb(p.snow, 0.92));
+    sg.addColorStop(0.75, rgb(p.snow, 0.5));
+    sg.addColorStop(1, rgb(p.snow, 0));
+    ctx.fillStyle = sg;
+    ctx.fillRect(0, top - 4, W, snowY - top + 4);
+    ctx.restore();
+
+    ctx.beginPath();                                // красная нить пути
+    for (i = 0; i < ridge.length; i++)
+      i ? ctx.lineTo(ridge[i][0], ridge[i][1] - 1) : ctx.moveTo(ridge[i][0], ridge[i][1] - 1);
+    ctx.strokeStyle = 'rgba(218,52,51,.85)'; ctx.lineWidth = 1.6; ctx.stroke();
+
+    var peak = ridge.reduce(function (u, v) { return v[1] < u[1] ? v : u; });
+    ctx.beginPath(); ctx.arc(peak[0], peak[1] - 4, 3.2, 0, 6.283);
+    ctx.fillStyle = '#DA3433'; ctx.fill();
+
     if (!still) requestAnimationFrame(frame);
   }
 
-  addEventListener('resize', function () { resize(); if (still) frame(); });
-  build(); resize();
-  if (still) frame(); else requestAnimationFrame(frame);
+  // переключатель сезонов: клик фиксирует сезон, повторный клик по нему — снимает
+  var host = cv.parentNode;
+  var bar = document.createElement('div');
+  bar.className = 'seasons';
+  label = document.createElement('span');
+  label.className = 'seasons-now';
+  bar.appendChild(label);
+  SEASONS.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = s.name; b.setAttribute('aria-label', 'Показать: ' + s.name);
+    b.addEventListener('click', function () {
+      if (manual && idx === i) { manual = false; t0 = performance.now(); }
+      else { manual = true; idx = i; }
+      [].forEach.call(bar.querySelectorAll('button'), function (x, j) {
+        x.setAttribute('aria-pressed', manual && j === i ? 'true' : 'false');
+      });
+      if (still) frame(performance.now());
+    });
+    bar.appendChild(b);
+  });
+  host.appendChild(bar);
+
+  host.addEventListener('pointermove', function (ev) {
+    var r = cv.getBoundingClientRect();
+    mouse.x = ev.clientX - r.left; mouse.y = ev.clientY - r.top;
+  });
+  host.addEventListener('pointerleave', function () { mouse.x = mouse.y = -1e4; });
+  window.addEventListener('resize', function () { resize(); if (still) frame(performance.now()); });
+
+  resize();
+  if (still) { idx = 2; frame(performance.now()); }   // без анимации показываем лето
+  else requestAnimationFrame(frame);
 })();
 
 /* Счётчики: числа набегают при появлении в кадре. Без JS в разметке нули,
@@ -477,5 +596,168 @@ function plural(n, one, few, many) {
   }, { threshold: 0.08, rootMargin: '0px 0px -40px' });
   [].slice.call(document.querySelectorAll('[data-reveal]')).forEach(function (el) {
     el.classList.add('reveal'); io.observe(el);
+  });
+})();
+
+/* ------------------------------------------------------------------ фигуры
+   Четыре анимированные схемы из предметного мира героев. Это не «наука
+   вообще» со светящейся ДНК: каждая рисует ровно тот объект, которым герой
+   занимается, и ведёт на его выпуск.
+
+   Всё на чистом canvas 2D, без библиотек. Считаем только когда фигура на
+   экране — IntersectionObserver; при системной настройке «уменьшить
+   движение» рисуем один статичный кадр. */
+(function () {
+  var INK = '27,28,26', RED = '218,52,51';
+
+  function setup(cv, draw) {
+    var ctx = cv.getContext('2d'), W, H, t = 0, run = false;
+    var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resize() {
+      var dpr = Math.min(devicePixelRatio || 1, 2);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (still) draw(ctx, W, H, 600);
+    }
+
+    function frame() {
+      if (!run) return;
+      ctx.clearRect(0, 0, W, H);
+      draw(ctx, W, H, t += 1);
+      requestAnimationFrame(frame);
+    }
+
+    addEventListener('resize', resize);
+    resize();
+    if (still) return;
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting && !run) { run = true; requestAnimationFrame(frame); }
+        else if (!e.isIntersecting) run = false;
+      });
+    }, { rootMargin: '80px' }).observe(cv);
+  }
+
+  /* Кристаллическая решётка: куб 3×3×3, изометрия, медленный поворот.
+     Расположение атомов определяет свойства материала — это и есть предмет
+     работы Оганова. */
+  function lattice3d(ctx, W, H, t) {
+    var n = 3, a = t / 260, s = Math.min(W, H) * 0.19, cx = W / 2, cy = H / 2, p = [];
+    for (var x = 0; x < n; x++) for (var y = 0; y < n; y++) for (var z = 0; z < n; z++) {
+      var ox = (x - 1) * s, oy = (y - 1) * s, oz = (z - 1) * s;
+      var rx = ox * Math.cos(a) - oz * Math.sin(a);
+      var rz = ox * Math.sin(a) + oz * Math.cos(a);
+      var k = 1 + rz / (s * 7);                       // слабая перспектива
+      p.push({ x: cx + rx * k, y: cy + (oy - rz * 0.36) * k, z: rz, k: k,
+               i: x + ',' + y + ',' + z, gx: x, gy: y, gz: z });
+    }
+    p.sort(function (u, v) { return u.z - v.z; });
+    ctx.lineWidth = 1;
+    p.forEach(function (u) {
+      p.forEach(function (v) {
+        var d = Math.abs(u.gx - v.gx) + Math.abs(u.gy - v.gy) + Math.abs(u.gz - v.gz);
+        if (d !== 1) return;
+        ctx.strokeStyle = 'rgba(' + INK + ',' + (0.06 + 0.1 * u.k) + ')';
+        ctx.beginPath(); ctx.moveTo(u.x, u.y); ctx.lineTo(v.x, v.y); ctx.stroke();
+      });
+    });
+    p.forEach(function (u) {
+      var core = u.gx === 1 && u.gy === 1 && u.gz === 1;     // атом замещения
+      ctx.fillStyle = core ? 'rgba(' + RED + ',.9)' : 'rgba(' + INK + ',' + (0.25 + 0.35 * u.k) + ')';
+      ctx.beginPath(); ctx.arc(u.x, u.y, (core ? 4.4 : 2.6) * u.k, 0, 6.2832); ctx.fill();
+    });
+  }
+
+  /* Траектория оптимизации: линии уровня и спуск к минимуму.
+     Шаги укорачиваются — так и работает градиентный метод. */
+  function descent(ctx, W, H, t) {
+    var cx = W * 0.56, cy = H * 0.54, s = Math.min(W, H) * 0.4;
+    ctx.lineWidth = 1;
+    for (var i = 1; i <= 6; i++) {                  // овраг: эллипсы под наклоном
+      ctx.strokeStyle = 'rgba(' + INK + ',' + (0.16 - i * 0.017) + ')';
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, s * i * 0.17, s * i * 0.085, -0.5, 0, 6.2832);
+      ctx.stroke();
+    }
+    var steps = 22, prog = (t / 2.4) % (steps + 26);
+    var px = cx - s * 0.95, py = cy - s * 0.34;
+    ctx.strokeStyle = 'rgba(' + RED + ',.75)'; ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(px, py);
+    for (var k = 1; k <= Math.min(prog, steps); k++) {
+      var d = Math.pow(0.82, k);
+      px += (cx - px) * 0.42 + Math.sin(k * 2.1) * s * 0.1 * d;
+      py += (cy - py) * 0.42 + Math.cos(k * 2.7) * s * 0.06 * d;
+      ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(' + RED + ',1)';
+    ctx.beginPath(); ctx.arc(px, py, 3.4, 0, 6.2832); ctx.fill();
+    ctx.fillStyle = 'rgba(' + INK + ',.5)';
+    ctx.beginPath(); ctx.arc(cx, cy, 2.4, 0, 6.2832); ctx.fill();
+  }
+
+  /* Скрытые колебания: видимый режим затухает, а рядом живёт второй
+     аттрактор, который не найти, стартовав из очевидной точки. */
+  function oscill(ctx, W, H, t) {
+    var m = 18, w = W - m * 2, h = H - m * 2, mid = m + h / 2;
+    ctx.strokeStyle = 'rgba(' + INK + ',.14)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(m, mid); ctx.lineTo(m + w, mid); ctx.stroke();
+
+    function curve(color, width, amp, decay, freq, phase, from) {
+      ctx.strokeStyle = color; ctx.lineWidth = width; ctx.beginPath();
+      for (var i = 0; i <= w; i++) {
+        var u = i / w, x = m + i;
+        var y = mid - Math.sin(u * freq + phase) * h * amp * Math.exp(-u * decay);
+        if (u < from) { ctx.moveTo(x, y); continue; }
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    var ph = -t / 46;
+    curve('rgba(' + INK + ',.42)', 1.4, 0.34, 1.9, 17, ph, 0);
+    curve('rgba(' + RED + ',.8)', 1.6, 0.15, -0.15, 9, ph * 0.6, 0.42);
+  }
+
+  /* Граф связей: случайные точки, рёбра между близкими. Красным — клика,
+     плотно связанная группа: то, что ищут в комбинаторике графов. */
+  function graph(ctx, W, H, t) {
+    var N = 26, pts = graph.p;
+    if (!pts || pts.length !== N || graph.w !== W) {
+      graph.w = W; pts = graph.p = [];
+      for (var i = 0; i < N; i++) pts.push({
+        x: Math.random(), y: Math.random(),
+        vx: (Math.random() - 0.5) * 0.0009, vy: (Math.random() - 0.5) * 0.0009,
+        c: i < 5,
+      });
+    }
+    var m = 14, w = W - m * 2, h = H - m * 2, R = 0.3;
+    pts.forEach(function (p) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > 1) p.vx *= -1;
+      if (p.y < 0 || p.y > 1) p.vy *= -1;
+      p.X = m + p.x * w; p.Y = m + p.y * h;
+    });
+    ctx.lineWidth = 1;
+    for (var i = 0; i < N; i++) for (var j = i + 1; j < N; j++) {
+      var a = pts[i], b = pts[j];
+      var d = Math.hypot(a.x - b.x, a.y - b.y);
+      var clique = a.c && b.c;
+      if (d > R && !clique) continue;
+      var o = clique ? 0.55 : 0.22 * (1 - d / R);
+      ctx.strokeStyle = (clique ? 'rgba(' + RED + ',' : 'rgba(' + INK + ',') + o + ')';
+      ctx.beginPath(); ctx.moveTo(a.X, a.Y); ctx.lineTo(b.X, b.Y); ctx.stroke();
+    }
+    pts.forEach(function (p) {
+      ctx.fillStyle = p.c ? 'rgba(' + RED + ',.9)' : 'rgba(' + INK + ',.45)';
+      ctx.beginPath(); ctx.arc(p.X, p.Y, p.c ? 3.4 : 2.4, 0, 6.2832); ctx.fill();
+    });
+  }
+
+  var kinds = { lattice3d: lattice3d, descent: descent, oscill: oscill, graph: graph };
+  [].forEach.call(document.querySelectorAll('canvas[data-fig]'), function (cv) {
+    var fn = kinds[cv.getAttribute('data-fig')];
+    if (fn) setup(cv, fn);
   });
 })();

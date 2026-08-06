@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=cf57c232">
+<link rel="stylesheet" href="assets/site.css?v=a21fa226">
 <script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
 m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
 (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
@@ -42,29 +42,41 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
 </div></header>
 <main id="main">
 
-<div class="hero-grid grid-bg"><div class="wrap">
-  <div>
-    <h1 data-rise="1">Путь<br>Покорителя</h1>
-    <p class="creed" data-rise="2">Знание формирует мышление.<br>
-      Среда формирует человека.<br>
-      Дисциплина формирует характер.<br>
-      Ответственность формирует системы.</p>
-    <div class="cta-row" data-rise="3">
-      <a class="btn btn-primary" href="vypuski/">Смотреть выпуски</a>
-      <a class="btn btn-ghost" href="kniga/">Читать книгу</a>
+<div class="hero-sky">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="wrap hero-layout">
+    <div class="hero-copy">
+      <p class="rubric" data-rise="1">Подкаст и книга</p>
+      <h1 data-rise="2">Путь<br>Покорителя</h1>
+      <p class="hero-what" data-rise="3">Разговоры с людьми, которые двигают науку,
+        образование и технологии в России. И книга, где герой обращается
+        к читателю сам — от первого лица, без пересказа.</p>
+      <p class="creed" data-rise="3"><span>Знание — мышление</span><span>Среда — человек</span><span>Дисциплина — характер</span><span>Ответственность — системы</span></p>
+      <div class="cta-row" data-rise="4">
+        <a class="btn btn-primary" href="vypuski/">Смотреть выпуски</a>
+        <a class="btn btn-ghost" href="kniga/">Читать книгу</a>
+      </div>
     </div>
+    <a class="summit-card" href="vypuski/aleksandr-tormasov/" data-rise="4"
+       aria-label="Последний выпуск: Александр Тормасов">
+      <span class="summit-kicker">Последняя вершина</span>
+      <span class="summit-photo"><img src="assets/photo/aleksandr-tormasov.jpg" alt="Александр Тормасов" width="480" height="360" fetchpriority="high"></span>
+      <span class="summit-meta">Сезон 2 · Выпуск 20 · 50 мин</span>
+      <strong>Александр Тормасов</strong>
+      <span class="summit-role">Профессор МФТИ, экс-ректор Университета Иннополис</span>
+      <span class="summit-action">Подняться к выпуску <span aria-hidden="true">↗</span></span>
+    </a>
   </div>
-  <figure class="hero-fig" data-rise="4">
-    <figcaption class="fig-no">Fig. 01</figcaption>
-    <canvas id="lattice" aria-hidden="true"></canvas>
-    <figcaption class="fig-cap">57 узлов связаны</figcaption>
-  </figure>
-</div></div>
+  <a class="hero-scroll" href="#vypuski">Листайте</a>
+</div>
 
-<div class="orgs"><div class="wrap">
-  <p class="orgs-h">Люди из этих организаций были в студии</p>
-  <ul class="orgs-list"><li>Минобрнауки России</li><li>Минэнерго России</li><li>Минстрой России</li><li>МФТИ</li><li>МГУ</li><li>ВШЭ</li><li>Сколтех</li><li>ДВФУ</li><li>УрФУ</li><li>Университет Иннополис</li><li>ННГАСУ</li><li>КНИТУ-КАИ</li><li>Сеченовский университет</li><li>ИПУ РАН</li><li>АН Республики Татарстан</li><li>Сколково</li><li>AIRI</li><li>Яндекс</li><li>VK</li><li>Сбер</li><li>МТС</li><li>Ростелеком</li><li>Росатом</li><li>SkyEng</li><li>Promobot</li></ul>
-</div></div>
+<div class="orgs">
+  <p class="orgs-h"><span class="wrap">Люди из этих организаций были в студии</span></p>
+  <div class="ticker">
+    <ul class="ticker-row"><li>Минобрнауки России</li><li>Минэнерго России</li><li>Минстрой России</li><li>МФТИ</li><li>МГУ</li><li>ВШЭ</li><li>Сколтех</li><li>ДВФУ</li><li>УрФУ</li><li>Университет Иннополис</li><li>ННГАСУ</li><li>КНИТУ-КАИ</li><li>Сеченовский университет</li><li>ИПУ РАН</li><li>АН Республики Татарстан</li><li>Сколково</li><li>AIRI</li><li>Яндекс</li><li>VK</li><li>Сбер</li><li>МТС</li><li>Ростелеком</li><li>Росатом</li><li>SkyEng</li><li>Promobot</li></ul>
+    <ul class="ticker-row" aria-hidden="true"><li>Минобрнауки России</li><li>Минэнерго России</li><li>Минстрой России</li><li>МФТИ</li><li>МГУ</li><li>ВШЭ</li><li>Сколтех</li><li>ДВФУ</li><li>УрФУ</li><li>Университет Иннополис</li><li>ННГАСУ</li><li>КНИТУ-КАИ</li><li>Сеченовский университет</li><li>ИПУ РАН</li><li>АН Республики Татарстан</li><li>Сколково</li><li>AIRI</li><li>Яндекс</li><li>VK</li><li>Сбер</li><li>МТС</li><li>Ростелеком</li><li>Росатом</li><li>SkyEng</li><li>Promobot</li></ul>
+  </div>
+</div>
 
 <div class="stats"><div class="wrap">
   <div class="stat"><b data-n="57">57</b><i>выпусков</i></div>
@@ -206,6 +218,34 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
   </div>
 </div></section>
 
+<section class="band"><div class="wrap">
+  <div class="sec-head">
+    <div><p class="rubric">Предметный мир</p><h2>Чем они заняты на самом деле</h2></div>
+    <a class="link-more" href="vypuski/">Все выпуски →</a>
+  </div>
+  <ul class="figs"><li class="fig">
+      <figure><canvas data-fig="lattice3d" aria-hidden="true"></canvas></figure>
+      <h3>Кристаллическая решётка</h3>
+      <p>Расположение атомов задаёт свойства материала. Алгоритм USPEX перебирает миллионы вариантов и находит устойчивые структуры — красный узел здесь атом замещения, из-за которого меняется всё.</p>
+      <a class="link-more" href="vypuski/artem-oganov/">Артём Оганов →</a>
+    </li><li class="fig">
+      <figure><canvas data-fig="descent" aria-hidden="true"></canvas></figure>
+      <h3>Траектория оптимизации</h3>
+      <p>Линии уровня — значения функции, ломаная — путь к минимуму. Шаги укорачиваются по мере приближения: так работают численные методы оптимизации, на которых стоит обучение моделей.</p>
+      <a class="link-more" href="vypuski/aleksandr-gasnikov/">Александр Гасников →</a>
+    </li><li class="fig">
+      <figure><canvas data-fig="oscill" aria-hidden="true"></canvas></figure>
+      <h3>Скрытые колебания</h3>
+      <p>Серая кривая — режим, который видно сразу; он затухает. Красная живёт рядом, но её не найти, стартовав из очевидной точки. Такие аттракторы и обрушивают системы, которые считались устойчивыми.</p>
+      <a class="link-more" href="vypuski/kuznetsov-gornov-nikolenko/">Кузнецов · Горнов · Николенко →</a>
+    </li><li class="fig">
+      <figure><canvas data-fig="graph" aria-hidden="true"></canvas></figure>
+      <h3>Граф связей</h3>
+      <p>Точки соединяются, если оказались достаточно близко. Красным — клика: группа, связанная каждый с каждым. Найти её в большом графе — классическая задача комбинаторики.</p>
+      <a class="link-more" href="vypuski/andrey-raygorodskiy/">Андрей Райгородский →</a>
+    </li></ul>
+</div></section>
+
 <section id="geroi"><div class="wrap">
   <div class="sec-head">
     <div><p class="rubric">Голоса</p><h2>Что говорят герои</h2></div>
@@ -302,6 +342,6 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
     <span class="pg">Подкаст и книга</span>
   </div>
 </footer>
-<script src="assets/catalog.js?v=cf57c232" defer></script>
+<script src="assets/catalog.js?v=a21fa226" defer></script>
 </body>
 </html>

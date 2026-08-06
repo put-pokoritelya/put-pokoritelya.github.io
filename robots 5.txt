@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://put-pokoritelya.github.io/sitemap.xml

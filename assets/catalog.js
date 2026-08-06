@@ -790,3 +790,35 @@ function plural(n, one, few, many) {
   card.querySelector('strong').textContent = pick.n;
   card.querySelector('.summit-role').textContent = pick.r;
 })();
+
+/* Ролик во всю ширину: включаем, когда доехали до блока, и глушим, когда
+   уехали. Файл в десять мегабайт не должен тянуться у тех, кто до него не
+   долистал, поэтому preload="none" в разметке, а load() зовём вручную.
+   При системной настройке «уменьшить движение» остаётся постер. */
+(function () {
+  var v = document.getElementById('reel');
+  if (!v) return;
+  var btn = document.querySelector('.reel-sound');
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (btn) btn.addEventListener('click', function () {
+    v.muted = !v.muted;
+    btn.setAttribute('aria-pressed', String(!v.muted));
+    btn.textContent = v.muted ? 'Включить звук' : 'Выключить звук';
+    if (!v.muted && v.paused) v.play().catch(function () {});
+  });
+
+  if (still) { if (btn) btn.hidden = true; return; }
+
+  var loaded = false;
+  new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) {
+        if (!loaded) { v.load(); loaded = true; }
+        v.play().catch(function () {});          // браузер вправе отказать — это не ошибка
+      } else if (!v.paused) {
+        v.pause();
+      }
+    });
+  }, { rootMargin: '200px' }).observe(v);
+})();

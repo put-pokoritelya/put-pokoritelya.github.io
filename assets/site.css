@@ -19,6 +19,9 @@
      Читается как шапка отчёта или подпись на приборе, а не как «ещё один
      заголовок». JetBrains Mono взят ради полной кириллицы. */
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  /* Голубой живёт только на тёмном первом экране: это цвет прибора, метка
+     сигнала. На бумаге его нет — там по-прежнему только красный. */
+  --signal:#7CC7E0;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -139,19 +142,33 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
   font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8FA2B5;text-decoration:none}
 .hero-scroll::after{content:'';display:block;width:1px;height:34px;background:linear-gradient(#8FA2B5,transparent);margin:10px auto 0}
 .hero-scroll:hover{color:var(--paper)}
-.summit-card{align-self:end;color:var(--paper);text-decoration:none;border-top:2px solid var(--accent-bright);padding-top:14px;max-width:340px;justify-self:end;min-width:0}
-.summit-kicker,.summit-meta,.summit-action{display:block;font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase}
-.summit-kicker{color:#AFC1D2;margin-bottom:12px}
-.summit-photo{display:block;aspect-ratio:2.6/1;overflow:hidden;background:#24384b}
-.summit-photo img{width:100%;height:100%;object-fit:cover;object-position:center bottom;filter:saturate(.78) contrast(1.04);transition:transform .45s ease,filter .3s ease}
-.summit-meta{color:#9FB3C8;margin-top:14px}
-.summit-card strong{display:block;font-family:var(--serif);font-size:clamp(24px,2.2vw,31px);line-height:1.15;margin-top:6px;text-wrap:balance}
-.summit-role{display:block;color:#C9D4DF;font-size:13px;line-height:1.45;margin-top:7px;text-wrap:pretty}
-.summit-action{color:#fff;margin-top:18px;padding-bottom:4px;border-bottom:1px solid rgba(251,249,245,.35);width:max-content;transition:color .2s,border-color .2s}
-.summit-card:hover .summit-photo img{transform:scale(1.035);filter:saturate(1) contrast(1.04)}
-.summit-card:hover .summit-action{color:#FF8A84;border-color:#FF8A84}
+/* Карточка последнего выпуска — панель приборного вида: голубая линия
+   сверху, метка сигнала, кадр в чёрно-белом, имя антиквой. */
+.summit-card{align-self:end;justify-self:end;max-width:360px;min-width:0;
+  background:rgba(18,28,42,.86);border:1px solid rgba(124,199,224,.16);
+  border-top:2px solid var(--signal);padding:20px 20px 24px;
+  color:var(--paper);text-decoration:none;backdrop-filter:blur(3px);
+  transition:border-color .25s,transform .25s}
+.summit-card:hover{transform:translateY(-3px);border-color:rgba(124,199,224,.4)}
+.summit-head{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--signal);margin-bottom:18px}
+.summit-photo{display:block;aspect-ratio:4/3;overflow:hidden;background:#24384b}
+.summit-photo img{width:100%;height:100%;object-fit:cover;object-position:center;
+  filter:grayscale(1) contrast(1.06);transition:transform .45s ease,filter .3s ease}
+.summit-meta{display:block;font-family:var(--mono);font-size:11px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:#B9C6D4;margin-top:18px}
+.summit-card strong{display:block;font-family:var(--serif);font-size:clamp(26px,2.2vw,34px);
+  line-height:1.12;margin-top:10px;text-wrap:balance}
+.summit-role{display:block;color:#C3CEDA;font-size:14px;line-height:1.45;margin-top:10px}
+.summit-action{display:inline-block;margin-top:22px;padding-bottom:6px;
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:#E4695A;border-bottom:1px solid rgba(228,105,90,.45);
+  transition:color .2s,border-color .2s}
+.summit-card:hover .summit-photo img{transform:scale(1.04);filter:grayscale(.15) contrast(1.06)}
+.summit-card:hover .summit-action{color:#fff;border-color:#fff}
 @media(max-width:880px){.hero-sky .wrap{min-height:0;padding-top:64px;padding-bottom:150px}.hero-layout{grid-template-columns:1fr}.summit-card{justify-self:start;max-width:520px;width:100%}}
-@media(max-width:560px){.hero-sky h1{font-size:clamp(46px,14.5vw,64px)}.hero-sky .cta-row{display:grid;grid-template-columns:1fr}.hero-sky .btn{justify-content:center}.summit-card{margin-top:8px}}
+@media(max-width:560px){.hero-sky h1{font-size:clamp(46px,14.5vw,64px)}.hero-sky .cta-row{display:grid;grid-template-columns:1fr}.hero-sky .btn{justify-content:center}.summit-card{margin-top:8px;max-width:none}}
 
 /* переключатель сезонов */
 .seasons{position:absolute;right:32px;bottom:26px;z-index:3;display:flex;align-items:center;gap:8px;flex-wrap:wrap}

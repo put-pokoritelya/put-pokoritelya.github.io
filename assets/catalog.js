@@ -761,3 +761,32 @@ function plural(n, one, few, many) {
     if (fn) setup(cv, fn);
   });
 })();
+
+/* Карточка на первом экране: при каждом открытии — другой разговор.
+   В разметку зашит последний выпуск, поэтому без JS и на первом кадре
+   карточка уже правильная; скрипт лишь подменяет её на случайную.
+   Ярлык честный: «Новый разговор» только у свежего, у остальных «Разговор». */
+(function () {
+  var card = document.querySelector('.summit-card');
+  var box = document.getElementById('summit-pool');
+  if (!card || !box) return;
+
+  var pool;
+  try { pool = JSON.parse(box.textContent); } catch (e) { return; }
+  if (!pool || pool.length < 2) return;
+
+  var pick = pool[Math.floor(Math.random() * pool.length)];
+  var img = card.querySelector('.summit-photo img');
+  if (!img) return;                                  // без кадра не подменяем
+
+  card.href = pick.u;
+  card.setAttribute('aria-label', 'Выпуск: ' + pick.n);
+  card.querySelector('.summit-label').textContent =
+    (pick.new ? 'Новый разговор' : 'Разговор') + ' · Сигнал ' + pick.s;
+  img.src = pick.p;
+  img.alt = pick.n;
+  img.removeAttribute('fetchpriority');               // приоритет нужен был первому кадру
+  card.querySelector('.summit-meta').textContent = pick.m;
+  card.querySelector('strong').textContent = pick.n;
+  card.querySelector('.summit-role').textContent = pick.r;
+})();

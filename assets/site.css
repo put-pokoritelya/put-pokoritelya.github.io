@@ -23,7 +23,7 @@
 
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;color-scheme:light}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;
@@ -37,6 +37,10 @@ a{color:inherit}
 @media(max-width:600px){.wrap,.wrap-narrow{padding:0 20px}}
 
 h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:700;line-height:1.14;letter-spacing:-.01em}
+/* balance — заголовок не оставляет одно слово на последней строке;
+   scroll-margin — якорь не уезжает под липкую шапку */
+h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
+.lede,.creed,.arch-lede,.ep-role{text-wrap:pretty}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:16px;top:16px;z-index:100;background:var(--ink);color:var(--paper);padding:10px 18px}
 
@@ -126,7 +130,7 @@ h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:700;line-height:1.14;let
 .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;font-family:var(--mono);
   font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   text-decoration:none;border:1px solid var(--ink);cursor:pointer;
-  transition:background .2s,color .2s,border-color .2s}
+  transition:background .2s,color .2s,border-color .2s;touch-action:manipulation}
 .btn-primary{background:var(--ink);color:var(--paper)}
 .btn-primary:hover{background:var(--accent);border-color:var(--accent)}
 .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
@@ -134,7 +138,8 @@ h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:700;line-height:1.14;let
 /* ---- счётчики ---- */
 .stats{border-bottom:1px solid var(--rule);background:var(--paper-alt)}
 .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:36px 32px}
-.stat b{display:block;font-family:var(--serif);font-size:clamp(32px,4vw,44px);line-height:1;color:var(--navy)}
+.stat b{display:block;font-family:var(--serif);font-size:clamp(32px,4vw,44px);line-height:1;
+  color:var(--navy);font-variant-numeric:tabular-nums}
 .stat i{display:block;font-style:normal;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-top:10px}
 @media(max-width:700px){.stats .wrap{grid-template-columns:repeat(2,1fr);row-gap:28px}}
 
@@ -150,7 +155,7 @@ section{padding:78px 0}
 /* ---- фильтры каталога ---- */
 .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
 .chip{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;padding:9px 14px;border:1px solid var(--rule);
+  text-transform:uppercase;padding:9px 14px;border:1px solid var(--rule);touch-action:manipulation;
   background:transparent;color:var(--ink);cursor:pointer;transition:.15s}
 .chip:hover{border-color:var(--ink)}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -298,6 +303,8 @@ section{padding:78px 0}
 
 /* ---- герои ---- */
 .guests{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px;list-style:none}
+/* 57 карточек героев: браузер не считает вёрстку тех, что за экраном */
+.guests>li{content-visibility:auto;contain-intrinsic-size:210px}
 .gu{text-align:center}
 .gu a{text-decoration:none}
 .gu .av img{width:100%;height:100%;object-fit:cover}

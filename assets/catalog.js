@@ -323,17 +323,6 @@ function plural(n, one, few, many) {
   upd();
 })();
 
-/* Меню закрывается при клике мимо и при переходе по ссылке. */
-(function () {
-  var m = document.querySelector('.menu');
-  if (!m) return;
-  document.addEventListener('click', function (ev) {
-    if (m.open && !m.contains(ev.target)) m.open = false;
-  });
-  m.addEventListener('click', function (ev) {
-    if (ev.target.closest('.menu-panel a')) m.open = false;
-  });
-})();
 
 /* Клавиша «/» ставит курсор в поиск — привычка тех, кто много читает. */
 (function () {
@@ -821,4 +810,48 @@ function plural(n, one, few, many) {
       }
     });
   }, { rootMargin: '200px' }).observe(v);
+})();
+
+/* Мобильное меню. Раньше было на <details>: работало без JS, но экранный
+   диктор не объявлял состояние. Теперь <button> с aria-expanded, закрытие
+   по Escape и по клику вне меню, возврат фокуса на кнопку — как требует
+   доступность. Без JS меню не откроется, поэтому в разметке рядом остаётся
+   основная навигация. */
+(function () {
+  var box = document.querySelector('.menu');
+  if (!box) return;
+  var btn = box.querySelector('.menu-btn');
+  var panel = box.querySelector('.menu-panel');
+  if (!btn || !panel) return;
+
+  function setOpen(on) {
+    panel.hidden = !on;
+    btn.setAttribute('aria-expanded', String(on));
+    btn.setAttribute('aria-label', on ? 'Закрыть меню' : 'Открыть меню');
+    on ? box.setAttribute('data-open', '') : box.removeAttribute('data-open');
+  }
+
+  btn.addEventListener('click', function () {
+    var willOpen = panel.hidden;
+    setOpen(willOpen);
+    if (willOpen) {
+      var first = panel.querySelector('a');
+      if (first) first.focus();
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || panel.hidden) return;
+    setOpen(false);
+    btn.focus();                                   // фокус возвращается на кнопку
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!panel.hidden && !box.contains(e.target)) setOpen(false);
+  });
+
+  // Фокус не должен уходить за пределы открытого меню
+  box.addEventListener('focusout', function (e) {
+    if (!panel.hidden && !box.contains(e.relatedTarget)) setOpen(false);
+  });
 })();

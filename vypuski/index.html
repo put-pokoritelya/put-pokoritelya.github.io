@@ -20,13 +20,13 @@
 <link rel="alternate" type="application/rss+xml" title="Путь Покорителя — выпуски" href="https://put-pokoritelya.github.io/rss.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=46af9a47">
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,600;0,7..72,700;1,7..72,600&family=Onest:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css?v=b15e365b">
 <script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
 m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
 (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
 ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/111307580" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<noscript><div><img src="https://mc.yandex.ru/watch/111307580" width="1" height="1" style="position:absolute;left:-9999px" alt=""></div></noscript>
 <meta name="form-endpoint" content="https://restless-band-bba2.arxiles-34.workers.dev">
 </head>
 <body>
@@ -35,10 +35,13 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
 <header class="hdr"><div class="wrap">
   <a class="logo" href="../">Путь Покорителя</a>
   <nav class="nav"><a href="../vypuski/">Выпуски</a><a href="../kniga/">Книга</a><a href="../geroi/">Герои</a><a href="../citaty/">Цитаты</a><a href="../o-proekte/">О проекте</a><a href="../partneram/">Партнёрам</a><a href="../poisk/">Поиск</a></nav>
-  <details class="menu">
-    <summary aria-label="Меню"><span></span><span></span><span></span></summary>
-    <nav class="menu-panel"><a href="../vypuski/">Выпуски</a><a href="../kniga/">Книга</a><a href="../geroi/">Герои</a><a href="../citaty/">Цитаты</a><a href="../o-proekte/">О проекте</a><a href="../partneram/">Партнёрам</a><a href="../poisk/">Поиск</a></nav>
-  </details>
+  <div class="menu">
+    <button class="menu-btn" type="button" aria-label="Открыть меню"
+            aria-expanded="false" aria-controls="mobile-navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="menu-panel" id="mobile-navigation" hidden><a href="../vypuski/">Выпуски</a><a href="../kniga/">Книга</a><a href="../geroi/">Герои</a><a href="../citaty/">Цитаты</a><a href="../o-proekte/">О проекте</a><a href="../partneram/">Партнёрам</a><a href="../poisk/">Поиск</a></nav>
+  </div>
 </div></header>
 <main id="main">
 
@@ -52,7 +55,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
 </div>
 <div class="filters">
   <button class="chip" type="button" data-plat="vk" aria-pressed="false">VK Video</button><button class="chip" type="button" data-plat="youtube" aria-pressed="false">YouTube</button><button class="chip" type="button" data-plat="rutube" aria-pressed="false">Rutube</button>
-  <button class="chip" type="button" data-book="1" aria-pressed="false">Есть глава в книге</button>
+  <button class="chip" type="button" data-book="1" aria-pressed="false">Есть глава книги</button>
   <button class="chip chip-reset" type="button" id="reset">Сбросить</button>
 </div>
 <p class="count" id="count" role="status"></p>
@@ -65,7 +68,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 20</span>
       <h3>Александр Тормасов</h3>
       <span class="role">Профессор МФТИ, экс-ректор Университета Иннополис</span>
-      <span class="tags"><span>5 февраля 2026</span><span>50 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>5 февраля 2026</span><span>50 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -77,7 +80,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 17</span>
       <h3>Николай Смирнов</h3>
       <span class="role">Директор центра развития промышленной робототехники</span>
-      <span class="tags"><span>20 января 2026</span><span>53 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>20 января 2026</span><span>53 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -89,7 +92,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 16</span>
       <h3>Юрий Чехович</h3>
       <span class="role">Завлабораторией ИПУ РАН, основатель «Думейт»</span>
-      <span class="tags"><span>15 января 2026</span><span>41 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>15 января 2026</span><span>41 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -101,7 +104,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 14</span>
       <h3>Марк Иванов</h3>
       <span class="role">Ведущий научный сотрудник ФИЦ химической физики РАН</span>
-      <span class="tags"><span>26 декабря 2025</span><span>35 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>26 декабря 2025</span><span>35 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -113,7 +116,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 13</span>
       <h3>Александр Коротин</h3>
       <span class="role">Руководитель группы генеративного ИИ, Сколтех и AIRI</span>
-      <span class="tags"><span>25 декабря 2025</span><span>47 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>25 декабря 2025</span><span>47 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -125,7 +128,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 12</span>
       <h3>Валентин Малых</h3>
       <span class="role">Руководитель фундаментальных исследований MWS AI (МТС)</span>
-      <span class="tags"><span>22 декабря 2025</span><span>32 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>22 декабря 2025</span><span>32 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -137,7 +140,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 15</span>
       <h3>Елена Александрова</h3>
       <span class="role">Руководитель спецпрограмм мастерской «Сенеж»</span>
-      <span class="tags"><span>12 декабря 2025</span><span>38 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>12 декабря 2025</span><span>38 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -149,7 +152,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 18</span>
       <h3>Андрей Грабовой</h3>
       <span class="role">Доцент МФТИ, старший научный сотрудник ИПУ РАН</span>
-      <span class="tags"><span>11 декабря 2025</span><span>34 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>11 декабря 2025</span><span>34 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -161,7 +164,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 07</span>
       <h3>Эдуард Фартушный</h3>
       <span class="role">Замдиректора Центра цифровой медицины и ИИ, Сеченовский университет</span>
-      <span class="tags"><span>9 декабря 2025</span><span>46 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>9 декабря 2025</span><span>46 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics=""
@@ -185,7 +188,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 06</span>
       <h3>Николай Хохлов</h3>
       <span class="role">Доктор физико-математических наук, преподаватель МФТИ</span>
-      <span class="tags"><span>6 декабря 2025</span><span>53 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>6 декабря 2025</span><span>53 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -197,7 +200,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 19</span>
       <h3>Василий Голубев</h3>
       <span class="role">Профессор МФТИ, лаборатория вычислительной геофизики</span>
-      <span class="tags"><span>4 декабря 2025</span><span>37 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>4 декабря 2025</span><span>37 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -209,7 +212,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 05</span>
       <h3>Роланд Хильдебранд</h3>
       <span class="role">Ведущий научный сотрудник МФТИ, к.ф.-м.н.</span>
-      <span class="tags"><span>4 декабря 2025</span><span>35 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>4 декабря 2025</span><span>35 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -221,7 +224,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 04</span>
       <h3>Андрей Зима</h3>
       <span class="role">Директор департамента ИИ-решений Ростелекома</span>
-      <span class="tags"><span>28 ноября 2025</span><span>39 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>28 ноября 2025</span><span>39 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -233,7 +236,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 10</span>
       <h3>Филипп Копылов</h3>
       <span class="role">Профессор, директор Института персонализированной кардиологии</span>
-      <span class="tags"><span>27 ноября 2025</span><span>37 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>27 ноября 2025</span><span>37 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -245,7 +248,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 03</span>
       <h3>Армен Бекларян</h3>
       <span class="role">Проректор по исследованиям и инновациям Университета RWB</span>
-      <span class="tags"><span>27 ноября 2025</span><span>37 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>27 ноября 2025</span><span>37 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -257,7 +260,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 02</span>
       <h3>Рустам Айнетдинов</h3>
       <span class="role">Генеральный директор SkyEng</span>
-      <span class="tags"><span>26 ноября 2025</span><span>32 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>26 ноября 2025</span><span>32 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -269,7 +272,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 01</span>
       <h3>Константин Михайлик</h3>
       <span class="role">Заместитель министра строительства и ЖКХ РФ</span>
-      <span class="tags"><span>19 ноября 2025</span><span>35 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>19 ноября 2025</span><span>35 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -281,7 +284,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 45</span>
       <h3>Артём Оганов</h3>
       <span class="role">Кристаллограф, химик, материаловед, профессор РАН</span>
-      <span class="tags"><span>14 ноября 2025</span><span>30 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>14 ноября 2025</span><span>30 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -293,7 +296,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 44</span>
       <h3>Михаил Кривопал</h3>
       <span class="role">Проректор по ДПО ДВФУ</span>
-      <span class="tags"><span>11 ноября 2025</span><span>36 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>11 ноября 2025</span><span>36 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card feat" data-topics="Наука"
@@ -305,7 +308,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 43</span>
       <h3>Андрей Кузнецов</h3>
       <span class="role">Директор лаборатории FusionBrain, AIRI (Сбер)</span>
-      <span class="tags"><span>7 ноября 2025</span><span>36 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>7 ноября 2025</span><span>36 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Ответственность"
@@ -317,7 +320,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 42</span>
       <h3>Гульнара Биккулова</h3>
       <span class="role">Директор Университета НЕЙМАРК</span>
-      <span class="tags"><span>3 ноября 2025</span><span>51 мин</span><span>Ответственность</span></span>
+      <span class="tags"><span>3 ноября 2025</span><span>51 мин</span><span>Ответственность</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -329,7 +332,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 41</span>
       <h3>Екатерина Солнцева</h3>
       <span class="role">Заместитель председателя правительства Нижегородской области</span>
-      <span class="tags"><span>30 октября 2025</span><span>32 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>30 октября 2025</span><span>32 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -341,7 +344,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 2 · ВЫПУСК 09</span>
       <h3>Александр Квашнин</h3>
       <span class="role">Профессор, руководитель научной группы Сколтеха</span>
-      <span class="tags"><span>29 октября 2025</span><span>33 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>29 октября 2025</span><span>33 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -353,7 +356,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 39</span>
       <h3>Александр Крайнов</h3>
       <span class="role">Директор по развитию технологий ИИ, Яндекс</span>
-      <span class="tags"><span>24 октября 2025</span><span>36 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>24 октября 2025</span><span>36 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -365,7 +368,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 40</span>
       <h3>Игорь Петров</h3>
       <span class="role">Доктор физико-математических наук, профессор</span>
-      <span class="tags"><span>23 октября 2025</span><span>50 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>23 октября 2025</span><span>50 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -377,7 +380,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 38</span>
       <h3>Эдуард Шереметцев</h3>
       <span class="role">Заместитель министра энергетики РФ</span>
-      <span class="tags"><span>22 октября 2025</span><span>33 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>22 октября 2025</span><span>33 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Ответственность"
@@ -389,7 +392,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 37</span>
       <h3>Георгий Щелканов</h3>
       <span class="role">Директор по работе с вузами VK</span>
-      <span class="tags"><span>17 октября 2025</span><span>33 мин</span><span>Ответственность</span></span>
+      <span class="tags"><span>17 октября 2025</span><span>33 мин</span><span>Ответственность</span></span>
     </span>
   </a>
 </li><li class="card feat" data-topics="Наука"
@@ -401,7 +404,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 36</span>
       <h3>Алексей Никитин</h3>
       <span class="role">Доцент кафедры общей математики ВМК МГУ</span>
-      <span class="tags"><span>11 октября 2025</span><span>46 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>11 октября 2025</span><span>46 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -413,7 +416,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 33</span>
       <h3>Ойбек Партов</h3>
       <span class="role">Заместитель проректора УрФУ по информационной политике</span>
-      <span class="tags"><span>10 октября 2025</span><span>38 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>10 октября 2025</span><span>38 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card feat" data-topics="Наука"
@@ -425,7 +428,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 35</span>
       <h3>Владимир Максименко</h3>
       <span class="role">Профессор, доктор физико-математических наук</span>
-      <span class="tags"><span>4 октября 2025</span><span>37 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>4 октября 2025</span><span>37 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card feat" data-topics="Наука"
@@ -437,7 +440,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 34</span>
       <h3>Николай Андреев</h3>
       <span class="role">Математик</span>
-      <span class="tags"><span>4 октября 2025</span><span>36 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>4 октября 2025</span><span>36 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -449,7 +452,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 31</span>
       <h3>Дмитрий Щеголев</h3>
       <span class="role">Ректор Нижегородского архитектурно-строительного университета</span>
-      <span class="tags"><span>8 сентября 2025</span><span>45 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>8 сентября 2025</span><span>45 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -461,7 +464,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 29</span>
       <h3>Рифкат Минниханов</h3>
       <span class="role">Президент Академии наук Республики Татарстан</span>
-      <span class="tags"><span>3 сентября 2025</span><span>49 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>3 сентября 2025</span><span>49 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card feat" data-topics="Среда"
@@ -473,7 +476,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 30</span>
       <h3>Руслан Шагалеев</h3>
       <span class="role">Заместитель председателя правления фонда «Сколково»</span>
-      <span class="tags"><span>2 сентября 2025</span><span>41 мин</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>2 сентября 2025</span><span>41 мин</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -485,7 +488,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 27</span>
       <h3>Александр Горбань</h3>
       <span class="role">Ведущий учёный, доктор физико-математических наук</span>
-      <span class="tags"><span>27 августа 2025</span><span>31 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>27 августа 2025</span><span>31 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card feat" data-topics="Ответственность"
@@ -497,7 +500,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 26</span>
       <h3>Ксения Прохоренко</h3>
       <span class="role">Директор Единого центра карьеры</span>
-      <span class="tags"><span>12 августа 2025</span><span>42 мин</span><span>Ответственность</span></span>
+      <span class="tags"><span>12 августа 2025</span><span>42 мин</span><span>Ответственность</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Дисциплина"
@@ -509,7 +512,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 25</span>
       <h3>Кристина Жукова</h3>
       <span class="role">Тренер по ораторскому искусству</span>
-      <span class="tags"><span>4 августа 2025</span><span>40 мин</span><span>Дисциплина</span></span>
+      <span class="tags"><span>4 августа 2025</span><span>40 мин</span><span>Дисциплина</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Ответственность"
@@ -521,7 +524,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 24</span>
       <h3>Татьяна Юсупова</h3>
       <span class="role">Основатель и генеральный директор «SayHire»</span>
-      <span class="tags"><span>25 июля 2025</span><span>35 мин</span><span>Ответственность</span></span>
+      <span class="tags"><span>25 июля 2025</span><span>35 мин</span><span>Ответственность</span></span>
     </span>
   </a>
 </li><li class="card feat" data-topics="Наука"
@@ -533,7 +536,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 23</span>
       <h3>Кузнецов · Горнов · Николенко</h3>
       <span class="role">Трое учёных: доктора наук, исследователи ИИ</span>
-      <span class="tags"><span>24 июля 2025</span><span>50 мин</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>24 июля 2025</span><span>50 мин</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card feat" data-topics="Ответственность"
@@ -545,7 +548,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 22</span>
       <h3>Егор Бологов</h3>
       <span class="role">Директор департамента обучения Технической академии Росатома</span>
-      <span class="tags"><span>18 июля 2025</span><span>34 мин</span><span>Ответственность</span></span>
+      <span class="tags"><span>18 июля 2025</span><span>34 мин</span><span>Ответственность</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Ответственность"
@@ -557,7 +560,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 21</span>
       <h3>Александр Перемятов</h3>
       <span class="role">Вице-президент Союза Торговых Центров</span>
-      <span class="tags"><span>10 июля 2025</span><span>38 мин</span><span>Ответственность</span></span>
+      <span class="tags"><span>10 июля 2025</span><span>38 мин</span><span>Ответственность</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Ответственность"
@@ -581,7 +584,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 19</span>
       <h3>Владимир Гордин</h3>
       <span class="role">Профессор-исследователь ВШЭ и МФТИ</span>
-      <span class="tags"><span>3 июля 2025</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>3 июля 2025</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -593,7 +596,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 18</span>
       <h3>Алексей Савватеев</h3>
       <span class="role">Математик, доктор физико-математических наук</span>
-      <span class="tags"><span>23 июня 2025</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>23 июня 2025</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Ответственность"
@@ -641,7 +644,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 12</span>
       <h3>Александр Гасников</h3>
       <span class="role">Ректор Университета Иннополис</span>
-      <span class="tags"><span>15 мая 2025</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>15 мая 2025</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -653,7 +656,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 11</span>
       <h3>Евгений Бобров</h3>
       <span class="role">Проректор Университета Иннополис</span>
-      <span class="tags"><span>12 мая 2025</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>12 мая 2025</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -665,7 +668,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 10</span>
       <h3>Сергей Ежов</h3>
       <span class="role">Директор школы «Иннополис»</span>
-      <span class="tags"><span>12 мая 2025</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>12 мая 2025</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -677,7 +680,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 08</span>
       <h3>Леонид Шабалин</h3>
       <span class="role">Директор передовой инженерной школы КАИ</span>
-      <span class="tags"><span>30 апреля 2025</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>30 апреля 2025</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -689,7 +692,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 07</span>
       <h3>Светлана Красночуб</h3>
       <span class="role">Исполнительный директор Фонда целевого капитала МФТИ</span>
-      <span class="tags"><span>25 апреля 2025</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>25 апреля 2025</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -701,7 +704,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 06</span>
       <h3>Евгений Данилов</h3>
       <span class="role">Генеральный директор АО «Иннополис»</span>
-      <span class="tags"><span>18 апреля 2025</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>18 апреля 2025</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Наука"
@@ -713,7 +716,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 05</span>
       <h3>Ольга Петрова</h3>
       <span class="role">Заместитель министра науки и высшего образования РФ</span>
-      <span class="tags"><span>18 апреля 2025</span><span>Наука</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>18 апреля 2025</span><span>Наука</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Среда"
@@ -725,7 +728,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <span class="no">СЕЗОН 1 · ВЫПУСК 03</span>
       <h3>Арман Костанян</h3>
       <span class="role">Директор Лицея Иннополис</span>
-      <span class="tags"><span>28 марта 2025</span><span>Среда</span><span class="bk">глава в книге</span></span>
+      <span class="tags"><span>28 марта 2025</span><span>Среда</span><span class="bk">глава книги</span></span>
     </span>
   </a>
 </li><li class="card" data-topics="Дисциплина"
@@ -757,6 +760,6 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
     <span class="pg">Подкаст и книга</span>
   </div>
 </footer>
-<script src="../assets/catalog.js?v=46af9a47" defer></script>
+<script src="../assets/catalog.js?v=b15e365b" defer></script>
 </body>
 </html>

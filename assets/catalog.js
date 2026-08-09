@@ -745,10 +745,9 @@ function plural(n, one, few, many) {
   }
 
   var kinds = { lattice3d: lattice3d, descent: descent, oscill: oscill, graph: graph };
-  [].forEach.call(document.querySelectorAll('canvas[data-fig]'), function (cv) {
-    var fn = kinds[cv.getAttribute('data-fig')];
-    if (fn) setup(cv, fn);
-  });
+  Object.assign(kinds, window.__figs2 || {});   // семь фигур из второго блока
+  window.__figs1 = kinds;
+  window.__figSetup = setup;
 })();
 
 /* Карточка на первом экране: при каждом открытии — другой разговор.
@@ -853,5 +852,194 @@ function plural(n, one, few, many) {
   // Фокус не должен уходить за пределы открытого меню
   box.addEventListener('focusout', function (e) {
     if (!panel.hidden && !box.contains(e.relatedTarget)) setOpen(false);
+  });
+})();
+
+/* ------------------------------------------------- схемы открытий (вторая часть)
+   Ещё семь фигур из областей героев. Правила те же: тушь по бумаге, один
+   красный акцент, чистый canvas, счёт только когда фигура на экране. */
+(function () {
+  var INK = '27,28,26', RED = '218,52,51';
+
+  /* Контейнерная виртуализация: одно ядро внизу, над ним лёгкие контейнеры.
+     Они появляются и гаснут за доли секунды — в этом и была суть технологии,
+     в отличие от виртуальных машин со своей копией системы. */
+  function containers(ctx, W, H, t) {
+    var m = 26, base = H - m - 18, w = W - m * 2, n = 7, bw = w / n;
+    ctx.strokeStyle = 'rgba(' + INK + ',.5)'; ctx.lineWidth = 1.6;
+    ctx.beginPath(); ctx.moveTo(m, base); ctx.lineTo(m + w, base); ctx.stroke();
+    for (var i = 0; i < n; i++) {
+      var phase = (t / 70 + i * 1.7) % 9;
+      if (phase > 6.4) continue;                      // контейнер «выключен»
+      var life = Math.min(phase / 0.6, 1) * Math.min((6.4 - phase) / 0.6, 1);
+      var h = (26 + (i % 3) * 16) * life;
+      var x = m + i * bw + 6, bwi = bw - 12;
+      ctx.fillStyle = 'rgba(' + INK + ',' + (0.05 + 0.05 * life) + ')';
+      ctx.fillRect(x, base - h, bwi, h);
+      ctx.strokeStyle = (i === 3 ? 'rgba(' + RED + ',' : 'rgba(' + INK + ',') + (0.55 * life) + ')';
+      ctx.lineWidth = 1; ctx.strokeRect(x, base - h, bwi, h);
+    }
+  }
+
+  /* Слои нейросети: сигнал идёт слева направо и подсвечивает слой за слоем. */
+  function layers(ctx, W, H, t) {
+    var cols = [3, 5, 5, 2], m = 30, w = W - m * 2, pts = [];
+    cols.forEach(function (cnt, c) {
+      for (var i = 0; i < cnt; i++) pts.push({
+        c: c, x: m + (w / (cols.length - 1)) * c,
+        y: H / 2 + (i - (cnt - 1) / 2) * Math.min(34, (H - 70) / Math.max(cnt - 1, 1)),
+      });
+    });
+    var head = (t / 90) % (cols.length + 1.4);
+    ctx.lineWidth = 1;
+    pts.forEach(function (a) {
+      pts.forEach(function (b) {
+        if (b.c !== a.c + 1) return;
+        var lit = Math.max(0, 1 - Math.abs(head - a.c - 0.5) * 1.6);
+        ctx.strokeStyle = lit > 0.05 ? 'rgba(' + RED + ',' + (0.5 * lit) + ')'
+                                     : 'rgba(' + INK + ',.1)';
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      });
+    });
+    pts.forEach(function (p) {
+      var lit = Math.max(0, 1 - Math.abs(head - p.c) * 1.6);
+      ctx.fillStyle = lit > 0.05 ? 'rgba(' + RED + ',' + (0.35 + 0.6 * lit) + ')'
+                                 : 'rgba(' + INK + ',.32)';
+      ctx.beginPath(); ctx.arc(p.x, p.y, 3.4 + 2.2 * lit, 0, 6.2832); ctx.fill();
+    });
+  }
+
+  /* Сейсморазведка: волна от источника на поверхности отражается от границ
+     пластов и возвращается к приёмникам — так и «просвечивают» недра. */
+  function seismic(ctx, W, H, t) {
+    var m = 20, top = m + 16, w = W - m * 2, srcX = m + w * 0.22;
+    var beds = [0.34, 0.56, 0.78];
+    ctx.lineWidth = 1;
+    beds.forEach(function (b, i) {
+      var y = top + (H - top - m) * b;
+      ctx.strokeStyle = 'rgba(' + INK + ',' + (0.22 - i * 0.04) + ')';
+      ctx.beginPath();
+      for (var x = 0; x <= w; x += 6) ctx.lineTo(m + x, y + Math.sin(x / 70 + i) * 5);
+      ctx.stroke();
+    });
+    ctx.strokeStyle = 'rgba(' + INK + ',.4)'; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.moveTo(m, top); ctx.lineTo(m + w, top); ctx.stroke();
+    for (var k = 0; k < 3; k++) {                     // расходящиеся фронты
+      var r = ((t / 2.6) + k * 46) % 138;
+      ctx.strokeStyle = 'rgba(' + RED + ',' + (0.5 * (1 - r / 138)) + ')';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.arc(srcX, top, r, 0.12, Math.PI - 0.12); ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(' + RED + ',.9)';
+    ctx.beginPath(); ctx.arc(srcX, top, 4, 0, 6.2832); ctx.fill();
+    ctx.fillStyle = 'rgba(' + INK + ',.45)';
+    for (var g = 1; g <= 6; g++) {                    // приёмники
+      ctx.fillRect(m + w * (0.3 + g * 0.1) - 2, top - 6, 4, 6);
+    }
+  }
+
+  /* Интерфейс «мозг — компьютер»: несколько каналов записи, в одном
+     проскакивает всплеск — его и превращают в команду. */
+  function bci(ctx, W, H, t) {
+    var m = 24, w = W - m * 2, rows = 4, gap = (H - m * 2) / rows;
+    var burst = (t / 150) % 1, ch = Math.floor((t / 150) % rows);
+    for (var r = 0; r < rows; r++) {
+      var y0 = m + gap * (r + 0.5);
+      ctx.strokeStyle = r === ch ? 'rgba(' + RED + ',.8)' : 'rgba(' + INK + ',.34)';
+      ctx.lineWidth = r === ch ? 1.5 : 1;
+      ctx.beginPath();
+      for (var i = 0; i <= w; i++) {
+        var u = i / w;
+        var noise = Math.sin(u * 44 + r * 3.1 + t / 26) * 3
+                  + Math.sin(u * 17 - r * 2.2 + t / 40) * 2.4;
+        var spike = (r === ch)
+          ? Math.exp(-Math.pow((u - burst) * 22, 2)) * gap * 0.42 : 0;
+        var y = y0 + noise - spike;
+        i ? ctx.lineTo(m + i, y) : ctx.moveTo(m + i, y);
+      }
+      ctx.stroke();
+    }
+  }
+
+  /* Поиск заимствований: два документа, совпавшие фрагменты соединены. */
+  function matching(ctx, W, H, t) {
+    var m = 24, colW = (W - m * 2) * 0.3, right = W - m - colW;
+    var rows = 9, gap = (H - m * 2) / rows;
+    var hit = Math.floor((t / 110) % rows);
+    for (var i = 0; i < rows; i++) {
+      var y = m + gap * i + gap * 0.3;
+      var lw = colW * (0.55 + ((i * 37) % 45) / 100);
+      var rw = colW * (0.5 + ((i * 53) % 48) / 100);
+      var on = i === hit;
+      ctx.fillStyle = on ? 'rgba(' + RED + ',.75)' : 'rgba(' + INK + ',.17)';
+      ctx.fillRect(m, y, lw, 5);
+      ctx.fillRect(right, y, rw, 5);
+      if (on) {
+        ctx.strokeStyle = 'rgba(' + RED + ',.45)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(m + lw, y + 2.5); ctx.lineTo(right, y + 2.5); ctx.stroke();
+      }
+    }
+  }
+
+  /* Циклоида: точка на катящемся круге вычерчивает кривую — классический
+     сюжет «Математических этюдов». */
+  function cycloid(ctx, W, H, t) {
+    var m = 26, base = H - m - 22, R = Math.min(34, (H - m * 2) / 3.2);
+    var span = W - m * 2 - R * 2, prog = (t / 260) % 1;
+    var cx = m + R + span * prog, a = (span * prog) / R;
+    ctx.strokeStyle = 'rgba(' + INK + ',.3)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(m, base); ctx.lineTo(W - m, base); ctx.stroke();
+    ctx.strokeStyle = 'rgba(' + RED + ',.8)'; ctx.lineWidth = 1.6;   // сама кривая
+    ctx.beginPath();
+    for (var i = 0; i <= 200; i++) {
+      var u = (i / 200) * prog, ang = (span * u) / R;
+      var x = m + R + span * u - R * Math.sin(ang), y = base - R + R * Math.cos(ang);
+      i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+    }
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(' + INK + ',.35)'; ctx.lineWidth = 1.2;  // круг
+    ctx.beginPath(); ctx.arc(cx, base - R, R, 0, 6.2832); ctx.stroke();
+    var px = cx - R * Math.sin(a), py = base - R + R * Math.cos(a);
+    ctx.strokeStyle = 'rgba(' + INK + ',.25)';
+    ctx.beginPath(); ctx.moveTo(cx, base - R); ctx.lineTo(px, py); ctx.stroke();
+    ctx.fillStyle = 'rgba(' + RED + ',1)';
+    ctx.beginPath(); ctx.arc(px, py, 4, 0, 6.2832); ctx.fill();
+  }
+
+  /* Компьютерное зрение: рамка обходит кадр и «захватывает» объект. */
+  function vision(ctx, W, H, t) {
+    var m = 22, w = W - m * 2, h = H - m * 2, step = 22;
+    ctx.strokeStyle = 'rgba(' + INK + ',.08)'; ctx.lineWidth = 1;
+    for (var x = m; x <= m + w; x += step) {
+      ctx.beginPath(); ctx.moveTo(x, m); ctx.lineTo(x, m + h); ctx.stroke();
+    }
+    for (var y = m; y <= m + h; y += step) {
+      ctx.beginPath(); ctx.moveTo(m, y); ctx.lineTo(m + w, y); ctx.stroke();
+    }
+    var ox = m + w * 0.54, oy = m + h * 0.46, ow = w * 0.3, oh = h * 0.42;
+    ctx.fillStyle = 'rgba(' + INK + ',.13)';
+    ctx.beginPath(); ctx.ellipse(ox, oy, ow / 2, oh / 2, 0, 0, 6.2832); ctx.fill();
+    var p = (t / 150) % 2, lock = Math.min(Math.max(p - 1, 0) * 3, 1);
+    var bx = m + (ox - ow / 2 - m) * Math.min(p, 1), by = m + (oy - oh / 2 - m) * Math.min(p, 1);
+    var bw = m + w - bx - (m + w - ox - ow / 2) * Math.min(p, 1);
+    var bh = m + h - by - (m + h - oy - oh / 2) * Math.min(p, 1);
+    ctx.strokeStyle = 'rgba(' + RED + ',' + (0.45 + 0.5 * lock) + ')';
+    ctx.lineWidth = 1.5; ctx.strokeRect(bx, by, bw, bh);
+    [[bx, by], [bx + bw, by], [bx, by + bh], [bx + bw, by + bh]].forEach(function (c) {
+      ctx.fillStyle = 'rgba(' + RED + ',' + (0.5 + 0.5 * lock) + ')';
+      ctx.fillRect(c[0] - 2.5, c[1] - 2.5, 5, 5);
+    });
+  }
+
+  window.__figs2 = { containers: containers, layers: layers, seismic: seismic,
+                     bci: bci, matching: matching, cycloid: cycloid, vision: vision };
+})();
+
+/* Регистрация всех схем — после того, как объявлены оба набора. */
+(function () {
+  var kinds = Object.assign({}, window.__figs1, window.__figs2);
+  [].forEach.call(document.querySelectorAll('canvas[data-fig]'), function (cv) {
+    var fn = kinds[cv.getAttribute('data-fig')];
+    if (fn) window.__figSetup(cv, fn);
   });
 })();

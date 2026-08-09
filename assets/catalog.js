@@ -1043,3 +1043,41 @@ function plural(n, one, few, many) {
     if (fn) window.__figSetup(cv, fn);
   });
 })();
+
+/* Книга, которую можно листать. Страницы уже лежат в разметке стопкой;
+   листание — это класс на нужных листах и порядок наложения, чтобы
+   перевёрнутые не перекрывали лежащие сверху. Работает с клавиатуры
+   стрелками, состояние объявляется вслух. Без JS видна обложка. */
+(function () {
+  var box = document.querySelector('.book3d');
+  if (!box) return;
+  var leaves = [].slice.call(box.querySelectorAll('.leaf'))
+                 .sort(function (a, b) { return a.dataset.leaf - b.dataset.leaf; });
+  var prev = box.querySelector('[data-book-prev]');
+  var next = box.querySelector('[data-book-next]');
+  var state = box.querySelector('.b-state');
+  var at = 0;                                        // сколько листов перевёрнуто
+
+  function render() {
+    leaves.forEach(function (leaf, i) {
+      if (i < at) leaf.setAttribute('data-flipped', '');
+      else leaf.removeAttribute('data-flipped');
+      // Перевёрнутые уходят вниз стопки, неперевёрнутые — наверх
+      leaf.style.zIndex = i < at ? i : leaves.length - i;
+    });
+    prev.disabled = at === 0;
+    next.disabled = at === leaves.length;
+    var t = box.querySelector('.leaf[data-leaf="' + at + '"] .face.front h3');
+    state.textContent = at === 0 ? 'Обложка'
+      : at === leaves.length ? 'Дальше — в оглавлении'
+      : 'Глава ' + at + (t ? ' · ' + t.textContent.trim().slice(0, 26) : '');
+  }
+
+  next.addEventListener('click', function () { if (at < leaves.length) { at++; render(); } });
+  prev.addEventListener('click', function () { if (at > 0) { at--; render(); } });
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { next.click(); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { prev.click(); e.preventDefault(); }
+  });
+  render();
+})();

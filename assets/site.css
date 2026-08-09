@@ -215,6 +215,13 @@ section{padding:78px 0}
 @media(max-width:600px){section{padding:52px 0}}
 .band{background:var(--paper-alt);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px;flex-wrap:wrap}
+/* Если под заголовком есть пояснение, левый столбец становится высоким,
+   и прижатая к низу ссылка отъезжает от заголовка. Здесь выравниваем по
+   верху и подводим ссылку к строке заголовка. */
+.sec-head.wide{align-items:flex-start}
+.sec-head.wide>div{max-width:62ch}
+.sec-head.wide .link-more{margin-top:30px}
+@media(max-width:760px){.sec-head.wide .link-more{margin-top:4px}}
 .sec-head h2,.sec-head h1{font-size:clamp(28px,4vw,48px);margin-top:20px}
 .sec-lede{margin-top:16px;max-width:56ch;color:var(--ink-muted);font-size:16.5px;line-height:1.6}
 .link-more{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.1em;
@@ -359,6 +366,98 @@ section{padding:78px 0}
 .reel-sound[aria-pressed="true"]{background:var(--accent-bright);border-color:var(--accent-bright);color:#fff}
 @media(max-width:600px){.reel-copy{min-height:min(60vh,420px);padding-top:52px;padding-bottom:76px}
   .reel-sound{right:20px;left:20px;bottom:20px;text-align:center}}
+
+/* ---- книга, которую можно листать ----
+   Обложка и восемь разворотов на CSS-трансформациях: страница поворачивается
+   вокруг левого корешка, обратная сторона несёт цитату героя. Никаких
+   библиотек — perspective, rotateY и backface-visibility.
+   При «уменьшить движение» поворот выключается, страницы просто сменяются. */
+.book3d{margin-top:56px}
+.book3d-stage{position:relative;margin:0 auto;width:min(100%,760px);aspect-ratio:3/2;
+  perspective:2200px;perspective-origin:50% 40%}
+.b-block{position:absolute;left:50%;top:0;width:50%;height:100%;
+  background:var(--paper-alt);border:1px solid var(--rule);
+  box-shadow:inset 22px 0 34px -26px rgba(20,17,15,.35)}
+.b-block::after{content:'';position:absolute;left:0;top:2%;bottom:2%;width:6px;
+  background:repeating-linear-gradient(to bottom,var(--rule) 0 1px,transparent 1px 4px)}
+.leaf{position:absolute;left:0;top:0;width:50%;height:100%;
+  transform-origin:right center;transform-style:preserve-3d;
+  transition:transform .9s cubic-bezier(.3,.05,.2,1)}
+.leaf[data-flipped]{transform:rotateY(-180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;
+  background:var(--paper);border:1px solid var(--rule);padding:34px 30px;
+  display:flex;flex-direction:column;overflow:hidden}
+.face.back{transform:rotateY(180deg);background:var(--paper-alt);justify-content:center}
+
+/* Обложка: чернильный переплёт с чертёжной сеткой, антиква в названии,
+   красная метка «в разработке» и кредо моноширинной строкой. Тот же язык,
+   что у сайта: бумага, тушь, один красный акцент. */
+.leaf-cover .face.front{background:var(--ink);color:var(--paper);border-color:var(--ink);
+  justify-content:space-between;padding:30px 26px;
+  background-image:linear-gradient(to right,rgba(251,249,245,.045) 1px,transparent 1px),
+                   linear-gradient(to bottom,rgba(251,249,245,.045) 1px,transparent 1px);
+  background-size:26px 26px}
+.c-badge{position:absolute;top:0;right:0;background:var(--accent-bright);color:#fff;
+  padding:6px 12px;font-family:var(--mono);font-size:9.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase}
+.c-top,.c-bottom{display:flex;justify-content:space-between;gap:12px}
+.c-rubric,.c-year,.c-bottom span{font-family:var(--mono);font-size:9.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:rgba(251,249,245,.55)}
+.c-mid{margin:auto 0}
+.leaf-cover strong{display:block;font-family:var(--serif);font-weight:700;
+  font-size:clamp(26px,4.6vw,44px);line-height:1.04;letter-spacing:-.015em}
+.c-rule{display:block;width:46px;height:2px;background:var(--accent-bright);margin:16px 0 14px}
+.c-sub{font-size:12.5px;line-height:1.5;color:rgba(251,249,245,.7);max-width:26ch}
+.c-creed{list-style:none;display:grid;gap:5px;margin-bottom:18px}
+.c-creed li{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(251,249,245,.42);display:flex;align-items:center;gap:8px}
+.c-creed li::before{content:'';width:3px;height:3px;background:var(--accent-bright);flex:none}
+.c-bottom{border-top:1px solid rgba(251,249,245,.16);padding-top:12px}
+.l-open{font-family:var(--serif);font-size:17px;line-height:1.5;color:var(--ink-muted)}
+.l-note{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);margin-top:20px;line-height:1.6}
+
+.l-part{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent)}
+.l-num{font-family:var(--serif);font-weight:700;font-size:44px;line-height:1;
+  color:var(--rule);margin:6px 0 14px}
+.book3d h3{font-size:clamp(18px,2.2vw,23px);line-height:1.2;margin-bottom:12px}
+.l-guest{font-family:var(--serif);font-size:17px}
+.l-role{font-size:13px;color:var(--ink-muted);line-height:1.4;margin-top:4px;flex:1}
+.face.front a{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--accent);
+  padding-bottom:3px;align-self:flex-start}
+.face.back blockquote{font-family:var(--serif);font-size:clamp(16px,2vw,20px);line-height:1.4}
+.face.back blockquote::before{content:'«';color:var(--accent-bright)}
+.face.back blockquote::after{content:'»';color:var(--accent-bright)}
+.face.back cite{font-family:var(--mono);font-style:normal;font-size:10.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-top:18px}
+
+.book3d-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:26px}
+.book3d-nav button{width:44px;height:44px;cursor:pointer;background:transparent;
+  border:1px solid var(--rule);color:var(--ink);font-size:17px;
+  transition:border-color .2s,color .2s,background-color .2s}
+.book3d-nav button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.book3d-nav button:disabled{opacity:.3;cursor:default}
+.b-state{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-muted);min-width:15ch;text-align:center}
+@media(prefers-reduced-motion:reduce){.leaf{transition:none}}
+@media(max-width:600px){.book3d-stage{aspect-ratio:1/1}.face{padding:22px 18px}
+  .l-num{font-size:34px}}
+
+/* ---- зачем проект нужен: четыре факта ---- */
+.why{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--rule);border:1px solid var(--rule)}
+.why li{background:var(--paper);padding:28px 24px;display:flex;flex-direction:column}
+.why b{font-family:var(--serif);font-weight:700;font-size:clamp(30px,3.6vw,44px);
+  line-height:1;color:var(--accent);margin-bottom:16px}
+.why p{font-size:15px;line-height:1.55;flex:1;margin-bottom:16px}
+.why a{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-muted);text-decoration:none;
+  border-bottom:1px solid var(--rule);padding-bottom:3px;align-self:flex-start}
+.why a:hover{color:var(--accent);border-color:var(--accent)}
+@media(max-width:900px){.why{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.why{grid-template-columns:1fr}}
 
 /* ---- что герои создали ----
    Одна сетка: у каждой работы своя схема из её же области, номер, название,

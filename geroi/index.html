@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Герои — Путь Покорителя</title>
-<meta name="description" content="Именной указатель: 57 героев подкаста и книги «Путь Покорителя».">
+<meta name="description" content="Навигатор по героям подкаста и книги «Путь Покорителя»: 57 героев, поиск и фильтры.">
 <link rel="canonical" href="https://put-pokoritelya.github.io/geroi/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Путь Покорителя">
 <meta property="og:title" content="Герои — Путь Покорителя">
-<meta property="og:description" content="Именной указатель: 57 героев подкаста и книги «Путь Покорителя».">
+<meta property="og:description" content="Навигатор по героям подкаста и книги «Путь Покорителя»: 57 героев, поиск и фильтры.">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:image" content="https://put-pokoritelya.github.io/assets/og/default.png">
 <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,600;0,7..72,700;1,7..72,600&family=Onest:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/site.css?v=04d8fe5b">
+<link rel="stylesheet" href="../assets/site.css?v=1c77f95a">
 <script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
 m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
 (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
@@ -45,357 +45,549 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
 </div></header>
 <main id="main">
 
-<section style="padding-bottom:30px"><div class="wrap-narrow">
+<section style="padding-bottom:22px"><div class="wrap">
   <p class="rubric">Именной указатель</p>
   <h1 style="font-size:clamp(34px,5vw,58px);margin-top:24px">Герои проекта</h1>
   <div class="rule"></div>
   <p class="lede" style="max-width:56ch">57 человек: учёные, ректоры,
-    заместители министров, основатели компаний и популяризаторы науки.</p>
-  <nav class="gi-alpha" aria-label="По алфавиту"><a href="#l-А">А</a><a href="#l-Б">Б</a><a href="#l-Г">Г</a><a href="#l-Д">Д</a><a href="#l-Е">Е</a><a href="#l-Ж">Ж</a><a href="#l-З">З</a><a href="#l-И">И</a><a href="#l-К">К</a><a href="#l-М">М</a><a href="#l-Н">Н</a><a href="#l-О">О</a><a href="#l-П">П</a><a href="#l-Р">Р</a><a href="#l-С">С</a><a href="#l-Т">Т</a><a href="#l-Ф">Ф</a><a href="#l-Х">Х</a><a href="#l-Ч">Ч</a><a href="#l-Ш">Ш</a><a href="#l-Щ">Щ</a><a href="#l-Ю">Ю</a></nav>
+    заместители министров, основатели компаний и популяризаторы науки.
+    Ищите по имени, должности или организации — например, «МФТИ».</p>
+
+  <div class="gnav">
+    <label class="skip" for="gq">Поиск по героям</label>
+    <input id="gq" type="search" placeholder="Имя, должность, организация" autocomplete="off">
+    <div class="gn-chips">
+      <button class="chip" data-gf="s1" aria-pressed="false">1 сезон</button>
+      <button class="chip" data-gf="s2" aria-pressed="false">2 сезон</button>
+      <button class="chip" data-gf="ch" aria-pressed="false">С главой книги</button>
+      <button class="chip chip-reset" id="greset" hidden>Сбросить</button>
+    </div>
+    <div class="gn-sort">
+      <button class="chip" data-gs="fam" aria-pressed="true">По фамилии</button>
+      <button class="chip" data-gs="ord" aria-pressed="false">По выпуску</button>
+    </div>
+  </div>
+  <p class="gn-count" id="gcount" aria-live="polite"></p>
+  <nav class="gi-alpha" id="galpha" aria-label="По алфавиту"><a href="#l-А">А</a><a href="#l-Б">Б</a><a href="#l-Г">Г</a><a href="#l-Д">Д</a><a href="#l-Е">Е</a><a href="#l-Ж">Ж</a><a href="#l-З">З</a><a href="#l-И">И</a><a href="#l-К">К</a><a href="#l-М">М</a><a href="#l-Н">Н</a><a href="#l-О">О</a><a href="#l-П">П</a><a href="#l-Р">Р</a><a href="#l-С">С</a><a href="#l-Т">Т</a><a href="#l-Ф">Ф</a><a href="#l-Х">Х</a><a href="#l-Ч">Ч</a><a href="#l-Ш">Ш</a><a href="#l-Щ">Щ</a><a href="#l-Ю">Ю</a></nav>
 </div></section>
-<section style="padding-top:0"><div class="wrap-narrow"><section id="l-А" class="gi-group"><h2>А</h2><ul><li>
-          <a href="../vypuski/rustam-aynetdinov/"><b>Рустам Айнетдинов</b>
-          <i>Генеральный директор SkyEng</i>
-          <span class="gi-meta">Сезон 2 · выпуск 02
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1990 году в Москве, окончил МГТУ имени Баумана. Прошёл путь до исполнительного директора группы компаний Skyeng, в декабре 2024 года возглавил компани…</span></a>
-        </li><li>
-          <a href="../vypuski/elena-aleksandrova/"><b>Елена Александрова</b>
-          <i>Руководитель спецпрограмм мастерской «Сенеж»</i>
-          <span class="gi-meta">Сезон 2 · выпуск 15
-          · <em>глава книги</em></span>
-          </a>
-        </li><li>
-          <a href="../vypuski/nikolay-andreev/"><b>Николай Андреев</b>
-          <i>Математик</i>
-          <span class="gi-meta">Сезон 1 · выпуск 34
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1975 году в Саратове, окончил механико-математический факультет МГУ, кандидат физико-математических наук. С 2000 года работает в Математическом инстит…</span></a>
-        </li><li>
-          <a href="../vypuski/vitaliy-arbuzov/"><b>Виталий Арбузов</b>
-          <i>Генеральный директор INPRO.digital</i>
-          <span class="gi-meta">Сезон 1 · выпуск 17
-          </span>
-          </a>
-        </li></ul></section><section id="l-Б" class="gi-group"><h2>Б</h2><ul><li>
-          <a href="../vypuski/iskander-bariev/"><b>Искандер Бариев</b>
-          <i>Директор Университета Иннополис</i>
-          <span class="gi-meta">Сезон 1 · выпуск 20
-          </span>
-          <span class="gi-bio">Родился в 1984 году в Арске. Бакалавр радиофизики и магистр физики Казанского государственного университета. Работал в ICL-КПО ВС, «Майкрософт Рус» и «РОСНАНО-И…</span></a>
-        </li><li>
-          <a href="../vypuski/armen-beklaryan/"><b>Армен Бекларян</b>
-          <i>Проректор по исследованиям и инновациям Университета RWB</i>
-          <span class="gi-meta">Сезон 2 · выпуск 03
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Кандидат технических наук с 2016 года, диссертацию по математическому моделированию и численным методам защитил в Высшей школе экономики: агентная модель поведе…</span></a>
-        </li><li>
-          <a href="../vypuski/gulnara-bikkulova/"><b>Гульнара Биккулова</b>
-          <i>Директор Университета НЕЙМАРК</i>
-          <span class="gi-meta">Сезон 1 · выпуск 42
-          </span>
-          <span class="gi-bio">Кандидат политических наук, окончила Казанский государственный университет, программу Nonprofit management в Университете штата Калифорния в Сакраменто и курсы …</span></a>
-        </li><li>
-          <a href="../vypuski/evgeniy-bobrov/"><b>Евгений Бобров</b>
-          <i>Проректор Университета Иннополис</i>
-          <span class="gi-meta">Сезон 1 · выпуск 11
-          · <em>глава книги</em></span>
-          </a>
-        </li><li>
-          <a href="../vypuski/egor-bologov/"><b>Егор Бологов</b>
-          <i>Директор департамента обучения Технической академии Росатома</i>
-          <span class="gi-meta">Сезон 1 · выпуск 22
-          </span>
-          </a>
-        </li></ul></section><section id="l-Г" class="gi-group"><h2>Г</h2><ul><li>
-          <a href="../vypuski/aleksandr-gasnikov/"><b>Александр Гасников</b>
-          <i>Ректор Университета Иннополис</i>
-          <span class="gi-meta">Сезон 1 · выпуск 12
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1983 году в Калининграде, окончил факультет управления и прикладной математики МФТИ. Доктор физико-математических наук, специалист по теории и численн…</span></a>
-        </li><li>
-          <a href="../vypuski/vasiliy-golubev/"><b>Василий Голубев</b>
-          <i>Профессор МФТИ, лаборатория вычислительной геофизики</i>
-          <span class="gi-meta">Сезон 2 · выпуск 19
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Выпускник МФТИ, доктор физико-математических наук. Профессор кафедры информатики и вычислительной математики МФТИ и ведущий научный сотрудник лаборатории прикла…</span></a>
-        </li><li>
-          <a href="../vypuski/aleksandr-gorban/"><b>Александр Горбань</b>
-          <i>Ведущий учёный, доктор физико-математических наук</i>
-          <span class="gi-meta">Сезон 1 · выпуск 27
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1952 году в Омске. Работает в областях статистической физики, неравновесной термодинамики, теории машинного обучения и математической биологии; один и…</span></a>
-        </li><li>
-          <a href="../vypuski/vladimir-gordin/"><b>Владимир Гордин</b>
-          <i>Профессор-исследователь ВШЭ и МФТИ</i>
-          <span class="gi-meta">Сезон 1 · выпуск 19
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Доктор физико-математических наук, профессор-исследователь департамента математики Высшей школы экономики, преподаёт также в МФТИ. Научный стаж превышает полвек…</span></a>
-        </li><li>
-          <a href="../vypuski/andrey-grabovoy/"><b>Андрей Грабовой</b>
-          <i>Доцент МФТИ, старший научный сотрудник ИПУ РАН</i>
-          <span class="gi-meta">Сезон 2 · выпуск 18
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Кандидат физико-математических наук, выпускник МФТИ. Доцент МФТИ и старший научный сотрудник лаборатории интеллектуального анализа данных Института проблем упра…</span></a>
-        </li></ul></section><section id="l-Д" class="gi-group"><h2>Д</h2><ul><li>
-          <a href="../vypuski/evgeniy-danilov/"><b>Евгений Данилов</b>
-          <i>Генеральный директор АО «Иннополис»</i>
-          <span class="gi-meta">Сезон 1 · выпуск 06
-          · <em>глава книги</em></span>
-          </a>
-        </li></ul></section><section id="l-Е" class="gi-group"><h2>Е</h2><ul><li>
-          <a href="../vypuski/sergey-ezhov/"><b>Сергей Ежов</b>
-          <i>Директор школы «Иннополис»</i>
-          <span class="gi-meta">Сезон 1 · выпуск 10
-          · <em>глава книги</em></span>
-          </a>
-        </li></ul></section><section id="l-Ж" class="gi-group"><h2>Ж</h2><ul><li>
-          <a href="../vypuski/kristina-zhukova/"><b>Кристина Жукова</b>
-          <i>Тренер по ораторскому искусству</i>
-          <span class="gi-meta">Сезон 1 · выпуск 25
-          </span>
-          </a>
-        </li></ul></section><section id="l-З" class="gi-group"><h2>З</h2><ul><li>
-          <a href="../vypuski/andrey-zima/"><b>Андрей Зима</b>
-          <i>Директор департамента ИИ-решений Ростелекома</i>
-          <span class="gi-meta">Сезон 2 · выпуск 04
-          · <em>глава книги</em></span>
-          </a>
-        </li></ul></section><section id="l-И" class="gi-group"><h2>И</h2><ul><li>
-          <a href="../vypuski/mark-ivanov/"><b>Марк Иванов</b>
-          <i>Ведущий научный сотрудник ФИЦ химической физики РАН</i>
-          <span class="gi-meta">Сезон 2 · выпуск 14
-          · <em>глава книги</em></span>
-          </a>
-        </li></ul></section><section id="l-К" class="gi-group"><h2>К</h2><ul><li>
-          <a href="../vypuski/aleksandr-kvashnin/"><b>Александр Квашнин</b>
-          <i>Профессор, руководитель научной группы Сколтеха</i>
-          <span class="gi-meta">Сезон 2 · выпуск 09
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Доктор физико-математических наук — защитил докторскую в 31 год. С 2023 года профессор Сколтеха, возглавляет лабораторию промышленно-ориентированного поиска мат…</span></a>
-        </li><li>
-          <a href="../vypuski/filipp-kopylov/"><b>Филипп Копылов</b>
-          <i>Профессор, директор Института персонализированной кардиологии</i>
-          <span class="gi-meta">Сезон 2 · выпуск 10
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Доктор медицинских наук, профессор. С 2011 года — профессор кафедры кардиологии, функциональной и ультразвуковой диагностики Института клинической медицины имен…</span></a>
-        </li><li>
-          <a href="../vypuski/aleksandr-korotin/"><b>Александр Коротин</b>
-          <i>Руководитель группы генеративного ИИ, Сколтех и AIRI</i>
-          <span class="gi-meta">Сезон 2 · выпуск 13
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Кандидат физико-математических наук, руководитель исследовательской группы по генеративному искусственному интеллекту Центра ИИ Сколтеха, научный сотрудник Инст…</span></a>
-        </li><li>
-          <a href="../vypuski/arman-kostanyan/"><b>Арман Костанян</b>
-          <i>Директор Лицея Иннополис</i>
-          <span class="gi-meta">Сезон 1 · выпуск 03
-          · <em>глава книги</em></span>
-          </a>
-        </li><li>
-          <a href="../vypuski/aleksandr-kraynov/"><b>Александр Крайнов</b>
-          <i>Директор по развитию технологий ИИ, Яндекс</i>
-          <span class="gi-meta">Сезон 1 · выпуск 39
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Окончил МИРЭА. Начинал с машинного проектирования топологии сверхпроводниковых матриц, затем работал директором по продуктам в Spirit DSP и SeeStorm — над алгор…</span></a>
-        </li><li>
-          <a href="../vypuski/svetlana-krasnochub/"><b>Светлана Красночуб</b>
-          <i>Исполнительный директор Фонда целевого капитала МФТИ</i>
-          <span class="gi-meta">Сезон 1 · выпуск 07
-          · <em>глава книги</em></span>
-          </a>
-        </li><li>
-          <a href="../vypuski/mihail-krivopal/"><b>Михаил Кривопал</b>
-          <i>Проректор по ДПО ДВФУ</i>
-          <span class="gi-meta">Сезон 1 · выпуск 44
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1987 году во Владивостоке. Весь путь связан с ДВФУ: в 2009 году окончил университет с отличием по специальности «финансы и кредит», работал старшим пр…</span></a>
-        </li><li>
-          <a href="../vypuski/andrey-kuznetsov/"><b>Андрей Кузнецов</b>
-          <i>Директор лаборатории FusionBrain, AIRI (Сбер)</i>
-          <span class="gi-meta">Сезон 1 · выпуск 43
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Кандидат технических наук, руководитель лаборатории FusionBrain Института AIRI, один из создателей моделей Kandinsky. Занимается цифровой обработкой изображений…</span></a>
-        </li><li>
-          <a href="../vypuski/kuznetsov-gornov-nikolenko/"><b>Кузнецов · Горнов · Николенко</b>
-          <i>Трое учёных: доктора наук, исследователи ИИ</i>
-          <span class="gi-meta">Сезон 1 · выпуск 23
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Николай Кузнецов — доктор физико-математических наук, член-корреспондент РАН, заведующий кафедрой прикладной кибернетики СПбГУ и лабораторией информационно-упра…</span></a>
-        </li></ul></section><section id="l-М" class="gi-group"><h2>М</h2><ul><li>
-          <a href="../vypuski/vladimir-maksimenko/"><b>Владимир Максименко</b>
-          <i>Профессор, доктор физико-математических наук</i>
-          <span class="gi-meta">Сезон 1 · выпуск 35
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1989 году в Аткарске Саратовской области. Кандидатскую по радиофизике защитил в 2015 году в Саратовском университете, докторскую — в 2020-м. Доктор фи…</span></a>
-        </li><li>
-          <a href="../vypuski/valentin-malyh/"><b>Валентин Малых</b>
-          <i>Руководитель фундаментальных исследований MWS AI (МТС)</i>
-          <span class="gi-meta">Сезон 2 · выпуск 12
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Кандидат технических наук, инженер и исследователь в области обработки естественного языка с опытом более десяти лет. Руководит направлением фундаментальных исс…</span></a>
-        </li><li>
-          <a href="../vypuski/rifkat-minnihanov/"><b>Рифкат Минниханов</b>
-          <i>Президент Академии наук Республики Татарстан</i>
-          <span class="gi-meta">Сезон 1 · выпуск 29
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1955 году в деревне Новый Арыш в Татарстане. Доктор технических наук, профессор. Специалист по информационной безопасности, безопасности дорожного дви…</span></a>
-        </li><li>
-          <a href="../vypuski/konstantin-mihaylik/"><b>Константин Михайлик</b>
-          <i>Заместитель министра строительства и ЖКХ РФ</i>
-          <span class="gi-meta">Сезон 2 · выпуск 01
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1983 году в Лесозаводске Приморского края. До перехода на государственную службу — заместитель генерального директора ПАО «Россети» по цифровой трансф…</span></a>
-        </li></ul></section><section id="l-Н" class="gi-group"><h2>Н</h2><ul><li>
-          <a href="../vypuski/aleksey-nikitin/"><b>Алексей Никитин</b>
-          <i>Доцент кафедры общей математики ВМК МГУ</i>
-          <span class="gi-meta">Сезон 1 · выпуск 36
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1983 году в Москве. Окончил лицей информационных технологий № 1533 и факультет вычислительной математики и кибернетики МГУ, кандидат физико-математиче…</span></a>
-        </li></ul></section><section id="l-О" class="gi-group"><h2>О</h2><ul><li>
-          <a href="../vypuski/artem-oganov/"><b>Артём Оганов</b>
-          <i>Кристаллограф, химик, материаловед, профессор РАН</i>
-          <span class="gi-meta">Сезон 1 · выпуск 45
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Окончил геологический факультет МГУ по специальности «кристаллография и кристаллохимия», защитил PhD в Университетском колледже Лондона и Habilitation в Швейцар…</span></a>
-        </li></ul></section><section id="l-П" class="gi-group"><h2>П</h2><ul><li>
-          <a href="../vypuski/oybek-partov/"><b>Ойбек Партов</b>
-          <i>Заместитель проректора УрФУ по информационной политике</i>
-          <span class="gi-meta">Сезон 1 · выпуск 33
-          · <em>глава книги</em></span>
-          </a>
-        </li><li>
-          <a href="../vypuski/aleksandr-peremyatov/"><b>Александр Перемятов</b>
-          <i>Вице-президент Союза Торговых Центров</i>
-          <span class="gi-meta">Сезон 1 · выпуск 21
-          </span>
-          </a>
-        </li><li>
-          <a href="../vypuski/igor-petrov/"><b>Игорь Петров</b>
-          <i>Доктор физико-математических наук, профессор</i>
-          <span class="gi-meta">Сезон 1 · выпуск 40
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1953 году в Ялте. Доктор физико-математических наук, профессор, член-корреспондент РАН с 2011 года. Специалист по компьютерному моделированию сложных …</span></a>
-        </li><li>
-          <a href="../vypuski/olga-petrova/"><b>Ольга Петрова</b>
-          <i>Заместитель министра науки и высшего образования РФ</i>
-          <span class="gi-meta">Сезон 1 · выпуск 05
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родилась в 1975 году в Горьком. Окончила бакалавриат МГУ имени Ломоносова по направлению «Математика» с отличием, кандидат социологических наук, доцент. С 1998 …</span></a>
-        </li><li>
-          <a href="../vypuski/kseniya-prohorenko/"><b>Ксения Прохоренко</b>
-          <i>Директор Единого центра карьеры</i>
-          <span class="gi-meta">Сезон 1 · выпуск 26
-          </span>
-          </a>
-        </li></ul></section><section id="l-Р" class="gi-group"><h2>Р</h2><ul><li>
-          <a href="../vypuski/andrey-raygorodskiy/"><b>Андрей Райгородский</b>
-          <i>Математик, профессор</i>
-          <span class="gi-meta">Сезон 2 · выпуск 21
-          </span>
-          <span class="gi-bio">Окончил механико-математический факультет МГУ, доктор физико-математических наук. В 2005 году получил премию Президиума РАН за цикл работ по комбинаторной геоме…</span></a>
-        </li></ul></section><section id="l-С" class="gi-group"><h2>С</h2><ul><li>
-          <a href="../vypuski/aleksey-savvateev/"><b>Алексей Савватеев</b>
-          <i>Математик, доктор физико-математических наук</i>
-          <span class="gi-meta">Сезон 1 · выпуск 18
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1973 году, окончил московскую школу № 57. Доктор физико-математических наук (2013), диссертация посвящена задаче многомерного размещения и теоретико-и…</span></a>
-        </li><li>
-          <a href="../vypuski/nikolay-smirnov/"><b>Николай Смирнов</b>
-          <i>Директор центра развития промышленной робототехники</i>
-          <span class="gi-meta">Сезон 2 · выпуск 17
-          · <em>глава книги</em></span>
-          </a>
-        </li><li>
-          <a href="../vypuski/ekaterina-solntseva/"><b>Екатерина Солнцева</b>
-          <i>Заместитель председателя правительства Нижегородской области</i>
-          <span class="gi-meta">Сезон 1 · выпуск 41
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Окончила Национальный исследовательский ядерный университет «МИФИ», кандидат технических наук. Более пятнадцати лет проработала в «Росатоме». С февраля 2025 год…</span></a>
-        </li></ul></section><section id="l-Т" class="gi-group"><h2>Т</h2><ul><li>
-          <a href="../vypuski/aleksandr-tormasov/"><b>Александр Тормасов</b>
-          <i>Профессор МФТИ, экс-ректор Университета Иннополис</i>
-          <span class="gi-meta">Сезон 2 · выпуск 20
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1964 году в Саратове, в 1987 году окончил ФУПМ МФТИ. Доктор физико-математических наук, профессор, заведовал кафедрой теоретической и прикладной инфор…</span></a>
-        </li><li>
-          <a href="../vypuski/ararat-tulynin/"><b>Арарат Тулынин</b>
-          <i>Спортсмен</i>
-          <span class="gi-meta">Сезон 1 · выпуск 01
-          </span>
-          </a>
-        </li></ul></section><section id="l-Ф" class="gi-group"><h2>Ф</h2><ul><li>
-          <a href="../vypuski/eduard-fartushnyy/"><b>Эдуард Фартушный</b>
-          <i>Замдиректора Центра цифровой медицины и ИИ, Сеченовский университет</i>
-          <span class="gi-meta">Сезон 2 · выпуск 07
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Заместитель директора Центра цифровой медицины Первого МГМУ имени И. М. Сеченова Минздрава России. Занимается внедрением решений искусственного интеллекта в кли…</span></a>
-        </li><li>
-          <a href="../vypuski/vladislav-feofanov/"><b>Владислав Феофанов</b>
-          <i>Руководитель спецпроектов АНО «ЦУРС», Минспорта НО</i>
-          <span class="gi-meta">Сезон 1 · выпуск 15
-          </span>
-          </a>
-        </li></ul></section><section id="l-Х" class="gi-group"><h2>Х</h2><ul><li>
-          <a href="../vypuski/roland-hildebrand/"><b>Роланд Хильдебранд</b>
-          <i>Ведущий научный сотрудник МФТИ, к.ф.-м.н.</i>
-          <span class="gi-meta">Сезон 2 · выпуск 05
-          · <em>глава книги</em></span>
-          <span class="gi-bio">В 1997 году получил диплом математика Свободного университета Берлина, в том же году окончил магистратуру мехмата МГУ, в 2001 году — аспирантуру там же. Работал…</span></a>
-        </li><li>
-          <a href="../vypuski/nikolay-hohlov/"><b>Николай Хохлов</b>
-          <i>Доктор физико-математических наук, преподаватель МФТИ</i>
-          <span class="gi-meta">Сезон 2 · выпуск 06
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1985 году, окончил МФТИ. Доктор физико-математических наук, заведует кафедрой информатики и вычислительной математики МФТИ, старший научный сотрудник …</span></a>
-        </li></ul></section><section id="l-Ч" class="gi-group"><h2>Ч</h2><ul><li>
-          <a href="../vypuski/yuriy-chehovich/"><b>Юрий Чехович</b>
-          <i>Завлабораторией ИПУ РАН, основатель «Думейт»</i>
-          <span class="gi-meta">Сезон 2 · выпуск 16
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1976 году в Москве, окончил ФУПМ МФТИ и аспирантуру ВМК МГУ, кандидат физико-математических наук. Специалист по дискретной математике, машинному обуче…</span></a>
-        </li><li>
-          <a href="../vypuski/maksim-chugunov/"><b>Максим Чугунов</b>
-          <i>Генеральный директор Promobot</i>
-          <span class="gi-meta">Сезон 1 · выпуск 14
-          </span>
-          <span class="gi-bio">Сооснователь пермской компании «Промобот» и один из создателей первого робота, собранного в гараже на окраине Перми. Соавтор алгоритма вопросно-ответной системы…</span></a>
-        </li></ul></section><section id="l-Ш" class="gi-group"><h2>Ш</h2><ul><li>
-          <a href="../vypuski/leonid-shabalin/"><b>Леонид Шабалин</b>
-          <i>Директор передовой инженерной школы КАИ</i>
-          <span class="gi-meta">Сезон 1 · выпуск 08
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Кандидат технических наук, доцент. Директор передовой инженерной школы «Комплексная авиационная инженерия» КНИТУ-КАИ имени А. Н. Туполева — участника федерально…</span></a>
-        </li><li>
-          <a href="../vypuski/ruslan-shagaleev/"><b>Руслан Шагалеев</b>
-          <i>Заместитель председателя правления фонда «Сколково»</i>
-          <span class="gi-meta">Сезон 1 · выпуск 30
-          · <em>глава книги</em></span>
-          </a>
-        </li><li>
-          <a href="../vypuski/eduard-sheremettsev/"><b>Эдуард Шереметцев</b>
-          <i>Заместитель министра энергетики РФ</i>
-          <span class="gi-meta">Сезон 1 · выпуск 38
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1979 году в Курской области. В 1999 году окончил Рыльский авиационный технический колледж по специальности «вычислительные машины, комплексы, системы …</span></a>
-        </li></ul></section><section id="l-Щ" class="gi-group"><h2>Щ</h2><ul><li>
-          <a href="../vypuski/dmitriy-schegolev/"><b>Дмитрий Щеголев</b>
-          <i>Ректор Нижегородского архитектурно-строительного университета</i>
-          <span class="gi-meta">Сезон 1 · выпуск 31
-          · <em>глава книги</em></span>
-          <span class="gi-bio">Родился в 1977 году в Горьком. В 1999 году окончил ННГАСУ по специальности «промышленное и гражданское строительство», в 2000 году — магистратуру по направлению…</span></a>
-        </li><li>
-          <a href="../vypuski/georgiy-schelkanov/"><b>Георгий Щелканов</b>
-          <i>Директор по работе с вузами VK</i>
-          <span class="gi-meta">Сезон 1 · выпуск 37
-          </span>
-          </a>
-        </li></ul></section><section id="l-Ю" class="gi-group"><h2>Ю</h2><ul><li>
-          <a href="../vypuski/tatyana-yusupova/"><b>Татьяна Юсупова</b>
-          <i>Основатель и генеральный директор «SayHire»</i>
-          <span class="gi-meta">Сезон 1 · выпуск 24
-          </span>
-          </a>
-        </li></ul></section></div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <ul class="gn-list" id="glist"><li class="gn" id="l-А"
+          data-q="рустам айнетдинов генеральный директор skyeng " data-s="2" data-ch="1"
+          data-fam="айнетдинов" data-ord="2002">
+          <a href="../vypuski/rustam-aynetdinov/">
+            <span class="gn-av"><img src="../assets/photo/rustam-aynetdinov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Рустам Айнетдинов</span>
+            <span class="gn-r">Генеральный директор SkyEng</span>
+            <span class="gn-m">С2&#160;·&#160;В02<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="елена александрова руководитель спецпрограмм мастерской «сенеж» " data-s="2" data-ch="1"
+          data-fam="александрова" data-ord="2015">
+          <a href="../vypuski/elena-aleksandrova/">
+            <span class="gn-av"><img src="../assets/photo/elena-aleksandrova.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Елена Александрова</span>
+            <span class="gn-r">Руководитель спецпрограмм мастерской «Сенеж»</span>
+            <span class="gn-m">С2&#160;·&#160;В15<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="николай андреев математик " data-s="1" data-ch="1"
+          data-fam="андреев" data-ord="1034">
+          <a href="../vypuski/nikolay-andreev/">
+            <span class="gn-av"><img src="../assets/photo/nikolay-andreev.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Николай Андреев</span>
+            <span class="gn-r">Математик</span>
+            <span class="gn-m">С1&#160;·&#160;В34<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="виталий арбузов генеральный директор inpro.digital " data-s="1" data-ch="0"
+          data-fam="арбузов" data-ord="1017">
+          <a href="../vypuski/vitaliy-arbuzov/">
+            <span class="gn-av">ВА</span>
+            <span class="gn-n">Виталий Арбузов</span>
+            <span class="gn-r">Генеральный директор INPRO.digital</span>
+            <span class="gn-m">С1&#160;·&#160;В17</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Б"
+          data-q="искандер бариев директор университета иннополис иннополис" data-s="1" data-ch="0"
+          data-fam="бариев" data-ord="1020">
+          <a href="../vypuski/iskander-bariev/">
+            <span class="gn-av">ИБ</span>
+            <span class="gn-n">Искандер Бариев</span>
+            <span class="gn-r">Директор Университета Иннополис</span>
+            <span class="gn-m">С1&#160;·&#160;В20</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="армен бекларян проректор по исследованиям и инновациям университета rwb " data-s="2" data-ch="1"
+          data-fam="бекларян" data-ord="2003">
+          <a href="../vypuski/armen-beklaryan/">
+            <span class="gn-av"><img src="../assets/photo/armen-beklaryan.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Армен Бекларян</span>
+            <span class="gn-r">Проректор по исследованиям и инновациям Университета RWB</span>
+            <span class="gn-m">С2&#160;·&#160;В03<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="гульнара биккулова директор университета неймарк неймарк" data-s="1" data-ch="0"
+          data-fam="биккулова" data-ord="1042">
+          <a href="../vypuski/gulnara-bikkulova/">
+            <span class="gn-av"><img src="../assets/photo/gulnara-bikkulova.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Гульнара Биккулова</span>
+            <span class="gn-r">Директор Университета НЕЙМАРК</span>
+            <span class="gn-m">С1&#160;·&#160;В42</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="евгений бобров проректор университета иннополис иннополис" data-s="1" data-ch="1"
+          data-fam="бобров" data-ord="1011">
+          <a href="../vypuski/evgeniy-bobrov/">
+            <span class="gn-av">ЕБ</span>
+            <span class="gn-n">Евгений Бобров</span>
+            <span class="gn-r">Проректор Университета Иннополис</span>
+            <span class="gn-m">С1&#160;·&#160;В11<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="егор бологов директор департамента обучения технической академии росатома росатом" data-s="1" data-ch="0"
+          data-fam="бологов" data-ord="1022">
+          <a href="../vypuski/egor-bologov/">
+            <span class="gn-av"><img src="../assets/photo/egor-bologov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Егор Бологов</span>
+            <span class="gn-r">Директор департамента обучения Технической академии Росатома</span>
+            <span class="gn-m">С1&#160;·&#160;В22</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Г"
+          data-q="александр гасников ректор университета иннополис иннополис" data-s="1" data-ch="1"
+          data-fam="гасников" data-ord="1012">
+          <a href="../vypuski/aleksandr-gasnikov/">
+            <span class="gn-av">АГ</span>
+            <span class="gn-n">Александр Гасников</span>
+            <span class="gn-r">Ректор Университета Иннополис</span>
+            <span class="gn-m">С1&#160;·&#160;В12<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="василий голубев профессор мфти, лаборатория вычислительной геофизики мфти" data-s="2" data-ch="1"
+          data-fam="голубев" data-ord="2019">
+          <a href="../vypuski/vasiliy-golubev/">
+            <span class="gn-av"><img src="../assets/photo/vasiliy-golubev.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Василий Голубев</span>
+            <span class="gn-r">Профессор МФТИ, лаборатория вычислительной геофизики</span>
+            <span class="gn-m">С2&#160;·&#160;В19<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="александр горбань ведущий учёный, доктор физико-математических наук " data-s="1" data-ch="1"
+          data-fam="горбань" data-ord="1027">
+          <a href="../vypuski/aleksandr-gorban/">
+            <span class="gn-av"><img src="../assets/photo/aleksandr-gorban.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Александр Горбань</span>
+            <span class="gn-r">Ведущий учёный, доктор физико-математических наук</span>
+            <span class="gn-m">С1&#160;·&#160;В27<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="владимир гордин профессор-исследователь вшэ и мфти мфти" data-s="1" data-ch="1"
+          data-fam="гордин" data-ord="1019">
+          <a href="../vypuski/vladimir-gordin/">
+            <span class="gn-av">ВГ</span>
+            <span class="gn-n">Владимир Гордин</span>
+            <span class="gn-r">Профессор-исследователь ВШЭ и МФТИ</span>
+            <span class="gn-m">С1&#160;·&#160;В19<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="андрей грабовой доцент мфти, старший научный сотрудник ипу ран мфти" data-s="2" data-ch="1"
+          data-fam="грабовой" data-ord="2018">
+          <a href="../vypuski/andrey-grabovoy/">
+            <span class="gn-av"><img src="../assets/photo/andrey-grabovoy.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Андрей Грабовой</span>
+            <span class="gn-r">Доцент МФТИ, старший научный сотрудник ИПУ РАН</span>
+            <span class="gn-m">С2&#160;·&#160;В18<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Д"
+          data-q="евгений данилов генеральный директор ао «иннополис» иннополис" data-s="1" data-ch="1"
+          data-fam="данилов" data-ord="1006">
+          <a href="../vypuski/evgeniy-danilov/">
+            <span class="gn-av">ЕД</span>
+            <span class="gn-n">Евгений Данилов</span>
+            <span class="gn-r">Генеральный директор АО «Иннополис»</span>
+            <span class="gn-m">С1&#160;·&#160;В06<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Е"
+          data-q="сергей ежов директор школы «иннополис» иннополис" data-s="1" data-ch="1"
+          data-fam="ежов" data-ord="1010">
+          <a href="../vypuski/sergey-ezhov/">
+            <span class="gn-av">СЕ</span>
+            <span class="gn-n">Сергей Ежов</span>
+            <span class="gn-r">Директор школы «Иннополис»</span>
+            <span class="gn-m">С1&#160;·&#160;В10<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Ж"
+          data-q="кристина жукова тренер по ораторскому искусству " data-s="1" data-ch="0"
+          data-fam="жукова" data-ord="1025">
+          <a href="../vypuski/kristina-zhukova/">
+            <span class="gn-av"><img src="../assets/photo/kristina-zhukova.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Кристина Жукова</span>
+            <span class="gn-r">Тренер по ораторскому искусству</span>
+            <span class="gn-m">С1&#160;·&#160;В25</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-З"
+          data-q="андрей зима директор департамента ии-решений ростелекома ростелеком" data-s="2" data-ch="1"
+          data-fam="зима" data-ord="2004">
+          <a href="../vypuski/andrey-zima/">
+            <span class="gn-av"><img src="../assets/photo/andrey-zima.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Андрей Зима</span>
+            <span class="gn-r">Директор департамента ИИ-решений Ростелекома</span>
+            <span class="gn-m">С2&#160;·&#160;В04<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-И"
+          data-q="марк иванов ведущий научный сотрудник фиц химической физики ран ран" data-s="2" data-ch="1"
+          data-fam="иванов" data-ord="2014">
+          <a href="../vypuski/mark-ivanov/">
+            <span class="gn-av"><img src="../assets/photo/mark-ivanov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Марк Иванов</span>
+            <span class="gn-r">Ведущий научный сотрудник ФИЦ химической физики РАН</span>
+            <span class="gn-m">С2&#160;·&#160;В14<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-К"
+          data-q="александр квашнин профессор, руководитель научной группы сколтеха сколтех" data-s="2" data-ch="1"
+          data-fam="квашнин" data-ord="2009">
+          <a href="../vypuski/aleksandr-kvashnin/">
+            <span class="gn-av"><img src="../assets/photo/aleksandr-kvashnin.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Александр Квашнин</span>
+            <span class="gn-r">Профессор, руководитель научной группы Сколтеха</span>
+            <span class="gn-m">С2&#160;·&#160;В09<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="филипп копылов профессор, директор института персонализированной кардиологии " data-s="2" data-ch="1"
+          data-fam="копылов" data-ord="2010">
+          <a href="../vypuski/filipp-kopylov/">
+            <span class="gn-av"><img src="../assets/photo/filipp-kopylov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Филипп Копылов</span>
+            <span class="gn-r">Профессор, директор Института персонализированной кардиологии</span>
+            <span class="gn-m">С2&#160;·&#160;В10<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="александр коротин руководитель группы генеративного ии, сколтех и airi сколтех" data-s="2" data-ch="1"
+          data-fam="коротин" data-ord="2013">
+          <a href="../vypuski/aleksandr-korotin/">
+            <span class="gn-av"><img src="../assets/photo/aleksandr-korotin.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Александр Коротин</span>
+            <span class="gn-r">Руководитель группы генеративного ИИ, Сколтех и AIRI</span>
+            <span class="gn-m">С2&#160;·&#160;В13<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="арман костанян директор лицея иннополис иннополис" data-s="1" data-ch="1"
+          data-fam="костанян" data-ord="1003">
+          <a href="../vypuski/arman-kostanyan/">
+            <span class="gn-av">АК</span>
+            <span class="gn-n">Арман Костанян</span>
+            <span class="gn-r">Директор Лицея Иннополис</span>
+            <span class="gn-m">С1&#160;·&#160;В03<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="александр крайнов директор по развитию технологий ии, яндекс яндекс" data-s="1" data-ch="1"
+          data-fam="крайнов" data-ord="1039">
+          <a href="../vypuski/aleksandr-kraynov/">
+            <span class="gn-av"><img src="../assets/photo/aleksandr-kraynov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Александр Крайнов</span>
+            <span class="gn-r">Директор по развитию технологий ИИ, Яндекс</span>
+            <span class="gn-m">С1&#160;·&#160;В39<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="светлана красночуб исполнительный директор фонда целевого капитала мфти мфти" data-s="1" data-ch="1"
+          data-fam="красночуб" data-ord="1007">
+          <a href="../vypuski/svetlana-krasnochub/">
+            <span class="gn-av">СК</span>
+            <span class="gn-n">Светлана Красночуб</span>
+            <span class="gn-r">Исполнительный директор Фонда целевого капитала МФТИ</span>
+            <span class="gn-m">С1&#160;·&#160;В07<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="михаил кривопал проректор по дпо двфу двфу" data-s="1" data-ch="1"
+          data-fam="кривопал" data-ord="1044">
+          <a href="../vypuski/mihail-krivopal/">
+            <span class="gn-av"><img src="../assets/photo/mihail-krivopal.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Михаил Кривопал</span>
+            <span class="gn-r">Проректор по ДПО ДВФУ</span>
+            <span class="gn-m">С1&#160;·&#160;В44<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="андрей кузнецов директор лаборатории fusionbrain, airi (сбер) airi" data-s="1" data-ch="1"
+          data-fam="кузнецов" data-ord="1043">
+          <a href="../vypuski/andrey-kuznetsov/">
+            <span class="gn-av"><img src="../assets/photo/andrey-kuznetsov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Андрей Кузнецов</span>
+            <span class="gn-r">Директор лаборатории FusionBrain, AIRI (Сбер)</span>
+            <span class="gn-m">С1&#160;·&#160;В43<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="кузнецов · горнов · николенко трое учёных: доктора наук, исследователи ии " data-s="1" data-ch="1"
+          data-fam="кузнецов · горнов · николенко" data-ord="1023">
+          <a href="../vypuski/kuznetsov-gornov-nikolenko/">
+            <span class="gn-av"><img src="../assets/photo/kuznetsov-gornov-nikolenko.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Кузнецов · Горнов · Николенко</span>
+            <span class="gn-r">Трое учёных: доктора наук, исследователи ИИ</span>
+            <span class="gn-m">С1&#160;·&#160;В23<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-М"
+          data-q="владимир максименко профессор, доктор физико-математических наук " data-s="1" data-ch="1"
+          data-fam="максименко" data-ord="1035">
+          <a href="../vypuski/vladimir-maksimenko/">
+            <span class="gn-av"><img src="../assets/photo/vladimir-maksimenko.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Владимир Максименко</span>
+            <span class="gn-r">Профессор, доктор физико-математических наук</span>
+            <span class="gn-m">С1&#160;·&#160;В35<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="валентин малых руководитель фундаментальных исследований mws ai (мтс) мтс" data-s="2" data-ch="1"
+          data-fam="малых" data-ord="2012">
+          <a href="../vypuski/valentin-malyh/">
+            <span class="gn-av"><img src="../assets/photo/valentin-malyh.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Валентин Малых</span>
+            <span class="gn-r">Руководитель фундаментальных исследований MWS AI (МТС)</span>
+            <span class="gn-m">С2&#160;·&#160;В12<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="рифкат минниханов президент академии наук республики татарстан академия наук рт" data-s="1" data-ch="1"
+          data-fam="минниханов" data-ord="1029">
+          <a href="../vypuski/rifkat-minnihanov/">
+            <span class="gn-av"><img src="../assets/photo/rifkat-minnihanov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Рифкат Минниханов</span>
+            <span class="gn-r">Президент Академии наук Республики Татарстан</span>
+            <span class="gn-m">С1&#160;·&#160;В29<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="константин михайлик заместитель министра строительства и жкх рф минстрой" data-s="2" data-ch="1"
+          data-fam="михайлик" data-ord="2001">
+          <a href="../vypuski/konstantin-mihaylik/">
+            <span class="gn-av"><img src="../assets/photo/konstantin-mihaylik.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Константин Михайлик</span>
+            <span class="gn-r">Заместитель министра строительства и ЖКХ РФ</span>
+            <span class="gn-m">С2&#160;·&#160;В01<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Н"
+          data-q="алексей никитин доцент кафедры общей математики вмк мгу мгу" data-s="1" data-ch="1"
+          data-fam="никитин" data-ord="1036">
+          <a href="../vypuski/aleksey-nikitin/">
+            <span class="gn-av"><img src="../assets/photo/aleksey-nikitin.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Алексей Никитин</span>
+            <span class="gn-r">Доцент кафедры общей математики ВМК МГУ</span>
+            <span class="gn-m">С1&#160;·&#160;В36<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-О"
+          data-q="артём оганов кристаллограф, химик, материаловед, профессор ран ран" data-s="1" data-ch="1"
+          data-fam="оганов" data-ord="1045">
+          <a href="../vypuski/artem-oganov/">
+            <span class="gn-av"><img src="../assets/photo/artem-oganov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Артём Оганов</span>
+            <span class="gn-r">Кристаллограф, химик, материаловед, профессор РАН</span>
+            <span class="gn-m">С1&#160;·&#160;В45<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-П"
+          data-q="ойбек партов заместитель проректора урфу по информационной политике урфу" data-s="1" data-ch="1"
+          data-fam="партов" data-ord="1033">
+          <a href="../vypuski/oybek-partov/">
+            <span class="gn-av"><img src="../assets/photo/oybek-partov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Ойбек Партов</span>
+            <span class="gn-r">Заместитель проректора УрФУ по информационной политике</span>
+            <span class="gn-m">С1&#160;·&#160;В33<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="александр перемятов вице-президент союза торговых центров " data-s="1" data-ch="0"
+          data-fam="перемятов" data-ord="1021">
+          <a href="../vypuski/aleksandr-peremyatov/">
+            <span class="gn-av"><img src="../assets/photo/aleksandr-peremyatov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Александр Перемятов</span>
+            <span class="gn-r">Вице-президент Союза Торговых Центров</span>
+            <span class="gn-m">С1&#160;·&#160;В21</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="игорь петров доктор физико-математических наук, профессор " data-s="1" data-ch="1"
+          data-fam="петров" data-ord="1040">
+          <a href="../vypuski/igor-petrov/">
+            <span class="gn-av"><img src="../assets/photo/igor-petrov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Игорь Петров</span>
+            <span class="gn-r">Доктор физико-математических наук, профессор</span>
+            <span class="gn-m">С1&#160;·&#160;В40<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="ольга петрова заместитель министра науки и высшего образования рф минобрнауки" data-s="1" data-ch="1"
+          data-fam="петрова" data-ord="1005">
+          <a href="../vypuski/olga-petrova/">
+            <span class="gn-av">ОП</span>
+            <span class="gn-n">Ольга Петрова</span>
+            <span class="gn-r">Заместитель министра науки и высшего образования РФ</span>
+            <span class="gn-m">С1&#160;·&#160;В05<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="ксения прохоренко директор единого центра карьеры " data-s="1" data-ch="0"
+          data-fam="прохоренко" data-ord="1026">
+          <a href="../vypuski/kseniya-prohorenko/">
+            <span class="gn-av"><img src="../assets/photo/kseniya-prohorenko.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Ксения Прохоренко</span>
+            <span class="gn-r">Директор Единого центра карьеры</span>
+            <span class="gn-m">С1&#160;·&#160;В26</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Р"
+          data-q="андрей райгородский математик, профессор " data-s="2" data-ch="0"
+          data-fam="райгородский" data-ord="2021">
+          <a href="../vypuski/andrey-raygorodskiy/">
+            <span class="gn-av">АР</span>
+            <span class="gn-n">Андрей Райгородский</span>
+            <span class="gn-r">Математик, профессор</span>
+            <span class="gn-m">С2&#160;·&#160;В21</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-С"
+          data-q="алексей савватеев математик, доктор физико-математических наук " data-s="1" data-ch="1"
+          data-fam="савватеев" data-ord="1018">
+          <a href="../vypuski/aleksey-savvateev/">
+            <span class="gn-av">АС</span>
+            <span class="gn-n">Алексей Савватеев</span>
+            <span class="gn-r">Математик, доктор физико-математических наук</span>
+            <span class="gn-m">С1&#160;·&#160;В18<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="николай смирнов директор центра развития промышленной робототехники " data-s="2" data-ch="1"
+          data-fam="смирнов" data-ord="2017">
+          <a href="../vypuski/nikolay-smirnov/">
+            <span class="gn-av"><img src="../assets/photo/nikolay-smirnov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Николай Смирнов</span>
+            <span class="gn-r">Директор центра развития промышленной робототехники</span>
+            <span class="gn-m">С2&#160;·&#160;В17<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="екатерина солнцева заместитель председателя правительства нижегородской области правительство но" data-s="1" data-ch="1"
+          data-fam="солнцева" data-ord="1041">
+          <a href="../vypuski/ekaterina-solntseva/">
+            <span class="gn-av"><img src="../assets/photo/ekaterina-solntseva.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Екатерина Солнцева</span>
+            <span class="gn-r">Заместитель председателя правительства Нижегородской области</span>
+            <span class="gn-m">С1&#160;·&#160;В41<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Т"
+          data-q="александр тормасов профессор мфти, экс-ректор университета иннополис мфти" data-s="2" data-ch="1"
+          data-fam="тормасов" data-ord="2020">
+          <a href="../vypuski/aleksandr-tormasov/">
+            <span class="gn-av"><img src="../assets/photo/aleksandr-tormasov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Александр Тормасов</span>
+            <span class="gn-r">Профессор МФТИ, экс-ректор Университета Иннополис</span>
+            <span class="gn-m">С2&#160;·&#160;В20<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="арарат тулынин спортсмен " data-s="1" data-ch="0"
+          data-fam="тулынин" data-ord="1001">
+          <a href="../vypuski/ararat-tulynin/">
+            <span class="gn-av">АТ</span>
+            <span class="gn-n">Арарат Тулынин</span>
+            <span class="gn-r">Спортсмен</span>
+            <span class="gn-m">С1&#160;·&#160;В01</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Ф"
+          data-q="эдуард фартушный замдиректора центра цифровой медицины и ии, сеченовский университет " data-s="2" data-ch="1"
+          data-fam="фартушный" data-ord="2007">
+          <a href="../vypuski/eduard-fartushnyy/">
+            <span class="gn-av"><img src="../assets/photo/eduard-fartushnyy.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Эдуард Фартушный</span>
+            <span class="gn-r">Замдиректора Центра цифровой медицины и ИИ, Сеченовский университет</span>
+            <span class="gn-m">С2&#160;·&#160;В07<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="владислав феофанов руководитель спецпроектов ано «цурс», минспорта но " data-s="1" data-ch="0"
+          data-fam="феофанов" data-ord="1015">
+          <a href="../vypuski/vladislav-feofanov/">
+            <span class="gn-av">ВФ</span>
+            <span class="gn-n">Владислав Феофанов</span>
+            <span class="gn-r">Руководитель спецпроектов АНО «ЦУРС», Минспорта НО</span>
+            <span class="gn-m">С1&#160;·&#160;В15</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Х"
+          data-q="роланд хильдебранд ведущий научный сотрудник мфти, к.ф.-м.н. мфти" data-s="2" data-ch="1"
+          data-fam="хильдебранд" data-ord="2005">
+          <a href="../vypuski/roland-hildebrand/">
+            <span class="gn-av"><img src="../assets/photo/roland-hildebrand.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Роланд Хильдебранд</span>
+            <span class="gn-r">Ведущий научный сотрудник МФТИ, к.ф.-м.н.</span>
+            <span class="gn-m">С2&#160;·&#160;В05<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="николай хохлов доктор физико-математических наук, преподаватель мфти мфти" data-s="2" data-ch="1"
+          data-fam="хохлов" data-ord="2006">
+          <a href="../vypuski/nikolay-hohlov/">
+            <span class="gn-av"><img src="../assets/photo/nikolay-hohlov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Николай Хохлов</span>
+            <span class="gn-r">Доктор физико-математических наук, преподаватель МФТИ</span>
+            <span class="gn-m">С2&#160;·&#160;В06<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Ч"
+          data-q="юрий чехович завлабораторией ипу ран, основатель «думейт» ран" data-s="2" data-ch="1"
+          data-fam="чехович" data-ord="2016">
+          <a href="../vypuski/yuriy-chehovich/">
+            <span class="gn-av"><img src="../assets/photo/yuriy-chehovich.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Юрий Чехович</span>
+            <span class="gn-r">Завлабораторией ИПУ РАН, основатель «Думейт»</span>
+            <span class="gn-m">С2&#160;·&#160;В16<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="максим чугунов генеральный директор promobot " data-s="1" data-ch="0"
+          data-fam="чугунов" data-ord="1014">
+          <a href="../vypuski/maksim-chugunov/">
+            <span class="gn-av">МЧ</span>
+            <span class="gn-n">Максим Чугунов</span>
+            <span class="gn-r">Генеральный директор Promobot</span>
+            <span class="gn-m">С1&#160;·&#160;В14</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Ш"
+          data-q="леонид шабалин директор передовой инженерной школы каи " data-s="1" data-ch="1"
+          data-fam="шабалин" data-ord="1008">
+          <a href="../vypuski/leonid-shabalin/">
+            <span class="gn-av">ЛШ</span>
+            <span class="gn-n">Леонид Шабалин</span>
+            <span class="gn-r">Директор передовой инженерной школы КАИ</span>
+            <span class="gn-m">С1&#160;·&#160;В08<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="руслан шагалеев заместитель председателя правления фонда «сколково» сколково" data-s="1" data-ch="1"
+          data-fam="шагалеев" data-ord="1030">
+          <a href="../vypuski/ruslan-shagaleev/">
+            <span class="gn-av"><img src="../assets/photo/ruslan-shagaleev.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Руслан Шагалеев</span>
+            <span class="gn-r">Заместитель председателя правления фонда «Сколково»</span>
+            <span class="gn-m">С1&#160;·&#160;В30<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="эдуард шереметцев заместитель министра энергетики рф минэнерго" data-s="1" data-ch="1"
+          data-fam="шереметцев" data-ord="1038">
+          <a href="../vypuski/eduard-sheremettsev/">
+            <span class="gn-av"><img src="../assets/photo/eduard-sheremettsev.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Эдуард Шереметцев</span>
+            <span class="gn-r">Заместитель министра энергетики РФ</span>
+            <span class="gn-m">С1&#160;·&#160;В38<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Щ"
+          data-q="дмитрий щеголев ректор нижегородского архитектурно-строительного университета " data-s="1" data-ch="1"
+          data-fam="щеголев" data-ord="1031">
+          <a href="../vypuski/dmitriy-schegolev/">
+            <span class="gn-av"><img src="../assets/photo/dmitriy-schegolev.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Дмитрий Щеголев</span>
+            <span class="gn-r">Ректор Нижегородского архитектурно-строительного университета</span>
+            <span class="gn-m">С1&#160;·&#160;В31<em>глава книги</em></span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn"
+          data-q="георгий щелканов директор по работе с вузами vk vk" data-s="1" data-ch="0"
+          data-fam="щелканов" data-ord="1037">
+          <a href="../vypuski/georgiy-schelkanov/">
+            <span class="gn-av"><img src="../assets/photo/georgiy-schelkanov.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Георгий Щелканов</span>
+            <span class="gn-r">Директор по работе с вузами VK</span>
+            <span class="gn-m">С1&#160;·&#160;В37</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li><li class="gn" id="l-Ю"
+          data-q="татьяна юсупова основатель и генеральный директор «sayhire» " data-s="1" data-ch="0"
+          data-fam="юсупова" data-ord="1024">
+          <a href="../vypuski/tatyana-yusupova/">
+            <span class="gn-av"><img src="../assets/photo/tatyana-yusupova.jpg" alt="" loading="lazy" width="88" height="88"></span>
+            <span class="gn-n">Татьяна Юсупова</span>
+            <span class="gn-r">Основатель и генеральный директор «SayHire»</span>
+            <span class="gn-m">С1&#160;·&#160;В24</span>
+            <span class="gn-go" aria-hidden="true">→</span>
+          </a></li></ul>
+  <p class="gn-empty" id="gempty" hidden>Никого не нашлось. Попробуйте другое слово или сбросьте фильтры.</p>
+</div></section>
 
 </main>
 <footer class="ftr">
@@ -408,6 +600,6 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
     <span class="pg">Подкаст и книга</span>
   </div>
 </footer>
-<script src="../assets/catalog.js?v=04d8fe5b" defer></script>
+<script src="../assets/catalog.js?v=1c77f95a" defer></script>
 </body>
 </html>

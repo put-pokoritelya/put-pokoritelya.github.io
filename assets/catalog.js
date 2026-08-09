@@ -1104,3 +1104,132 @@ function plural(n, one, few, many) {
   });
   render();
 })();
+
+/* Навигатор по героям. Строки уже отрисованы — JS прячет лишние и меняет
+   порядок, поэтому без JS страница остаётся полным списком по фамилиям.
+   Состояние живёт в URL, чтобы отфильтрованный список можно было переслать. */
+(function () {
+  var list = document.getElementById('glist');
+  if (!list) return;
+
+  var rows = [].slice.call(list.querySelectorAll('.gn'));
+  var search = document.getElementById('gq');
+  var count = document.getElementById('gcount');
+  var empty = document.getElementById('gempty');
+  var alpha = document.getElementById('galpha');
+  var reset = document.getElementById('greset');
+  var filters = [].slice.call(document.querySelectorAll('.chip[data-gf]'));
+  var sorts = [].slice.call(document.querySelectorAll('.chip[data-gs]'));
+  var total = rows.length;
+
+  var state = { s: [], ch: false, q: '', sort: 'fam' };
+
+  function matches(r) {
+    if (state.ch && r.dataset.ch !== '1') return false;
+    if (state.s.length && state.s.indexOf(r.dataset.s) < 0) return false;
+    if (state.q) {
+      var hay = r.dataset.q;
+      return state.q.split(/\s+/).filter(Boolean).every(function (w) {
+        return hay.indexOf(w) > -1;
+      });
+    }
+    return true;
+  }
+
+  function apply(push) {
+    var shown = 0;
+    rows.forEach(function (r) {
+      var ok = matches(r);
+      r.hidden = !ok;
+      if (ok) shown++;
+    });
+    count.textContent = 'Показано ' + shown + ' ' +
+      plural(shown, 'герой', 'героя', 'героев') + ' из ' + total;
+    empty.hidden = shown > 0;
+
+    // Буквенная навигация врёт, когда список отфильтрован или пересортирован.
+    var clean = !state.q && !state.s.length && !state.ch && state.sort === 'fam';
+    if (alpha) alpha.hidden = !clean;
+    if (reset) reset.hidden = clean && state.sort === 'fam';
+
+    if (push !== false) {
+      var p = new URLSearchParams();
+      if (state.q) p.set('q', state.q);
+      if (state.s.length) p.set('sezon', state.s.join(','));
+      if (state.ch) p.set('kniga', '1');
+      if (state.sort !== 'fam') p.set('sort', state.sort);
+      var qs = p.toString();
+      history.replaceState(null, '', qs ? '?' + qs : location.pathname);
+    }
+  }
+
+  function order() {
+    var key = state.sort === 'ord' ? 'ord' : 'fam';
+    var sorted = rows.slice().sort(function (a, b) {
+      if (key === 'ord') return b.dataset.ord - a.dataset.ord;
+      return a.dataset.fam < b.dataset.fam ? -1 : a.dataset.fam > b.dataset.fam ? 1 : 0;
+    });
+    var frag = document.createDocumentFragment();
+    sorted.forEach(function (r) { frag.appendChild(r); });
+    list.appendChild(frag);
+  }
+
+  filters.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var k = b.dataset.gf, on = b.getAttribute('aria-pressed') === 'true';
+      b.setAttribute('aria-pressed', on ? 'false' : 'true');
+      if (k === 'ch') state.ch = !on;
+      else {
+        var v = k.slice(1), i = state.s.indexOf(v);
+        if (i > -1) state.s.splice(i, 1); else state.s.push(v);
+      }
+      apply();
+    });
+  });
+
+  sorts.forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.sort = b.dataset.gs;
+      sorts.forEach(function (x) {
+        x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
+      });
+      order(); apply();
+    });
+  });
+
+  if (search) {
+    search.addEventListener('input', function () {
+      state.q = search.value.trim().toLowerCase();
+      apply();
+    });
+  }
+
+  if (reset) {
+    reset.addEventListener('click', function () {
+      state = { s: [], ch: false, q: '', sort: 'fam' };
+      if (search) search.value = '';
+      filters.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      sorts.forEach(function (b) {
+        b.setAttribute('aria-pressed', b.dataset.gs === 'fam' ? 'true' : 'false');
+      });
+      order(); apply();
+    });
+  }
+
+  // Состояние из адреса: ссылку с фильтром можно переслать.
+  var p = new URLSearchParams(location.search);
+  if (p.get('q') && search) { search.value = p.get('q'); state.q = p.get('q').toLowerCase(); }
+  if (p.get('sezon')) state.s = p.get('sezon').split(',');
+  if (p.get('kniga')) state.ch = true;
+  if (p.get('sort')) state.sort = p.get('sort');
+  filters.forEach(function (b) {
+    var k = b.dataset.gf;
+    var on = k === 'ch' ? state.ch : state.s.indexOf(k.slice(1)) > -1;
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  sorts.forEach(function (b) {
+    b.setAttribute('aria-pressed', b.dataset.gs === state.sort ? 'true' : 'false');
+  });
+  if (state.sort !== 'fam') order();
+  apply(false);
+})();

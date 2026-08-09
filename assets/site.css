@@ -511,7 +511,10 @@ section{padding:78px 0}
 @media(max-width:640px){.voices{grid-template-columns:1fr}}
 
 /* ---- герои ---- */
-.guests{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px;list-style:none}
+.guests{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px;list-style:none}
+@media(max-width:1080px){.guests{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:760px){.guests{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+@media(max-width:460px){.guests{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* 57 карточек героев: браузер не считает вёрстку тех, что за экраном */
 .guests>li{content-visibility:auto;contain-intrinsic-size:210px}
 .gu{text-align:center}
@@ -615,7 +618,6 @@ section{padding:78px 0}
 .bio .rubric{margin-bottom:14px}
 .bio-src{margin-top:14px;font-size:13px;color:var(--ink-muted)}
 .bio-src a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--rule)}
-.gi-bio{display:block;font-size:13.5px;color:var(--ink-muted);margin-top:8px;max-width:72ch;line-height:1.5}
 
 /* ---- страница главы: полоса книги, вынесенная в веб ---- */
 /* Номер главы висит гигантской подложкой — так делают на шмуцтитулах:
@@ -776,17 +778,6 @@ section{padding:78px 0}
   border:1px solid var(--rule);
   transition:color .15s,border-color .15s}
 .gi-alpha a:hover{border-color:var(--accent);color:var(--accent)}
-.gi-group{padding:26px 0 6px;border-top:none}
-.gi-group h2{font-family:var(--serif);font-size:44px;color:var(--accent);line-height:1}
-.gi-group ul{list-style:none;margin-top:14px}
-.gi-group li{border-bottom:1px solid var(--rule)}
-.gi-group a{display:block;padding:16px 0;text-decoration:none;transition:padding-left .2s}
-.gi-group a:hover{padding-left:10px}
-.gi-group b{font-family:var(--serif);font-size:21px}
-.gi-group a:hover b{color:var(--accent)}
-.gi-group i{display:block;font-style:normal;font-size:14px;color:var(--ink-muted);margin-top:3px}
-.gi-meta{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);margin-top:7px}
-.gi-meta em{font-style:normal;color:var(--accent)}
 
 /* ---- хронология: столбцы по месяцам ---- */
 .tl{list-style:none;display:flex;align-items:flex-end;gap:10px;height:300px;padding-top:30px}
@@ -895,3 +886,43 @@ html,body{overflow-x:hidden}
 .wrap,.wrap-narrow{width:100%}
 
 @media print{.hdr,.filters,.cta-row,.watch{display:none}body{background:#fff}}
+
+/* Навигатор по героям: поиск, фильтры, сортировка и плотные строки.
+   Строки уже в разметке — JS только прячет лишние и меняет порядок. */
+.gnav{display:grid;grid-template-columns:minmax(220px,1fr) auto auto;gap:14px 18px;
+  align-items:center;margin-top:26px}
+.gnav input{width:100%;height:46px;padding:0 14px;border:1px solid var(--rule);
+  background:var(--paper);font:inherit;font-size:15px;color:var(--ink);border-radius:0}
+.gnav input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gn-chips,.gn-sort{display:flex;flex-wrap:wrap;gap:8px}
+.gn-sort{border-left:1px solid var(--rule);padding-left:18px}
+.gn-count{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-muted);margin-top:16px;min-height:1em}
+.gn-list{list-style:none;margin-top:8px;border-top:1px solid var(--rule)}
+.gn{border-bottom:1px solid var(--rule)}
+.gn a{display:grid;grid-template-columns:44px minmax(0,1.1fr) minmax(0,1.4fr) auto 18px;
+  gap:18px;align-items:center;padding:13px 0;text-decoration:none;
+  transition:padding-left .18s,background-color .18s}
+.gn a:hover{padding-left:10px;background:var(--paper-alt)}
+.gn-av{width:44px;height:44px;overflow:hidden;flex:none;display:flex;align-items:center;
+  justify-content:center;background:linear-gradient(150deg,var(--navy),#33322f);
+  font-family:var(--serif);font-size:15px;color:rgba(251,249,245,.4)}
+.gn-av img{width:100%;height:100%;object-fit:cover}
+.gn-n{font-family:var(--serif);font-size:19px;font-weight:700;line-height:1.2;min-width:0}
+.gn a:hover .gn-n{color:var(--accent)}
+.gn-r{font-size:13.5px;color:var(--ink-muted);line-height:1.4;min-width:0}
+.gn-m{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;text-align:right}
+.gn-m em{font-style:normal;display:block;color:var(--accent);margin-top:3px}
+.gn-go{color:var(--ink-muted);text-align:right}
+.gn a:hover .gn-go{color:var(--accent)}
+.gn-empty{padding:40px 0;color:var(--ink-muted)}
+@media(max-width:900px){
+  .gnav{grid-template-columns:1fr}
+  .gn-sort{border-left:none;padding-left:0}
+  .gn a{grid-template-columns:44px minmax(0,1fr) auto;gap:14px;row-gap:4px;padding:14px 0}
+  .gn-r{grid-column:2/4;font-size:13px}
+  .gn-m{grid-column:2/4;text-align:left}
+  .gn-m em{display:inline;margin-left:10px}
+  .gn-go{display:none}
+}

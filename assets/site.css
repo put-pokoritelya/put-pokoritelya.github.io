@@ -60,7 +60,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 
 .rubric{display:flex;align-items:center;gap:10px;font-size:11.5px;text-transform:uppercase;
   letter-spacing:.14em;color:var(--ink-muted);font-weight:600}
-.rubric::before{content:'';flex:none;width:8px;height:8px;background:var(--accent-bright)}
+.rubric::before{content:'';flex:none;width:18px;height:1px;background:var(--accent-bright)}
 .rule{width:52px;height:2px;background:var(--accent);margin:18px 0 24px}
 .bignum{font-family:var(--serif);color:var(--navy);opacity:.11;line-height:1;pointer-events:none;user-select:none}
 
@@ -125,7 +125,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .hero-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr);gap:clamp(44px,7vw,100px);align-items:center}
 .hero-copy{min-width:0}
 .hero-sky .rubric{color:#9FB3C8}
-.hero-sky .rubric::after{background:var(--accent-bright)}
+
 .hero-sky h1{font-size:clamp(50px,8vw,108px);line-height:1.02;letter-spacing:-.015em;margin-top:30px}
 .hero-sky .lede{color:#C9D4DF;font-size:clamp(17px,1.6vw,21px);max-width:52ch;margin-top:26px;text-wrap:pretty}
 /* Что это вообще такое — одной фразой, сразу под названием. */
@@ -135,8 +135,8 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
   font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;line-height:1.5}
 .creed span{display:flex;align-items:center;color:#AFC1D2}
-.creed span+span::before{content:'';width:4px;height:4px;background:var(--accent-bright);
-  margin:0 14px;flex:none}
+.creed span+span::before{content:'';width:1px;height:11px;background:rgba(175,193,210,.4);
+  margin:0 16px;flex:none}
 .hero-sky .btn{border-color:var(--paper);color:var(--paper)}
 .hero-sky .btn-primary{background:var(--accent-bright);border-color:var(--accent-bright);color:#fff}
 .hero-sky .btn-primary:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
@@ -328,7 +328,7 @@ section{padding:78px 0}
 .ticker-row{display:flex;list-style:none;flex:none}
 .ticker-row li{display:flex;align-items:center;font-family:var(--mono);font-size:14px;
   font-weight:600;letter-spacing:.06em;white-space:nowrap;padding:0 26px;color:var(--ink)}
-.ticker-row li::after{content:'';width:5px;height:5px;background:var(--accent-bright);margin-left:26px;flex:none}
+.ticker-row li::after{content:'';width:1px;height:13px;background:var(--rule);margin-left:26px;flex:none}
 .ticker-row .has-logo img{height:30px;width:auto;opacity:.62;filter:grayscale(1);
   transition:opacity .25s,filter .25s}
 .ticker:hover .has-logo img{opacity:1;filter:none}
@@ -411,7 +411,7 @@ section{padding:78px 0}
 .c-creed{list-style:none;display:grid;gap:5px;margin-bottom:18px}
 .c-creed li{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:rgba(251,249,245,.42);display:flex;align-items:center;gap:8px}
-.c-creed li::before{content:'';width:3px;height:3px;background:var(--accent-bright);flex:none}
+.c-creed li::before{content:'';width:10px;height:1px;background:rgba(218,52,51,.7);flex:none}
 .c-bottom{border-top:1px solid rgba(251,249,245,.16);padding-top:12px}
 .l-open{font-family:var(--serif);font-size:17px;line-height:1.5;color:var(--ink-muted)}
 .l-note{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;
@@ -570,7 +570,7 @@ section{padding:78px 0}
 .ep-h .n{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.08em;color:var(--accent)}
 .theses{list-style:none;display:grid;gap:15px;max-width:70ch}
 .theses li{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;font-size:16.5px}
-.theses li::before{content:'';width:8px;height:8px;background:var(--accent-bright);margin-top:.5em}
+.theses li::before{content:'';width:14px;height:1px;background:var(--accent-bright);margin-top:.75em}
 .takebox{border:1px solid var(--rule);background:var(--paper-alt);padding:28px}
 .takebox h3{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--accent);margin-bottom:12px}
@@ -877,7 +877,7 @@ section{padding:78px 0}
   .hero-sky .wrap{padding-top:36px;padding-bottom:104px}
   .hero-what{font-size:15.5px}
   .creed{font-size:10.5px;letter-spacing:.08em}
-  .creed span+span::before{margin:0 9px}
+  .creed span+span::before{margin:0 10px}
   .summit-card{padding:16px 16px 20px}
   .summit-card strong{font-size:23px}
   .ticker-row li{font-size:11px;padding:0 11px}

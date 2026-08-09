@@ -770,7 +770,7 @@ function plural(n, one, few, many) {
   card.href = pick.u;
   card.setAttribute('aria-label', 'Выпуск: ' + pick.n);
   card.querySelector('.summit-label').textContent =
-    (pick.new ? 'Новый разговор' : 'Разговор') + ' · Сигнал ' + pick.s;
+    pick.new ? 'Новый разговор' : 'Разговор';
   img.src = pick.p;
   img.alt = pick.n;
   img.removeAttribute('fetchpriority');               // приоритет нужен был первому кадру

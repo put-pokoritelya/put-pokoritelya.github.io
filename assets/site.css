@@ -218,9 +218,9 @@ section{padding:78px 0}
 /* Если под заголовком есть пояснение, левый столбец становится высоким,
    и прижатая к низу ссылка отъезжает от заголовка. Здесь выравниваем по
    верху и подводим ссылку к строке заголовка. */
-.sec-head.wide{align-items:flex-start}
+.sec-head.wide{display:block}
 .sec-head.wide>div{max-width:62ch}
-.sec-head.wide .link-more{margin-top:30px}
+.sec-head.wide .link-more{display:inline-block;margin-top:22px}
 @media(max-width:760px){.sec-head.wide .link-more{margin-top:4px}}
 .sec-head h2,.sec-head h1{font-size:clamp(28px,4vw,48px);margin-top:20px}
 .sec-lede{margin-top:16px;max-width:56ch;color:var(--ink-muted);font-size:16.5px;line-height:1.6}
@@ -465,16 +465,17 @@ section{padding:78px 0}
    один красный акцент — тот же язык, что у хребта на первом экране.
    Работа без своей схемы на сайт не попадает: абстрактная картинка рядом
    с конкретным открытием врёт. */
-.works{list-style:none;counter-reset:d;display:grid;grid-template-columns:1fr 1fr;
+.works{list-style:none;counter-reset:d;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
   gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .works li{counter-increment:d;background:var(--paper);padding:26px;
-  display:flex;flex-direction:column}
+  display:flex;flex-direction:column;min-width:0}
 .works figure{position:relative;border:1px solid var(--rule);background:var(--paper);
   aspect-ratio:16/10;margin-bottom:20px}
 .works figure::before{content:counter(d,decimal-leading-zero);position:absolute;
   left:12px;top:10px;z-index:1;font-family:var(--mono);font-size:11px;font-weight:600;
   letter-spacing:.1em;color:var(--accent)}
-.works canvas{width:100%;height:100%;display:block}
+.works canvas{width:100%;height:100%;max-width:100%;display:block}
 .d-area{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;
   letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px}
 .works h3{font-size:clamp(20px,2.2vw,25px);line-height:1.22;margin-bottom:12px}

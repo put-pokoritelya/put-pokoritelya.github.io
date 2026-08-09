@@ -1031,8 +1031,31 @@ function plural(n, one, few, many) {
     });
   }
 
+  /* Оптимальный транспорт: слева — исходное распределение, справа — целевое.
+     Точки едут по своим маршрутам и нигде не пересекаются: это и есть
+     признак оптимального плана — дешевле переставить, чем перекрещивать. */
+  function transport(ctx, W, H, t) {
+    var m = 24, n = 13, x0 = m + 12, x1 = W - m - 12, cy = H / 2;
+    var span = H - m * 2, p = (1 - Math.cos(t / 80)) / 2;
+    for (var i = 0; i < n; i++) {
+      var u = (i + 0.5) / n - 0.5;
+      var ys = cy + u * span * 0.92 + Math.sin(u * 11) * 4;
+      var yt = cy + Math.tan(u * 2.1) * span * 0.16;
+      var xs = x0 + Math.cos(u * 6) * 7, xt = x1 - Math.sin(u * 5) * 7;
+      ctx.strokeStyle = 'rgba(' + INK + ',.13)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(xs, ys); ctx.lineTo(xt, yt); ctx.stroke();
+      ctx.fillStyle = 'rgba(' + INK + ',.22)';
+      ctx.beginPath(); ctx.arc(xs, ys, 2.6, 0, 6.284); ctx.fill();
+      ctx.beginPath(); ctx.arc(xt, yt, 2.6, 0, 6.284); ctx.fill();
+      var q = Math.max(0, Math.min(1, p * 1.6 - Math.abs(u) * 0.5));
+      ctx.fillStyle = 'rgba(' + RED + ',' + (0.32 + 0.5 * Math.sin(q * Math.PI)).toFixed(3) + ')';
+      ctx.beginPath(); ctx.arc(xs + (xt - xs) * q, ys + (yt - ys) * q, 3.4, 0, 6.284); ctx.fill();
+    }
+  }
+
   window.__figs2 = { containers: containers, layers: layers, seismic: seismic,
-                     bci: bci, matching: matching, cycloid: cycloid, vision: vision };
+                     bci: bci, matching: matching, cycloid: cycloid, vision: vision,
+                     transport: transport };
 })();
 
 /* Регистрация всех схем — после того, как объявлены оба набора. */

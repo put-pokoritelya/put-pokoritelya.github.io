@@ -311,8 +311,6 @@ section{padding:78px 0}
 .spread .bignum{position:absolute;right:20px;top:8px;font-size:96px}
 .spread .st{font-family:var(--serif);font-size:20px;max-width:46%}
 .spread .sl{width:38px;height:2px;background:var(--accent);margin:10px 0}
-.spread .sb{height:6px;background:var(--rule);margin:7px 0;max-width:44%}
-.spread .sb:nth-of-type(even){max-width:38%}
 .progress{height:6px;background:var(--rule);margin:22px 0 10px}
 .progress i{display:block;height:100%;background:var(--accent)}
 .progress-label{font-size:13px;color:var(--ink-muted)}
@@ -1003,3 +1001,13 @@ html,body{overflow-x:hidden}
   .host-page{grid-template-columns:1fr;gap:26px}
   .host-photo{max-width:280px}
 }
+
+/* Разворот книги на главной: не декорация, а начало настоящей главы. */
+.spread{display:block;text-decoration:none;color:inherit}
+.spread .st{display:block;font-family:var(--serif);font-size:clamp(19px,2.1vw,24px);
+  font-weight:700;line-height:1.25;max-width:22ch}
+.spread .sq{display:block;font-family:var(--serif);font-size:15px;line-height:1.6;
+  color:var(--ink-muted);margin-top:16px;max-width:34ch}
+.spread .sg{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-top:18px}
+.spread:hover .st{color:var(--accent)}

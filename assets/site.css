@@ -205,10 +205,12 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 
 /* ---- счётчики ---- */
 .stats{border-bottom:1px solid var(--rule);background:var(--paper-alt)}
-.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:36px 32px}
+.stats .wrap{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px 18px;padding:36px 32px}
+@media(max-width:1080px){.stats .wrap{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .stat b{display:block;font-family:var(--serif);font-size:clamp(32px,4vw,44px);line-height:1;
   color:var(--navy);font-variant-numeric:tabular-nums}
-.stat i{display:block;font-style:normal;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-top:10px}
+.stat i{display:block;font-style:normal;font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);margin-top:10px;line-height:1.35;text-wrap:balance}
 @media(max-width:700px){.stats .wrap{grid-template-columns:repeat(2,1fr);row-gap:28px}}
 
 section{padding:78px 0}

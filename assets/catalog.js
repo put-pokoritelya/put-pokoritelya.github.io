@@ -849,9 +849,13 @@ function plural(n, one, few, many) {
     if (!panel.hidden && !box.contains(e.target)) setOpen(false);
   });
 
-  // Фокус не должен уходить за пределы открытого меню
+  // Меню закрывается, когда фокус ушёл наружу. Но на тач-экранах при касании
+  // ссылки relatedTarget пустой: браузер сначала снимает фокус и только потом
+  // отдаёт клик. Раньше меню успевало закрыться — и переход не срабатывал.
+  // Поэтому пустой relatedTarget не считаем уходом фокуса.
   box.addEventListener('focusout', function (e) {
-    if (!panel.hidden && !box.contains(e.relatedTarget)) setOpen(false);
+    if (panel.hidden || !e.relatedTarget) return;
+    if (!box.contains(e.relatedTarget)) setOpen(false);
   });
 })();
 

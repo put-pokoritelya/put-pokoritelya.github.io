@@ -11,7 +11,7 @@
   --paper:#FBF9F5; --paper-alt:#F2F0ED; --ink:#1B1C1A; --ink-muted:#474743;
   --accent:#B6171E;        /* тёмный красный для мелкого текста: контраст 4.5:1 на бумаге */
   --accent-bright:#DA3433; /* акцентный красный из макетов — плашки, крупные элементы */
-  --navy:#1C1B1B; --rule:#E4E2DE;
+  --navy:#1C1B1B; --rule:#E4E2DE;--head-h:68px;
   /* Три функциональных шрифта по ТЗ. Literata — книжная антиква с оптическими
      размерами: мягче и спокойнее Playfair, ближе к печатной полосе. Onest —
      гротеск с хорошей кириллицей для текста и интерфейса. IBM Plex Mono —
@@ -66,7 +66,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 
 /* ---- шапка ---- */
 .hdr{position:sticky;top:0;z-index:50;background:rgba(251,249,245,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
-.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:var(--head-h);gap:24px}
 .logo{font-family:var(--serif);font-size:20px;font-weight:700;text-decoration:none;white-space:nowrap}
 .nav{display:flex;gap:24px;font-family:var(--mono);font-size:11.5px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase}
@@ -92,6 +92,19 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
   letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:none}
 .menu-panel a:hover{background:var(--paper-alt);color:var(--accent)}
 @media(max-width:1080px){.nav{display:none}.menu{display:block}}
+
+/* На узком экране меню — не висящий над текстом ярлык, а лист во всю ширину:
+   попасть пальцем проще, а страница под ним не просвечивает. */
+@media(max-width:760px){
+  .menu[data-open]::before{content:'';position:fixed;inset:0;z-index:59;
+    background:rgba(20,17,15,.45)}
+  .menu-panel{position:fixed;left:0;right:0;top:var(--head-h);min-width:0;
+    border-left:none;border-right:none;border-top:none;padding:4px 0;
+    max-height:calc(100vh - var(--head-h));overflow-y:auto;
+    box-shadow:0 20px 40px rgba(20,17,15,.18)}
+  .menu-panel a{padding:17px 22px;font-size:13px;border-bottom:1px solid var(--rule)}
+  .menu-panel a:last-child{border-bottom:none}
+}
 
 /* полоса прочитанного — только на страницах глав */
 .readbar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:70;

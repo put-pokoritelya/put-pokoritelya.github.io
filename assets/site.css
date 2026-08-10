@@ -941,3 +941,21 @@ html,body{overflow-x:hidden}
   .gn-m em{display:inline;margin-left:10px}
   .gn-go{display:none}
 }
+
+/* Согласие на обработку данных: без галочки форма не отправляется. */
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;
+  color:var(--ink-muted);line-height:1.45;cursor:pointer;margin:4px 0 2px}
+.consent input{flex:none;width:18px;height:18px;margin-top:1px;accent-color:var(--accent)}
+.consent a{color:var(--ink)}
+.mail .consent{grid-column:1/-1}
+
+/* Правовая страница: длинный текст, читаемый без усилий. */
+.legal{max-width:66ch;margin-top:30px}
+.legal h2{font-family:var(--serif);font-size:20px;margin:32px 0 10px}
+.legal h2:first-child{margin-top:0}
+.legal p{font-size:16px;line-height:1.6;color:var(--ink-muted);margin-bottom:12px}
+.legal strong{color:var(--ink)}
+.legal .todo{font-style:normal;background:rgba(218,52,51,.12);color:var(--accent);
+  padding:1px 7px;font-family:var(--mono);font-size:12px}
+.ftr .colophon a{color:var(--ink-muted);text-decoration:none;border-bottom:1px solid var(--rule)}
+.ftr .colophon a:hover{color:var(--accent);border-color:var(--accent)}

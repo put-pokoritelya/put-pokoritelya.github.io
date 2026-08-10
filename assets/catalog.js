@@ -787,28 +787,52 @@ function plural(n, one, few, many) {
   var v = document.getElementById('reel');
   if (!v) return;
   var btn = document.querySelector('.reel-sound');
+  var sec = document.querySelector('.reel');
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var loaded = false;
 
   if (btn) btn.addEventListener('click', function () {
-    v.muted = !v.muted;
+    if (v.paused) {                              // ролик стоит — сначала запускаем
+      if (!loaded) { v.load(); loaded = true; }
+      v.muted = false;
+      v.play().then(function () { blocked(false); }, function () {});
+    } else {
+      v.muted = !v.muted;
+    }
     btn.setAttribute('aria-pressed', String(!v.muted));
-    btn.textContent = v.muted ? 'Включить звук' : 'Выключить звук';
-    if (!v.muted && v.paused) v.play().catch(function () {});
+    if (!v.paused) blocked(false);
   });
 
   if (still) { if (btn) btn.hidden = true; return; }
 
-  var loaded = false;
-  new IntersectionObserver(function (es) {
-    es.forEach(function (e) {
-      if (e.isIntersecting) {
-        if (!loaded) { v.load(); loaded = true; }
-        v.play().catch(function () {});          // браузер вправе отказать — это не ошибка
-      } else if (!v.paused) {
-        v.pause();
-      }
-    });
-  }, { rootMargin: '200px' }).observe(v);
+  // Браузер вправе отказать в автовоспроизведении: режим энергосбережения на
+  // iPhone, экономия трафика, настройки сайта. Раньше в этом случае оставался
+  // молчаливый постер и запустить ролик было нечем. Теперь отказ виден:
+  // кнопка превращается в «Смотреть», а клик — это уже жест пользователя,
+  // и его браузер не блокирует никогда.
+  function blocked(on) {
+    if (btn) btn.textContent = on ? 'Смотреть'
+      : (v.muted ? 'Включить звук' : 'Выключить звук');
+    if (!sec) return;
+    on ? sec.setAttribute('data-blocked', '') : sec.removeAttribute('data-blocked');
+  }
+
+  function start() {
+    if (!loaded) { v.load(); loaded = true; }
+    v.play().then(function () { blocked(false); },
+                  function () { blocked(true); });
+  }
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) start();
+        else if (!v.paused) v.pause();
+      });
+    }, { rootMargin: '200px' }).observe(v);
+  } else {
+    start();                                     // старый браузер — просто пробуем
+  }
 })();
 
 /* Мобильное меню. Раньше было на <details>: работало без JS, но экранный

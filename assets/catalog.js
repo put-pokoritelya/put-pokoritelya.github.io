@@ -109,57 +109,6 @@ function plural(n, one, few, many) {
   fromUrl();
 })();
 
-/* Отправка форм в Telegram через воркер. Адрес приёмника кладётся в <meta> при
-   сборке; пока он не задан, форма честно говорит, что приём ещё не подключён. */
-(function () {
-  var meta = document.querySelector('meta[name="form-endpoint"]');
-  var endpoint = meta && meta.content;
-
-  [].slice.call(document.querySelectorAll('form[data-form]')).forEach(function (form) {
-    var status = form.querySelector('[data-status]');
-    var button = form.querySelector('button');
-
-    form.addEventListener('submit', function (ev) {
-      ev.preventDefault();
-      if (!endpoint) {
-        status.textContent = 'Приём заявок ещё не подключён. Напишите нам в Telegram.';
-        return;
-      }
-      var email = form.querySelector('input[type=email]').value.trim();
-      button.disabled = true;
-      status.textContent = 'Отправляем…';
-
-      fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: email,
-          kind: form.dataset.form,
-          company: form.querySelector('input[name=company]').value,
-          note: [
-            (form.querySelector('input[name=name]') || {}).value,
-            (form.querySelector('textarea[name=note]') || {}).value,
-          ].filter(Boolean).join('\n'),
-        }),
-      })
-        .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
-        .then(function (r) {
-          if (r.ok) {
-            status.textContent = 'Готово. Напишем, когда книга выйдет.';
-            form.querySelector('input[type=email]').value = '';
-          } else {
-            status.textContent = r.error || 'Не отправилось. Попробуйте ещё раз.';
-            button.disabled = false;
-          }
-        })
-        .catch(function () {
-          status.textContent = 'Нет связи с сервером. Попробуйте позже.';
-          button.disabled = false;
-        });
-    });
-  });
-})();
-
 /* Поиск по всему сайту. Индекс подгружается один раз при первом вводе,
    дальше всё считается в браузере — сервер не нужен. Запрос живёт в адресе,
    поэтому результатом можно поделиться ссылкой. */

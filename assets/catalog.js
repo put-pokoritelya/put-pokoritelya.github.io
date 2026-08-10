@@ -1053,9 +1053,42 @@ function plural(n, one, few, many) {
     }
   }
 
+  /* Цифровой двойник пациента: слева каналы измерений одного человека,
+     справа модель, которая бьётся с ним в такт. Пунктир — это не человек,
+     а его расчётная копия. */
+  function twin(ctx, W, H, t) {
+    var m = 20, mid = W * 0.56, cx = (mid + W - m) / 2, cy = H / 2;
+    var beat = 0, n = 3;
+    for (var k = 0; k < n; k++) {
+      var y = m + (H - m * 2) * (k + 0.5) / n, first = true;
+      ctx.strokeStyle = 'rgba(' + INK + ',.32)'; ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var x = m; x < mid - 30; x += 2) {
+        var p = (x - m) / 21 + t / 24 - k * 1.7;
+        var w = Math.sin(p) * 3.4 + Math.sin(p * 2.6) * 1.8;
+        var s = ((p % 6.283) + 6.283) % 6.283 - 3.14;
+        w += Math.exp(-s * s * 5) * (9 - k * 1.6);
+        if (first) { ctx.moveTo(x, y - w); first = false; } else ctx.lineTo(x, y - w);
+        if (x >= mid - 32) beat += w;
+      }
+      ctx.stroke();
+      ctx.strokeStyle = 'rgba(' + INK + ',.14)';
+      ctx.beginPath(); ctx.moveTo(mid - 26, y); ctx.lineTo(mid - 6, cy); ctx.stroke();
+    }
+    var r = Math.min(W - mid, H) * 0.3 + beat * 0.5;
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = 'rgba(' + RED + ',.8)'; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(cx, cy, Math.max(6, r), 0, 6.284); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = 'rgba(' + RED + ',.22)';
+    ctx.beginPath(); ctx.arc(cx, cy, Math.max(3, r * 0.52), 0, 6.284); ctx.stroke();
+    ctx.fillStyle = 'rgba(' + RED + ',.9)';
+    ctx.beginPath(); ctx.arc(cx, cy, 2.6, 0, 6.284); ctx.fill();
+  }
+
   window.__figs2 = { containers: containers, layers: layers, seismic: seismic,
                      bci: bci, matching: matching, cycloid: cycloid, vision: vision,
-                     transport: transport };
+                     transport: transport, twin: twin };
 })();
 
 /* Регистрация всех схем — после того, как объявлены оба набора. */

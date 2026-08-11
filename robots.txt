@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://put-pokoritelya.ru/sitemap.xml
+Sitemap: https://put-pokoritelya.ru/sitemap-personal-brand.xml

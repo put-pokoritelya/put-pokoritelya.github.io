@@ -1026,3 +1026,38 @@ html,body{overflow-x:hidden}
   .spread .page-l{border-right:none;border-bottom:1px solid var(--rule)}
   .spread>span{padding:24px 22px}
 }
+
+/* «С чего начать»: маршруты по пять разговоров. Строка плотная, чтобы весь
+   маршрут читался одним взглядом, а не прокруткой. */
+.route{margin-top:52px}
+.route h2{font-size:clamp(21px,2.4vw,27px);line-height:1.25;max-width:26ch}
+.route-lede{font-size:16px;line-height:1.6;color:var(--ink-muted);margin-top:12px;max-width:60ch}
+.rt{list-style:none;margin-top:22px;border-top:1px solid var(--rule)}
+.rt li{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;
+  border-bottom:1px solid var(--rule)}
+.rt-n{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);
+  padding-top:20px}
+.rt a{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:16px;
+  align-items:center;padding:14px 0;text-decoration:none;transition:padding-left .18s}
+.rt a:hover{padding-left:8px}
+.rt-ava{width:56px;height:56px;overflow:hidden;display:flex;align-items:center;
+  justify-content:center;background:linear-gradient(150deg,var(--navy),#33322f);
+  font-family:var(--serif);font-size:17px;color:rgba(251,249,245,.4)}
+.rt-ava img{width:100%;height:100%;object-fit:cover}
+.rt-body{min-width:0}
+.rt-body b{display:block;font-family:var(--serif);font-size:18px;line-height:1.2}
+.rt a:hover .rt-body b{color:var(--accent)}
+.rt-body i{display:block;font-style:normal;font-size:12.5px;color:var(--ink-muted);
+  margin-top:3px}
+.rt-body em{display:block;font-style:normal;font-size:14px;line-height:1.5;
+  color:var(--ink);margin-top:8px;max-width:58ch}
+.rt-meta{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;text-align:right}
+.rt-meta span{display:block;color:var(--accent);margin-top:4px}
+@media(max-width:760px){
+  .rt a{grid-template-columns:44px minmax(0,1fr);row-gap:8px;padding:16px 0}
+  .rt-ava{width:44px;height:44px;font-size:14px}
+  .rt-body{grid-column:2}
+  .rt-meta{grid-column:2;text-align:left}
+  .rt-meta span{display:inline;margin-left:10px}
+}

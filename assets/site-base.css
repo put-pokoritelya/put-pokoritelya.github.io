@@ -1061,3 +1061,16 @@ html,body{overflow-x:hidden}
   .rt-meta{grid-column:2;text-align:left}
   .rt-meta span{display:inline;margin-left:10px}
 }
+
+/* ---- страница автора ---- */
+/* Портрет справа от текста, в тонкой рамке — тот же приём, что и у карточек
+   героев. На узком экране уходит под текст. */
+.author-hero{max-width:1240px;margin:0 auto;padding:56px 32px 8px;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,400px);gap:56px;align-items:start}
+.author-text p{max-width:66ch}
+.author-portrait .frame{display:block;border:1px solid var(--rule);padding:10px;background:var(--paper-alt)}
+.author-portrait img{width:100%;height:auto}
+.author-portrait figcaption{margin-top:12px;font-family:var(--mono);font-size:12px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
+@media(max-width:880px){.author-hero{grid-template-columns:1fr;gap:32px;padding:40px 20px 8px}
+  .author-portrait{max-width:420px}}

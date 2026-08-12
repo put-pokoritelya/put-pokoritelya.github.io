@@ -1074,13 +1074,3 @@ html,body{overflow-x:hidden}
   letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
 @media(max-width:880px){.author-hero{grid-template-columns:1fr;gap:32px;padding:40px 20px 8px}
   .author-portrait{max-width:420px}}
-
-/* ---- «Как устроен проект»: шаги слева, картинка справа ---- */
-.howto{list-style:none}
-.howto li{display:grid;grid-template-columns:auto 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--rule)}
-.howto li:first-child{border-top:0;padding-top:0}
-.howto b{font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--accent)}
-.howto h3{font-size:19px;margin:0 0 6px}
-.howto p{color:var(--ink-muted);font-size:15.5px;margin:0}
-.howto-img{padding:0;background:var(--paper-alt);overflow:hidden}
-.howto-img img{width:100%;height:100%;object-fit:cover}

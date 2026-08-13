@@ -484,7 +484,10 @@ function plural(n, one, few, many) {
     els.forEach(function (el) { el.textContent = el.dataset.n; });
     return;
   }
-  els.forEach(function (el) { el.textContent = '0'; });
+  // Число зануляется только в момент, когда элемент реально попал в кадр, —
+  // прямо перед разгоном. Если элемент так и не увидели (короткий экран,
+  // рендер соц-карточки, скриншот), в нём остаётся настоящее значение из data-n,
+  // а не «0».
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       if (!en.isIntersecting) return;

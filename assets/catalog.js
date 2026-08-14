@@ -328,7 +328,7 @@ function plural(n, one, few, many) {
 
   // Палитра сети: холодные тона неба плюс фирменный красный только на сигнал.
   var C_NODE = [201, 212, 223], C_EDGE = [126, 166, 194],
-      C_WEAK = [143, 168, 186], C_SIG  = [218, 52, 51];
+      C_WEAK = [143, 168, 186], C_SIG  = [ 77, 163, 255];   // сигнальный голубой темы «синяя ночь»
 
   var W, H, dpr, ridge, mouse = { x: -1e4, y: -1e4 }, touch = false;
   var nodes = [], edges = [], signals = [], born = 0;
@@ -559,11 +559,11 @@ function plural(n, one, few, many) {
     ctx.beginPath();                                // красная нить пути
     for (i = 0; i < ridge.length; i++)
       i ? ctx.lineTo(ridge[i][0], ridge[i][1] - 1) : ctx.moveTo(ridge[i][0], ridge[i][1] - 1);
-    ctx.strokeStyle = 'rgba(218,52,51,.85)'; ctx.lineWidth = 1.6; ctx.stroke();
+    ctx.strokeStyle = 'rgba(77,163,255,.85)'; ctx.lineWidth = 1.6; ctx.stroke();
 
     var peak = ridge.reduce(function (u, v) { return v[1] < u[1] ? v : u; });
     ctx.beginPath(); ctx.arc(peak[0], peak[1] - 4, 3.2, 0, 6.283);
-    ctx.fillStyle = '#DA3433'; ctx.fill();
+    ctx.fillStyle = '#4DA3FF'; ctx.fill();
 
     if (!still && running) raf = requestAnimationFrame(frame);
   }
@@ -684,7 +684,7 @@ function plural(n, one, few, many) {
    экране — IntersectionObserver; при системной настройке «уменьшить
    движение» рисуем один статичный кадр. */
 (function () {
-  var INK = '27,28,26', RED = '218,52,51';
+  var INK = '234,240,248', RED = '77,163,255';
 
   function setup(cv, draw) {
     var ctx = cv.getContext('2d'), W, H, t = 0, run = false;
@@ -975,7 +975,7 @@ function plural(n, one, few, many) {
    Ещё семь фигур из областей героев. Правила те же: тушь по бумаге, один
    красный акцент, чистый canvas, счёт только когда фигура на экране. */
 (function () {
-  var INK = '27,28,26', RED = '218,52,51';
+  var INK = '234,240,248', RED = '77,163,255';
 
   /* Контейнерная виртуализация: одно ядро внизу, над ним лёгкие контейнеры.
      Они появляются и гаснут за доли секунды — в этом и была суть технологии,

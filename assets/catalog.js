@@ -811,34 +811,12 @@ function plural(n, one, few, many) {
   window.__figSetup = setup;
 })();
 
-/* Карточка на первом экране: при каждом открытии — другой разговор.
-   В разметку зашит последний выпуск, поэтому без JS и на первом кадре
-   карточка уже правильная; скрипт лишь подменяет её на случайную.
-   Ярлык честный: «Новый разговор» только у свежего, у остальных «Разговор». */
-(function () {
-  var card = document.querySelector('.summit-card');
-  var box = document.getElementById('summit-pool');
-  if (!card || !box) return;
-
-  var pool;
-  try { pool = JSON.parse(box.textContent); } catch (e) { return; }
-  if (!pool || pool.length < 2) return;
-
-  var pick = pool[Math.floor(Math.random() * pool.length)];
-  var img = card.querySelector('.summit-photo img');
-  if (!img) return;                                  // без кадра не подменяем
-
-  card.href = pick.u;
-  card.setAttribute('aria-label', 'Выпуск: ' + pick.n);
-  card.querySelector('.summit-label').textContent =
-    pick.new ? 'Новый разговор' : 'Разговор';
-  img.src = pick.p;
-  img.alt = pick.n;
-  img.removeAttribute('fetchpriority');               // приоритет нужен был первому кадру
-  card.querySelector('.summit-meta').textContent = pick.m;
-  card.querySelector('strong').textContent = pick.n;
-  card.querySelector('.summit-role').textContent = pick.r;
-})();
+/* Карточка первого экрана: показываем последний выпуск, зашитый в разметку.
+   Раньше скрипт подменял его случайным героем из пула. Это ломало приоритет
+   загрузки: браузер тянул первое изображение с fetchpriority="high", а через
+   мгновение показывал другое — лишний трафик и заметный подскок кадра.
+   Пул оставлен в разметке: он ещё пригодится, если понадобится ручной выбор
+   «Выбор Александра», но автоматически ничего не подменяется. */
 
 /* Ролик во всю ширину: включаем, когда доехали до блока, и глушим, когда
    уехали. Файл в десять мегабайт не должен тянуться у тех, кто до него не
@@ -848,9 +826,32 @@ function plural(n, one, few, many) {
   var v = document.getElementById('reel');
   if (!v) return;
   var btn = document.querySelector('.reel-sound');
+  var play = document.querySelector('.reel-play');
   var sec = document.querySelector('.reel');
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var loaded = false;
+  var loaded = false, byUser = false;           // byUser: пользователь сам поставил паузу
+
+  // Кнопка паузы. Автозапуск без остановки — барьер доступности: движение
+  // нельзя выключить. Пауза, поставленная руками, сильнее автоматики —
+  // наблюдатель ниже не станет перезапускать ролик при возврате в кадр.
+  function mark() {
+    if (!play) return;
+    var on = !v.paused;
+    play.textContent = on ? 'Пауза' : 'Смотреть';
+    play.setAttribute('aria-pressed', String(on));
+    play.setAttribute('aria-label', on ? 'Пауза' : 'Воспроизвести');
+  }
+  if (play) play.addEventListener('click', function () {
+    if (v.paused) {
+      byUser = false;
+      if (!loaded) { v.load(); loaded = true; }
+      v.play().then(function () { blocked(false); mark(); }, function () { blocked(true); });
+    } else {
+      byUser = true; v.pause(); mark();
+    }
+  });
+  v.addEventListener('play', mark);
+  v.addEventListener('pause', mark);
 
   if (btn) btn.addEventListener('click', function () {
     if (v.paused) {                              // ролик стоит — сначала запускаем
@@ -864,7 +865,7 @@ function plural(n, one, few, many) {
     if (!v.paused) blocked(false);
   });
 
-  if (still) { if (btn) btn.hidden = true; return; }
+  if (still) { if (btn) btn.hidden = true; if (play) play.hidden = true; return; }
 
   // Браузер вправе отказать в автовоспроизведении: режим энергосбережения на
   // iPhone, экономия трафика, настройки сайта. Раньше в этом случае оставался
@@ -887,7 +888,7 @@ function plural(n, one, few, many) {
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
       es.forEach(function (e) {
-        if (e.isIntersecting) start();
+        if (e.isIntersecting) { if (!byUser) start(); }
         else if (!v.paused) v.pause();
       });
     }, { rootMargin: '200px' }).observe(v);

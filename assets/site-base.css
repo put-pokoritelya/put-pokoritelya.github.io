@@ -10,7 +10,7 @@
   /* Палитра из макетов: бумага холоднее и светлее прежней, чернила почти чёрные */
   --paper:#FBF9F5; --paper-alt:#F2F0ED; --ink:#1B1C1A; --ink-muted:#474743;
   --accent:#B6171E;        /* тёмный красный для мелкого текста: контраст 4.5:1 на бумаге */
-  --accent-bright:#DA3433; /* акцентный красный из макетов — плашки, крупные элементы */
+  --accent-bright:#C42221; /* акцентный красный: затемнён — белый текст на нём 5.4:1 */
   --navy:#1C1B1B; --rule:#E4E2DE;--head-h:68px;
   /* Три функциональных шрифта. Prata — выразительная кириллическая антиква
      для заголовков, имён и цитат. Golos Text — нейтральный гротеск для
@@ -62,7 +62,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .side-quotes cite,.quote-band cite,.tags,.prevnext .dir,.stat i,.ftr .pl,
 .colophon,.ch-list .soon,.progress-label,.orgs{font-family:var(--mono)}
 
-.rubric{display:flex;align-items:center;gap:10px;font-size:11.5px;text-transform:uppercase;
+.rubric{display:flex;align-items:center;gap:10px;font-size:13px;text-transform:uppercase;
   letter-spacing:.14em;color:var(--ink-muted);font-weight:600}
 .rubric::before{content:'';flex:none;width:18px;height:1px;background:var(--accent-bright)}
 .rule{width:52px;height:2px;background:var(--accent);margin:18px 0 24px}
@@ -72,13 +72,13 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 /* Полоса «в разработке»: стоит над липкой шапкой и уезжает вместе со страницей,
    не отъедая высоту первого экрана при скролле. */
 .wipbar{background:var(--ink);color:var(--paper);text-align:center;
-  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;
+  font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.08em;
   text-transform:uppercase;padding:9px 20px;line-height:1.4}
-@media(max-width:600px){.wipbar{font-size:10px;letter-spacing:.05em;padding:8px 14px}}
+@media(max-width:600px){.wipbar{font-size:11.5px;letter-spacing:.05em;padding:8px 14px}}
 .hdr{position:sticky;top:0;z-index:50;background:rgba(251,249,245,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:var(--head-h);gap:24px}
 .logo{font-family:var(--serif);font-size:20px;font-weight:400;letter-spacing:-.035em;text-decoration:none;white-space:nowrap}
-.nav{display:flex;gap:24px;font-family:var(--mono);font-size:11.5px;font-weight:600;
+.nav{display:flex;gap:24px;font-family:var(--mono);font-size:13px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase}
 .nav a{text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:border-color .2s,color .2s}
 .nav a:hover,.nav a[aria-current]{border-color:var(--accent);color:var(--accent)}
@@ -153,7 +153,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .hero-what{font-size:clamp(16px,1.6vw,19px);line-height:1.6;max-width:46ch;margin-top:24px}
 .hero-sky .hero-what{color:#C9D4DF}
 .creed{display:flex;flex-wrap:wrap;gap:8px 0;margin-top:26px;
-  font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.1em;
+  font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;line-height:1.5}
 .creed span{display:flex;align-items:center;color:#AFC1D2}
 .creed span+span::before{content:'';width:1px;height:11px;background:rgba(175,193,210,.4);
@@ -163,7 +163,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .hero-sky .btn-primary:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
 .hero-sky .btn-ghost:hover{border-color:var(--accent-bright);color:var(--accent-bright)}
 .hero-scroll{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;
-  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8FA2B5;text-decoration:none}
+  font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:#8FA2B5;text-decoration:none}
 .hero-scroll::after{content:'';display:block;width:1px;height:34px;background:linear-gradient(#8FA2B5,transparent);margin:10px auto 0}
 .hero-scroll:hover{color:var(--paper)}
 /* Карточка последнего выпуска — панель приборного вида: голубая линия
@@ -176,18 +176,18 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .summit-card:hover{transform:translateY(-3px);border-color:rgba(124,199,224,.4)}
 .summit-label{min-width:0}
 .summit-head{display:flex;justify-content:space-between;align-items:center;gap:14px;
-  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;
+  font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.14em;
   text-transform:uppercase;color:var(--signal);margin-bottom:18px}
 .summit-photo{display:block;aspect-ratio:4/3;overflow:hidden;background:#24384b}
 .summit-photo img{width:100%;height:100%;object-fit:cover;object-position:center;
   transition:transform .45s ease,filter .3s ease}
-.summit-meta{display:block;font-family:var(--mono);font-size:11px;font-weight:600;
+.summit-meta{display:block;font-family:var(--mono);font-size:12.5px;font-weight:600;
   letter-spacing:.12em;text-transform:uppercase;color:#B9C6D4;margin-top:18px}
 .summit-card strong{display:block;font-family:var(--serif);font-size:clamp(26px,2.2vw,34px);
   line-height:1.12;margin-top:10px;text-wrap:balance}
 .summit-role{display:block;color:#C3CEDA;font-size:14px;line-height:1.45;margin-top:10px}
 .summit-action{display:inline-block;margin-top:22px;padding-bottom:6px;
-  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+  font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:#E4695A;border-bottom:1px solid rgba(228,105,90,.45);
   transition:color .2s,border-color .2s}
 .summit-card:hover .summit-photo img{transform:scale(1.04)}
@@ -206,6 +206,13 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .lede{font-size:19px;color:var(--ink-muted);max-width:46ch;margin-top:22px}
 
 .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+/* Зоны нажатия: WCAG 2.5.8 требует минимум 24×24, комфортный минимум — 44×44.
+   Задаём его служебным ссылкам и кнопкам, у которых своей высоты не хватало. */
+@media(pointer:coarse){
+  .nav a,.menu-panel a,.link-more,.chip,.tags a,.ftr .pl a,.seasons button,
+  .reel-play,.reel-sound,.menu-btn{min-height:44px;display:inline-flex;align-items:center}
+  .gu a,.card a,.summit-card{min-height:44px}
+}
 .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;font-family:var(--mono);
   font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   text-decoration:none;border:1px solid var(--ink);cursor:pointer;
@@ -237,13 +244,13 @@ section{padding:78px 0}
 @media(max-width:760px){.sec-head.wide .link-more{margin-top:4px}}
 .sec-head h2,.sec-head h1{font-size:clamp(28px,4vw,48px);margin-top:20px}
 .sec-lede{margin-top:16px;max-width:56ch;color:var(--ink-muted);font-size:16.5px;line-height:1.6}
-.link-more{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.1em;
+.link-more{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--accent);
   padding-bottom:3px;white-space:nowrap}
 
 /* ---- фильтры каталога ---- */
 .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
-.chip{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;
+.chip{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.08em;
   text-transform:uppercase;padding:9px 14px;border:1px solid var(--rule);touch-action:manipulation;
   background:transparent;color:var(--ink);cursor:pointer;
   transition:background-color .15s,color .15s,border-color .15s}
@@ -291,7 +298,7 @@ section{padding:78px 0}
 .card h3{font-size:22px;margin:7px 0 6px}
 .card a:hover h3{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
 .card .role{font-size:13.5px;color:var(--ink-muted);line-height:1.45}
-.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted)}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted)}
 .tags span{border:1px solid var(--rule);padding:5px 9px}
 .tags .bk{border-color:var(--accent);color:var(--accent)}
 
@@ -325,7 +332,7 @@ section{padding:78px 0}
    Состав гостей — главный аргумент проекта. Логотипы чужие, ставить их нельзя,
    но имена организаций в моноширинном капсе работают не хуже. */
 .orgs{border-bottom:1px solid var(--rule);background:var(--paper);padding:30px 0 34px;overflow:hidden}
-.orgs-h{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+.orgs-h{font-size:12.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-muted);margin-bottom:20px}
 /* .wrap здесь — span внутри абзаца. Инлайновому элементу боковой padding
    достаётся только первой и последней строке, поэтому на узком экране
@@ -367,15 +374,20 @@ section{padding:78px 0}
   padding-top:72px;padding-bottom:80px}
 .reel .btn{border-color:var(--accent-bright);background:var(--accent-bright);color:#fff}
 .reel .btn:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
-.reel-sound{position:absolute;right:32px;bottom:26px;z-index:3;cursor:pointer;
-  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;padding:12px 16px;color:rgba(251,249,245,.75);
+/* Управление роликом: пауза и звук — две отдельные кнопки. Автозапуск без
+   возможности остановить движение — барьер доступности (WCAG 2.2.2). */
+.reel-ctrl{position:absolute;right:32px;bottom:26px;z-index:3;display:flex;gap:10px}
+.reel-play,.reel-sound{cursor:pointer;
+  font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:13px 18px;min-height:44px;color:rgba(251,249,245,.8);
   background:rgba(20,29,39,.5);border:1px solid rgba(251,249,245,.22);
   backdrop-filter:blur(4px);transition:color .2s,border-color .2s}
+.reel-play:hover{color:var(--paper);border-color:rgba(251,249,245,.55)}
 .reel-sound:hover{color:var(--paper);border-color:rgba(251,249,245,.55)}
 .reel-sound[aria-pressed="true"]{background:var(--accent-bright);border-color:var(--accent-bright);color:#fff}
 @media(max-width:600px){.reel-copy{min-height:min(60vh,420px);padding-top:52px;padding-bottom:76px}
-  .reel-sound{right:20px;left:20px;bottom:20px;text-align:center}}
+  .reel-ctrl{right:20px;left:20px;bottom:20px;justify-content:center}
+  .reel-play,.reel-sound{flex:1;text-align:center;padding:13px 10px}}
 
 /* ---- книга, которую можно листать ----
    Обложка и восемь разворотов на CSS-трансформациях: страница поворачивается
@@ -424,23 +436,23 @@ section{padding:78px 0}
 .c-creed li::before{content:'';width:10px;height:1px;background:rgba(218,52,51,.7);flex:none}
 .c-bottom{border-top:1px solid rgba(251,249,245,.16);padding-top:12px}
 .l-open{font-family:var(--serif);font-size:17px;line-height:1.5;color:var(--ink-muted)}
-.l-note{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+.l-note{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:var(--accent);margin-top:20px;line-height:1.6}
 
-.l-part{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.12em;
+.l-part{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--accent)}
 .l-num{font-family:var(--serif);font-weight:700;font-size:44px;line-height:1;
   color:var(--rule);margin:6px 0 14px}
 .book3d h3{font-size:clamp(18px,2.2vw,23px);line-height:1.2;margin-bottom:12px}
 .l-guest{font-family:var(--serif);font-size:17px}
 .l-role{font-size:13px;color:var(--ink-muted);line-height:1.4;margin-top:4px;flex:1}
-.face.front a{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+.face.front a{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--accent);
   padding-bottom:3px;align-self:flex-start}
 .face.back blockquote{font-family:var(--serif);font-size:clamp(16px,2vw,20px);line-height:1.4}
 .face.back blockquote::before{content:'«';color:var(--accent-bright)}
 .face.back blockquote::after{content:'»';color:var(--accent-bright)}
-.face.back cite{font-family:var(--mono);font-style:normal;font-size:10.5px;font-weight:600;
+.face.back cite{font-family:var(--mono);font-style:normal;font-size:12px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-top:18px}
 
 .book3d-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:26px}
@@ -449,7 +461,7 @@ section{padding:78px 0}
   transition:border-color .2s,color .2s,background-color .2s}
 .book3d-nav button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
 .book3d-nav button:disabled{opacity:.3;cursor:default}
-.b-state{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;
+.b-state{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;color:var(--ink-muted);min-width:15ch;text-align:center}
 @media(prefers-reduced-motion:reduce){.leaf{transition:none}}
 @media(max-width:600px){.book3d-stage{aspect-ratio:1/1}.face{padding:22px 18px}
@@ -462,7 +474,7 @@ section{padding:78px 0}
 .why b{font-family:var(--serif);font-weight:700;font-size:clamp(30px,3.6vw,44px);
   line-height:1;color:var(--accent);margin-bottom:16px}
 .why p{font-size:15px;line-height:1.55;flex:1;margin-bottom:16px}
-.why a{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;
+.why a{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink-muted);text-decoration:none;
   border-bottom:1px solid var(--rule);padding-bottom:3px;align-self:flex-start}
 .why a:hover{color:var(--accent);border-color:var(--accent)}
@@ -483,14 +495,14 @@ section{padding:78px 0}
 .works figure{position:relative;border:1px solid var(--rule);background:var(--paper);
   aspect-ratio:16/10;margin-bottom:20px}
 .works figure::before{content:counter(d,decimal-leading-zero);position:absolute;
-  left:12px;top:10px;z-index:1;font-family:var(--mono);font-size:11px;font-weight:600;
+  left:12px;top:10px;z-index:1;font-family:var(--mono);font-size:12.5px;font-weight:600;
   letter-spacing:.1em;color:var(--accent)}
 .works canvas{width:100%;height:100%;max-width:100%;display:block}
-.d-area{display:block;font-family:var(--mono);font-size:10.5px;font-weight:600;
+.d-area{display:block;font-family:var(--mono);font-size:12px;font-weight:600;
   letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px}
 .works h3{font-size:clamp(20px,2.2vw,25px);line-height:1.22;margin-bottom:12px}
 .works p{font-size:15px;line-height:1.55;color:var(--ink-muted);margin-bottom:18px;flex:1}
-.works a{align-self:flex-start;font-family:var(--mono);font-size:11px;font-weight:600;
+.works a{align-self:flex-start;font-family:var(--mono);font-size:12.5px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
   border-bottom:1px solid var(--accent);padding-bottom:3px}
 .works a:hover{color:var(--accent)}
@@ -501,7 +513,7 @@ section{padding:78px 0}
 .voices{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
   border:1px solid var(--rule);list-style:none}
 .voices li{background:var(--paper);padding:30px 28px;display:flex;flex-direction:column;gap:16px}
-.voices .org{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+.voices .org{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--accent)}
 .voices blockquote{font-family:var(--serif);font-size:19px;line-height:1.42;flex:1}
 .voices blockquote::before{content:'«';color:var(--accent-bright)}
@@ -599,7 +611,7 @@ section{padding:78px 0}
 .side-quotes cite{display:block;font-style:normal;font-size:12px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink-muted);margin-top:11px}
 .next-card{border:1px solid var(--rule);background:var(--paper-alt);padding:24px}
-.next-card>span{font-size:11.5px;font-weight:600;letter-spacing:.12em;
+.next-card>span{font-size:13px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--ink-muted)}
 .next-card a{display:block;text-decoration:none;margin-top:14px}
 .next-card b{display:block;font-family:var(--serif);font-size:21px;line-height:1.2}
@@ -673,9 +685,9 @@ section{padding:78px 0}
 .dossier .ph img{width:100%;height:100%;object-fit:cover}
 .dossier .ph em{font-family:var(--serif);font-style:normal;font-size:54px;color:rgba(251,249,245,.3)}
 .dossier .tag{position:absolute;top:0;right:0;background:var(--accent-bright);color:#fff;
-  padding:5px 10px;font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase}
+  padding:5px 10px;font-size:12px;font-weight:600;letter-spacing:.11em;text-transform:uppercase}
 .dossier h3{font-size:23px;line-height:1.15}
-.dossier .role{margin:9px 0 15px;font-size:10.5px;font-weight:600;letter-spacing:.11em;
+.dossier .role{margin:9px 0 15px;font-size:12px;font-weight:600;letter-spacing:.11em;
   text-transform:uppercase;color:var(--accent);line-height:1.5}
 .dossier p{font-size:14px;line-height:1.55;color:var(--ink-muted)}
 .dossier .src{margin-top:14px;font-size:12.5px}
@@ -726,7 +738,7 @@ section{padding:78px 0}
 /* Вопросы и ответы — раскрытыми карточками: это не FAQ, это часть текста главы */
 .qa{margin-top:30px;display:grid;gap:20px;max-width:76ch}
 .qa-card{border:1px solid var(--rule);padding:24px 26px;background:var(--paper)}
-.qa-n{font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+.qa-n{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   color:var(--accent);margin-bottom:12px}
 .qa-card h3{font-size:19px;line-height:1.3;margin-bottom:12px}
 .qa-card p{font-size:15.5px;color:var(--ink-muted)}
@@ -769,12 +781,12 @@ section{padding:78px 0}
 .q-card blockquote p::before{content:'«';color:var(--accent-bright);margin-right:.02em}
 .q-card blockquote p::after{content:'»';color:var(--accent-bright);margin-left:.02em}
 .q-card a{display:block;margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);
-  font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;
+  font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.08em;
   color:var(--ink-muted);text-decoration:none}
 .q-card a:hover{color:var(--accent)}
 .q-act{display:flex;gap:14px;margin-top:10px;opacity:0;transition:opacity .2s}
 .q-card:hover .q-act,.q-card:focus-within .q-act{opacity:1}
-.q-act button{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.06em;
+.q-act button{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.06em;
   text-transform:uppercase;color:var(--ink-muted);min-height:44px;
   background:none;border:none;border-bottom:1px solid var(--rule);padding:0 0 3px;cursor:pointer}
 .q-act button:hover{color:var(--accent);border-color:var(--accent)}
@@ -798,7 +810,7 @@ section{padding:78px 0}
 .tl-n{font-family:var(--serif);font-size:15px;color:var(--navy);margin-bottom:6px}
 .tl-bar{display:block;width:100%;max-width:52px;background:var(--navy);transition:background .2s;min-height:4px}
 .tl-col:hover .tl-bar{background:var(--accent)}
-.tl-m{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-muted);
+.tl-m{font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-muted);
   margin-top:10px;text-align:center;line-height:1.3}
 .tl-m b{display:block;font-weight:400;opacity:.6}
 .tl-pop{list-style:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
@@ -816,7 +828,7 @@ section{padding:78px 0}
 .sr-item{border-bottom:1px solid var(--rule)}
 .sr-item a{display:block;padding:18px 0;text-decoration:none;transition:padding-left .2s}
 .sr-item a:hover{padding-left:10px}
-.sr-kind{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+.sr-kind{display:inline-block;font-size:12.5px;text-transform:uppercase;letter-spacing:.09em;
   color:var(--accent);font-weight:600;margin-bottom:6px}
 .sr-item b{display:block;font-family:var(--serif);font-size:20px;line-height:1.3}
 .sr-item i{display:block;font-style:normal;font-size:13.5px;color:var(--ink-muted);margin-top:5px}
@@ -879,11 +891,11 @@ section{padding:78px 0}
   .hero-sky h1{font-size:clamp(34px,11vw,44px)}
   .hero-sky .wrap{padding-top:36px;padding-bottom:104px}
   .hero-what{font-size:15.5px}
-  .creed{font-size:10.5px;letter-spacing:.08em}
+  .creed{font-size:12px;letter-spacing:.08em}
   .creed span+span::before{margin:0 10px}
   .summit-card{padding:16px 16px 20px}
   .summit-card strong{font-size:23px}
-  .ticker-row li{font-size:11px;padding:0 11px}
+  .ticker-row li{font-size:12.5px;padding:0 11px}
   .ticker-row li::after{margin-left:11px}
   .stats .wrap{padding:26px 14px}
   .sec-head h2,.sec-head h1{font-size:26px}
@@ -907,7 +919,7 @@ html,body{overflow-x:hidden}
 .gnav input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .gn-chips,.gn-sort{display:flex;flex-wrap:wrap;gap:8px}
 .gn-sort{border-left:1px solid var(--rule);padding-left:18px}
-.gn-count{font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.08em;
+.gn-count{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink-muted);margin-top:16px;min-height:1em}
 .gn-list{list-style:none;margin-top:8px;border-top:1px solid var(--rule)}
 .gn{border-bottom:1px solid var(--rule)}
@@ -922,7 +934,7 @@ html,body{overflow-x:hidden}
 .gn-n{font-family:var(--serif);font-size:19px;font-weight:700;line-height:1.2;min-width:0}
 .gn a:hover .gn-n{color:var(--accent)}
 .gn-r{font-size:13.5px;color:var(--ink-muted);line-height:1.4;min-width:0}
-.gn-m{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;
+.gn-m{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;text-align:right}
 .gn-m em{font-style:normal;display:block;color:var(--accent);margin-top:3px}
 .gn-go{color:var(--ink-muted);text-align:right}
@@ -969,7 +981,7 @@ html,body{overflow-x:hidden}
 .parts li{display:grid;grid-template-columns:28px 1fr;align-items:baseline;
   padding:9px 0;border-top:1px solid var(--rule)}
 .parts li:first-child{border-top:none}
-.parts li span{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent)}
+.parts li span{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent)}
 .parts a{font-family:var(--serif);font-size:17px;text-decoration:none}
 .parts a:hover{color:var(--accent)}
 
@@ -990,7 +1002,7 @@ html,body{overflow-x:hidden}
   font-size:64px;color:rgba(251,249,245,.4)}
 .host-text p{font-size:17px;line-height:1.65;margin-bottom:16px;max-width:62ch}
 .host-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
-.host-links a{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.1em;
+.host-links a{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;text-decoration:none;border:1px solid var(--rule);padding:10px 14px}
 .host-links a:hover{border-color:var(--accent);color:var(--accent)}
 @media(max-width:860px){
@@ -1011,17 +1023,17 @@ html,body{overflow-x:hidden}
 .spread>span{display:block;padding:30px 28px;min-width:0}
 .spread .page-l{border-right:1px solid var(--rule);display:flex;flex-direction:column;
   justify-content:center}
-.spread .snum{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;
+.spread .snum{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.14em;
   text-transform:uppercase;color:var(--accent);margin-bottom:14px}
 .spread .st{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);font-weight:700;
   line-height:1.22;color:var(--ink)}
 .spread .sl{display:block;width:38px;height:2px;background:var(--accent);margin:16px 0 0}
-.spread .sg{display:block;font-family:var(--mono);font-size:10px;font-weight:600;
+.spread .sg{display:block;font-family:var(--mono);font-size:12px;font-weight:600;
   letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-top:16px;
   line-height:1.45}
 .spread .page-r{display:flex;flex-direction:column;justify-content:center}
 .spread .sq{font-family:var(--serif);font-size:15px;line-height:1.62;color:var(--ink-muted)}
-.spread .smore{display:block;font-family:var(--mono);font-size:10px;font-weight:600;
+.spread .smore{display:block;font-family:var(--mono);font-size:12px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-top:18px}
 .spread:hover .st{color:var(--accent)}
 @media(max-width:860px){
@@ -1038,7 +1050,7 @@ html,body{overflow-x:hidden}
 .rt{list-style:none;margin-top:22px;border-top:1px solid var(--rule)}
 .rt li{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;
   border-bottom:1px solid var(--rule)}
-.rt-n{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);
+.rt-n{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent);
   padding-top:20px}
 .rt a{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:16px;
   align-items:center;padding:14px 0;text-decoration:none;transition:padding-left .18s}
@@ -1054,7 +1066,7 @@ html,body{overflow-x:hidden}
   margin-top:3px}
 .rt-body em{display:block;font-style:normal;font-size:14px;line-height:1.5;
   color:var(--ink);margin-top:8px;max-width:58ch}
-.rt-meta{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.07em;
+.rt-meta{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.07em;
   text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;text-align:right}
 .rt-meta span{display:block;color:var(--accent);margin-top:4px}
 @media(max-width:760px){

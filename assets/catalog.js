@@ -284,46 +284,28 @@ function plural(n, one, few, many) {
   });
 })();
 
-/* Первый экран: хребет в четырёх сезонах и нейронная сеть над ним.
-   Небо, склон, снеговая линия и осадки меняются по кругу: зима → весна →
-   лето → осень. Поверх идёт сеть узлов и связей — визуальная модель
-   мышления и передачи знания: узлы объединены в кластеры, связи ветвятся
-   кривыми, по веткам изредка проходят импульсы. Всё рисуется в canvas,
-   переходы — линейная интерполяция палитр: ни картинок, ни библиотек. */
+/* Первый экран: нейронная сеть над абстрактным рельефом.
+   Узлы объединены в кластеры, связи ветвятся кривыми, а по веткам
+   изредка проходят импульсы — визуальная модель мышления и передачи
+   знания. Всё рисуется в canvas: ни картинок, ни библиотек. */
 (function () {
   var cv = document.getElementById('sky');
   if (!cv) return;
   var ctx = cv.getContext('2d');
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var SEASONS = [
-    { k: 'winter', name: 'Зима',
-      sky: [[14, 26, 42], [44, 72, 102]],        // от зенита к горизонту
-      rock: [22, 32, 44], snow: [236, 244, 250],
-      line: 0.10,                                 // доля высоты, ниже которой снега нет
-      star: [226, 238, 250], fall: 'snow' },
-    { k: 'spring', name: 'Весна',
-      sky: [[20, 40, 58], [78, 116, 132]],
-      rock: [46, 66, 54], snow: [232, 240, 244],
-      line: 0.52, star: [206, 226, 232], fall: 'haze' },
-    { k: 'summer', name: 'Лето',
-      sky: [[16, 44, 70], [64, 128, 158]],
-      rock: [40, 72, 50], snow: [240, 246, 248],
-      line: 0.88, star: [214, 232, 240], fall: 'warm' },
-    { k: 'autumn', name: 'Осень',
-      sky: [[34, 30, 44], [116, 84, 58]],
-      rock: [74, 56, 38], snow: [238, 240, 242],
-      line: 0.66, star: [236, 214, 190], fall: 'leaf' },
-  ];
-  var HOLD = 9000, FADE = 2600;                   // держим сезон / плавный переход
+  var THEME = {
+    sky0: [18, 35, 51],                           // от зенита к горизонту
+    sky1: [55, 88, 104],
+    rock: [25, 38, 47],
+  };
 
   // Палитра сети: холодные тона неба плюс фирменный красный только на сигнал.
   var C_NODE = [201, 212, 223], C_EDGE = [126, 166, 194],
       C_WEAK = [143, 168, 186], C_SIG  = [218, 52, 51];
 
-  var W, H, dpr, fall, ridge, mouse = { x: -1e4, y: -1e4 }, touch = false;
+  var W, H, dpr, ridge, mouse = { x: -1e4, y: -1e4 }, touch = false;
   var nodes = [], edges = [], signals = [], born = 0;
-  var idx = 0, t0 = performance.now(), manual = false, label;
   var running = false, raf = 0;
 
   function ridgeY(x) {                            // силуэт хребта
@@ -412,37 +394,11 @@ function plural(n, one, few, many) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ridge = [];
     for (var x = 0; x <= W; x += 5) ridge.push([x, ridgeY(x)]);
-    var n = Math.min(90, Math.floor(W / 16));       // осадки
-    fall = [];
-    for (var i = 0; i < n; i++) fall.push({
-      x: Math.random() * W, y: Math.random() * H * 0.86,
-      vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.16,
-      r: Math.random() * 1.5 + 0.5, s: Math.random(),
-    });
     createNetwork();
   }
 
-  function mix(a, b, k) { return a.map(function (v, i) { return v + (b[i] - v) * k; }); }
   function rgb(c, a) {
     return 'rgba(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ',' + a + ')';
-  }
-
-  function palette(now) {                          // текущая палитра с учётом перехода
-    var a = SEASONS[idx], b = SEASONS[(idx + 1) % SEASONS.length];
-    var dt = now - t0, k = 0;
-    if (!manual && !still) {
-      if (dt > HOLD + FADE) { idx = (idx + 1) % SEASONS.length; t0 = now; dt = 0; }
-      k = dt > HOLD ? (dt - HOLD) / FADE : 0;
-      a = SEASONS[idx]; b = SEASONS[(idx + 1) % SEASONS.length];
-    }
-    if (label) label.textContent = (k > 0.5 ? b : a).name;
-    return {
-      sky0: mix(a.sky[0], b.sky[0], k), sky1: mix(a.sky[1], b.sky[1], k),
-      rock: mix(a.rock, b.rock, k), snow: mix(a.snow, b.snow, k),
-      star: mix(a.star, b.star, k),
-      line: a.line + (b.line - a.line) * k,
-      fall: k > 0.5 ? b.fall : a.fall, fk: k,
-    };
   }
 
   // Края растворяем: слева и справа сеть уходит в ноль, текст не спорит с линиями.
@@ -554,32 +510,13 @@ function plural(n, one, few, many) {
     now = now || performance.now();
     var dt = last ? Math.min(0.05, (now - last) / 1000) : 0.016;
     last = now;
-    var p = palette(now);
+    var p = THEME;
     var appear = still ? 1 : Math.min(1, (now - born) / 1400);
 
     var g = ctx.createLinearGradient(0, 0, 0, H);   // небо
     g.addColorStop(0, rgb(p.sky0, 1));
     g.addColorStop(1, rgb(p.sky1, 1));
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-
-    // Осадки читаются как погода только в движении. В статике (reduced motion)
-    // редкие точки выглядели бы звёздами — а первый экран должен читаться
-    // как сеть, поэтому в неподвижном кадре слой осадков не рисуем.
-    for (var i = 0; still ? 0 : i < fall.length; i++) {   // осадки сезона
-      var pt = fall[i];
-      if (!still) {
-        if (p.fall === 'snow') { pt.x += pt.vx * 0.6; pt.y += 0.35 + pt.r * 0.35; }
-        else if (p.fall === 'leaf') { pt.x += Math.sin(pt.y / 40 + pt.s * 6) * 0.5; pt.y += 0.28 + pt.r * 0.2; }
-        else if (p.fall === 'warm') { pt.x += pt.vx; pt.y -= 0.06 + pt.r * 0.05; }
-        else { pt.x += pt.vx * 0.8; pt.y += pt.vy * 0.5; }
-        if (pt.x < -10) pt.x = W + 10; if (pt.x > W + 10) pt.x = -10;
-        if (pt.y > H * 0.9) pt.y = -10; if (pt.y < -12) pt.y = H * 0.86;
-      }
-      ctx.beginPath();
-      ctx.arc(pt.x, pt.y, pt.r * (p.fall === 'snow' ? 1.2 : 0.85), 0, 6.283);
-      ctx.fillStyle = rgb(p.star, 0.14 + pt.r * 0.16);
-      ctx.fill();
-    }
 
     if (!still) { drift(now); spawnSignal(now); }
     drawEdges(now, appear);
@@ -588,26 +525,10 @@ function plural(n, one, few, many) {
 
     ctx.beginPath();                                // склон
     ctx.moveTo(0, H);
-    for (i = 0; i < ridge.length; i++) ctx.lineTo(ridge[i][0], ridge[i][1]);
+    for (var i = 0; i < ridge.length; i++) ctx.lineTo(ridge[i][0], ridge[i][1]);
     ctx.lineTo(W, H); ctx.closePath();
     ctx.fillStyle = rgb(p.rock, 0.94); ctx.fill();
 
-    // снеговая линия: чем ниже line, тем больше снега — зимой почти до подошвы
-    var top = Math.min.apply(null, ridge.map(function (r) { return r[1]; }));
-    var snowY = top + (H - top) * p.line;
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(0, H);
-    for (i = 0; i < ridge.length; i++) ctx.lineTo(ridge[i][0], ridge[i][1]);
-    ctx.lineTo(W, H); ctx.closePath();
-    ctx.clip();
-    var sg = ctx.createLinearGradient(0, top, 0, snowY);
-    sg.addColorStop(0, rgb(p.snow, 0.92));
-    sg.addColorStop(0.75, rgb(p.snow, 0.5));
-    sg.addColorStop(1, rgb(p.snow, 0));
-    ctx.fillStyle = sg;
-    ctx.fillRect(0, top - 4, W, snowY - top + 4);
-    ctx.restore();
 
     ctx.beginPath();                                // красная нить пути
     for (i = 0; i < ridge.length; i++)
@@ -633,27 +554,7 @@ function plural(n, one, few, many) {
     raf = 0;
   }
 
-  // переключатель сезонов: клик фиксирует сезон, повторный клик по нему — снимает
   var host = cv.parentNode;
-  var bar = document.createElement('div');
-  bar.className = 'seasons';
-  label = document.createElement('span');
-  label.className = 'seasons-now';
-  bar.appendChild(label);
-  SEASONS.forEach(function (s, i) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.textContent = s.name; b.setAttribute('aria-label', 'Показать: ' + s.name);
-    b.addEventListener('click', function () {
-      if (manual && idx === i) { manual = false; t0 = performance.now(); }
-      else { manual = true; idx = i; }
-      [].forEach.call(bar.querySelectorAll('button'), function (x, j) {
-        x.setAttribute('aria-pressed', manual && j === i ? 'true' : 'false');
-      });
-      if (still) drawFrame();
-    });
-    bar.appendChild(b);
-  });
-  host.appendChild(bar);
 
   host.addEventListener('pointermove', function (ev) {
     if (ev.pointerType === 'touch') { touch = true; return; }
@@ -674,7 +575,7 @@ function plural(n, one, few, many) {
   });
 
   resize();
-  if (still) { idx = 2; drawFrame(); }               // без анимации показываем лето
+  if (still) drawFrame();
   else if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (en) {
       en[0].isIntersecting ? start() : stop();

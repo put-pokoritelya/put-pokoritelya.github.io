@@ -228,6 +228,9 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 /* Вторая кнопка на бумаге: тонкая рамка почти не читалась как кнопка.
    Добавлена заливка и подъём границы до чернил. */
 .btn-ghost{background:rgba(27,28,26,.04);border-color:rgba(27,28,26,.55)}
+.wrap-narrow .btn+.btn{margin-left:10px}
+@media(max-width:600px){.wrap-narrow .btn{display:flex;justify-content:center}
+  .wrap-narrow .btn+.btn{margin-left:0;margin-top:10px}}
 .btn-ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 
 /* ---- счётчики ---- */
@@ -558,6 +561,32 @@ section{padding:78px 0}
 .gu b{display:block;font-size:14px;font-weight:600}
 .gu a:hover b{color:var(--accent)}
 .gu i{font-style:normal;font-size:12px;color:var(--ink-muted);line-height:1.4;display:block;margin-top:3px}
+
+/* ---- Тематический хаб ---- */
+/* Список разговоров темы: кадр слева, объяснение справа. Двухколоночная
+   сетка на широком экране, одна колонка на узком. */
+.hub-q{max-width:64ch;margin-top:22px;counter-reset:hq;list-style:none}
+.hub-q li{counter-increment:hq;position:relative;padding:12px 0 12px 44px;
+  border-top:1px solid var(--rule);font-size:16px;line-height:1.5}
+.hub-q li::before{content:counter(hq,decimal-leading-zero);position:absolute;left:0;top:13px;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent)}
+.hub-list{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.hub-card{background:var(--paper);display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr);
+  gap:20px;padding:22px;transition:background .2s}
+.hub-card:hover{background:var(--paper-alt)}
+.hub-ph{display:block;overflow:hidden;aspect-ratio:16/9;background:var(--paper-alt)}
+.hub-ph img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.hub-card:hover .hub-ph img{transform:scale(1.04)}
+.hub-tx h3{font-size:20px;margin:0 0 6px}
+.hub-tx h3 a{text-decoration:none}
+.hub-tx h3 a:hover{color:var(--accent)}
+.hub-role{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:10px;line-height:1.4}
+.hub-tx p{font-size:14.5px;color:var(--ink-muted);line-height:1.5}
+.hub-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px}
+@media(max-width:1080px){.hub-list{grid-template-columns:1fr}}
+@media(max-width:560px){.hub-card{grid-template-columns:1fr}.hub-ph{max-width:320px}}
 
 /* ---- Авторский блок на главной ---- */
 /* Раньше автор был одной строкой в первом экране. Здесь он получает лицо,

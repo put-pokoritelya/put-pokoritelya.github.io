@@ -119,16 +119,14 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
                    linear-gradient(to bottom,rgba(0,0,0,.05) 1px,transparent 1px);
   background-size:40px 40px}
 
-/* ---- тёмный первый экран: хребет в четырёх сезонах ----
-   Возвращён по просьбе автора. Небо, склон, снеговая линия и осадки
-   меняются по кругу, сезон можно зафиксировать вручную. Дальше по
-   странице сайт снова «бумажный». */
+/* ---- тёмный первый экран: нейронная сеть и абстрактный рельеф ----
+   Спокойный технологичный фон продолжает тему науки и людей без
+   декоративной смены погоды. Дальше по странице сайт снова «бумажный». */
 .hero-sky{position:relative;color:var(--paper);border-bottom:1px solid var(--rule);overflow:hidden;
   background:#141d27}
 .hero-sky canvas{position:absolute;inset:0;width:100%;height:100%}
-/* Подложка под текстом: канвас живёт своей жизнью — снеговая линия и небо
-   меняются по кругу, — а текст обязан читаться при любом кадре. Затемнение
-   слабеет слева направо, чтобы хребет и вершина остались видны. */
+/* Подложка под текстом сохраняет контраст, не скрывая сеть и рельеф.
+   Затемнение слабеет слева направо, чтобы композиция осталась видна. */
 .hero-sky::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(96deg,rgba(20,29,39,.95) 0%,rgba(20,29,39,.86) 34%,
              rgba(20,29,39,.42) 58%,rgba(20,29,39,.12) 82%),
@@ -187,16 +185,6 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 @media(max-width:880px){.hero-sky .wrap{min-height:0;padding-top:64px;padding-bottom:150px}.hero-layout{grid-template-columns:1fr}.summit-card{justify-self:start;max-width:520px;width:100%}}
 @media(max-width:560px){.hero-sky h1{font-size:clamp(46px,14.5vw,64px)}.hero-sky .cta-row{display:grid;grid-template-columns:1fr}.hero-sky .btn{justify-content:center}.summit-card{margin-top:8px;max-width:none}}
 
-/* переключатель сезонов */
-.seasons{position:absolute;right:32px;bottom:26px;z-index:3;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.seasons-now{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#9FB3C8;margin-right:6px}
-.seasons button{font:inherit;font-size:12px;font-weight:500;padding:8px 13px;border-radius:999px;cursor:pointer;touch-action:manipulation;
-  color:rgba(251,249,245,.7);background:rgba(251,249,245,.08);border:1px solid rgba(251,249,245,.18);
-  transition:color .18s,border-color .18s,background-color .18s;backdrop-filter:blur(4px)}
-.seasons button:hover{color:var(--paper);border-color:rgba(251,249,245,.5)}
-.seasons button[aria-pressed="true"]{background:var(--accent-bright);border-color:var(--accent-bright);color:#fff}
-@media(max-width:880px){.seasons{right:20px;left:20px;bottom:64px;justify-content:flex-start}}
-@media(max-width:520px){.seasons-now{width:100%;margin-bottom:2px}}
 @media(prefers-reduced-motion:no-preference){
   .hero-sky [data-rise]{opacity:0;transform:translateY(22px);
     animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
@@ -892,7 +880,6 @@ section{padding:78px 0}
   .ch-head h1,.ep-hero h1{font-size:26px}
   .ch-bg{font-size:70vw}
   .gi-alpha a{width:40px;height:40px}
-  .seasons button{padding:8px 10px;font-size:11px}
 }
 
 /* Ничто не должно вызывать горизонтальную прокрутку */

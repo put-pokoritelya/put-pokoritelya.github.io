@@ -750,3 +750,47 @@ function plural(n, one, few, many) {
     el.classList.add('reveal'); io.observe(el);
   });
 })();
+
+/* Маршрут главной: активная станция и высота меняются по реальному положению
+   разделов. Прогресс рисуется через transform — без перерасчёта раскладки. */
+(function () {
+  var nav = document.querySelector('.route-nav');
+  if (!nav) return;
+  var links = [].slice.call(nav.querySelectorAll('[data-route]'));
+  var sections = links.map(function (link) {
+    return document.querySelector(link.getAttribute('href'));
+  });
+  var altitude = document.getElementById('route-alt');
+  var progress = document.getElementById('route-progress');
+  var ticking = false;
+
+  function update() {
+    var marker = window.scrollY + window.innerHeight * 0.36;
+    var active = 0;
+    sections.forEach(function (section, i) {
+      if (section && section.offsetTop <= marker) active = i;
+    });
+    links.forEach(function (link, i) {
+      if (i === active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+    if (altitude) altitude.textContent = links[active].dataset.alt;
+
+    var first = sections[0];
+    var last = sections[sections.length - 1];
+    if (first && last && progress) {
+      var start = first.offsetTop;
+      var finish = last.offsetTop + last.offsetHeight - window.innerHeight;
+      var ratio = Math.min(Math.max((window.scrollY - start) / Math.max(finish - start, 1), 0), 1);
+      progress.style.transform = 'scaleX(' + ratio.toFixed(3) + ')';
+    }
+    ticking = false;
+  }
+
+  function requestUpdate() {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }
+  addEventListener('scroll', requestUpdate, { passive: true });
+  addEventListener('resize', requestUpdate);
+  update();
+})();

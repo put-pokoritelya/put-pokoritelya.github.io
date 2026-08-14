@@ -44,7 +44,11 @@ a{color:inherit}
 .wrap-narrow{max-width:820px;margin:0 auto;padding:0 32px}
 @media(max-width:600px){.wrap,.wrap-narrow{padding:0 20px}}
 
-h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:400;line-height:1.12;letter-spacing:-.018em}
+/* Prata существует в единственном начертании: font-weight:700 браузер рисует
+   искусственным утолщением — контуры плывут. Поэтому вес заголовка держим
+   размером и плотной выключкой, а не жирностью. */
+h1,h2,h3,h4,.serif{font-family:var(--serif);font-weight:400;line-height:1.1;
+  letter-spacing:-.022em;font-synthesis-weight:none}
 /* balance — заголовок не оставляет одно слово на последней строке;
    scroll-margin — якорь не уезжает под липкую шапку */
 h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
@@ -78,9 +82,10 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 @media(max-width:600px){.wipbar{font-size:11.5px;letter-spacing:.05em;padding:8px 14px}}
 .hdr{position:sticky;top:0;z-index:50;background:rgba(251,249,245,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:var(--head-h);gap:24px}
-.logo{font-family:var(--serif);font-size:20px;font-weight:400;letter-spacing:-.035em;text-decoration:none;white-space:nowrap}
-.nav{display:flex;gap:24px;font-family:var(--mono);font-size:13px;font-weight:600;
-  letter-spacing:.1em;text-transform:uppercase}
+.logo{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:-.022em;
+  text-decoration:none;white-space:nowrap;font-synthesis-weight:none}
+.nav{display:flex;gap:26px;font-family:var(--sans);font-size:14px;font-weight:500;
+  letter-spacing:.01em}
 .nav a{text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;transition:border-color .2s,color .2s}
 .nav a:hover,.nav a[aria-current]{border-color:var(--accent);color:var(--accent)}
 /* мобильное меню на <details> — без JS, закрывается по Esc силами браузера */
@@ -144,7 +149,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
              linear-gradient(to top,rgba(20,29,39,.6),transparent 42%)}
 .hero-sky .wrap{position:relative;z-index:2;min-height:min(86vh,760px);
   padding-top:72px;padding-bottom:112px;max-width:1240px}
-.hero-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr);gap:clamp(44px,7vw,100px);align-items:center}
+.hero-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:clamp(44px,7vw,100px);align-items:center}
 .hero-copy{min-width:0}
 .hero-sky .rubric{color:#9FB3C8}
 
@@ -169,9 +174,9 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .hero-scroll:hover{color:var(--paper)}
 /* Карточка последнего выпуска — панель приборного вида: голубая линия
    сверху, метка сигнала, кадр в чёрно-белом, имя антиквой. */
-.summit-card{align-self:end;justify-self:end;max-width:360px;min-width:0;
+.summit-card{align-self:end;justify-self:end;max-width:460px;min-width:0;
   background:rgba(18,28,42,.86);border:1px solid rgba(124,199,224,.16);
-  border-top:2px solid var(--signal);padding:20px 20px 24px;
+  border-top:2px solid var(--signal);padding:24px 26px 28px;
   color:var(--paper);text-decoration:none;backdrop-filter:blur(3px);
   transition:border-color .25s,transform .25s}
 .summit-card:hover{transform:translateY(-3px);border-color:rgba(124,199,224,.4)}
@@ -187,7 +192,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .summit-card strong{display:block;font-family:var(--serif);font-size:clamp(26px,2.2vw,34px);
   line-height:1.12;margin-top:10px;text-wrap:balance}
 .summit-role{display:block;color:#C3CEDA;font-size:14px;line-height:1.45;margin-top:10px}
-.summit-action{display:inline-block;margin-top:22px;padding-bottom:6px;
+.summit-action{display:inline-block;margin-top:24px;padding-bottom:6px;
   font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:#E4695A;border-bottom:1px solid rgba(228,105,90,.45);
   transition:color .2s,border-color .2s}
@@ -218,9 +223,12 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
   font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   text-decoration:none;border:1px solid var(--ink);cursor:pointer;
   transition:background .2s,color .2s,border-color .2s;touch-action:manipulation}
-.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-primary{background:var(--accent-bright);border-color:var(--accent-bright);color:#fff}
 .btn-primary:hover{background:var(--accent);border-color:var(--accent)}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+/* Вторая кнопка на бумаге: тонкая рамка почти не читалась как кнопка.
+   Добавлена заливка и подъём границы до чернил. */
+.btn-ghost{background:rgba(27,28,26,.04);border-color:rgba(27,28,26,.55)}
+.btn-ghost:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 
 /* ---- счётчики ---- */
 .stats{border-bottom:1px solid var(--rule);background:var(--paper-alt)}
@@ -553,7 +561,8 @@ section{padding:78px 0}
 
 /* ---- CTA-блоки ---- */
 .ctas{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.cta{background:var(--paper);padding:44px 36px}
+.cta{background:var(--paper);padding:44px 36px;transition:background .2s}
+.cta:hover{background:var(--paper-alt)}
 .cta h3{font-size:clamp(21px,2.5vw,32px);margin:18px 0 12px}
 .cta p{color:var(--ink-muted);font-size:15.5px;margin-bottom:22px;max-width:38ch}
 @media(max-width:760px){.ctas{grid-template-columns:1fr}}

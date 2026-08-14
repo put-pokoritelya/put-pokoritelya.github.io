@@ -6,6 +6,32 @@ function plural(n, one, few, many) {
   return many;
 }
 
+/* В Safari внешний SVG-фильтр может загружаться позже изображения. Дублируем
+   цветовую матрицу прямо в документе и переключаем портреты на неё, когда DOM
+   готов. Остальные изображения и обложки этот фильтр не затрагивает. */
+(function () {
+  if (document.getElementById('photo-tone-warm-editorial')) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var svg = document.createElementNS(ns, 'svg');
+  var filter = document.createElementNS(ns, 'filter');
+  var matrix = document.createElementNS(ns, 'feColorMatrix');
+  svg.setAttribute('width', '0');
+  svg.setAttribute('height', '0');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.style.position = 'absolute';
+  svg.style.pointerEvents = 'none';
+  filter.setAttribute('id', 'photo-tone-warm-editorial');
+  filter.setAttribute('color-interpolation-filters', 'sRGB');
+  matrix.setAttribute('type', 'matrix');
+  matrix.setAttribute('values',
+    '0.73 0.27 0 0 0  0.28 0.29 0.43 0 0  0 0.33 0.67 0 0.005  0 0 0 1 0');
+  filter.appendChild(matrix);
+  svg.appendChild(filter);
+  document.body.appendChild(svg);
+  document.documentElement.style.setProperty('--photo-tone',
+    'url("#photo-tone-warm-editorial") saturate(.91) contrast(1.1) brightness(.995) sepia(.035)');
+})();
+
 /* Фильтры каталога. Карточки уже отрендерены в HTML — JS только прячет лишние,
    поэтому без JS каталог остаётся полным и рабочим. Состояние живёт в URL. */
 (function () {

@@ -284,10 +284,12 @@ function plural(n, one, few, many) {
   });
 })();
 
-/* Хребет в четырёх сезонах. Небо, склоны, снеговая линия и осадки
-   меняются по кругу: зима → весна → лето → осень. Всё рисуется в canvas,
-   переходы — линейная интерполяция палитр, поэтому смена плавная и
-   не требует ни картинок, ни библиотек. Сезон можно переключить вручную. */
+/* Первый экран: хребет в четырёх сезонах и нейронная сеть над ним.
+   Небо, склон, снеговая линия и осадки меняются по кругу: зима → весна →
+   лето → осень. Поверх идёт сеть узлов и связей — визуальная модель
+   мышления и передачи знания: узлы объединены в кластеры, связи ветвятся
+   кривыми, по веткам изредка проходят импульсы. Всё рисуется в canvas,
+   переходы — линейная интерполяция палитр: ни картинок, ни библиотек. */
 (function () {
   var cv = document.getElementById('sky');
   if (!cv) return;
@@ -315,8 +317,14 @@ function plural(n, one, few, many) {
   ];
   var HOLD = 9000, FADE = 2600;                   // держим сезон / плавный переход
 
-  var W, H, dpr, pts, ridge, mouse = { x: -1e4, y: -1e4 };
+  // Палитра сети: холодные тона неба плюс фирменный красный только на сигнал.
+  var C_NODE = [201, 212, 223], C_EDGE = [126, 166, 194],
+      C_WEAK = [143, 168, 186], C_SIG  = [218, 52, 51];
+
+  var W, H, dpr, fall, ridge, mouse = { x: -1e4, y: -1e4 }, touch = false;
+  var nodes = [], edges = [], signals = [], born = 0;
   var idx = 0, t0 = performance.now(), manual = false, label;
+  var running = false, raf = 0;
 
   function ridgeY(x) {                            // силуэт хребта
     // Слева хребет прижат к низу, вершина смещена вправо: текст первого
@@ -329,6 +337,74 @@ function plural(n, one, few, many) {
     return H - H * h * ramp;
   }
 
+  /* Сеть строится один раз на размер экрана, а не каждый кадр.
+     Узлы садятся кластерами в полосе между колонками: слева заголовок,
+     справа карточка выпуска — там плотность минимальная. */
+  function createNetwork() {
+    nodes = []; edges = []; signals = []; born = performance.now();
+    var target = W < 640 ? 20 : W < 1024 ? 30 : 40;
+    var hubs = W < 640 ? 3 : W < 1024 ? 4 : 5;
+    var floor = Math.min.apply(null, ridge.map(function (r) { return r[1]; }));
+    var bottom = Math.max(H * 0.16, floor - 18);   // не залезаем на склон
+
+    // Центры кластеров: 45–78% ширины — самая плотная зона.
+    var centers = [];
+    for (var c = 0; c < hubs; c++) {
+      centers.push({
+        x: W * (0.44 + 0.36 * (c + 0.5) / hubs + (Math.random() - 0.5) * 0.05),
+        y: bottom * (0.22 + 0.56 * Math.random()),
+      });
+    }
+
+    function push(x, y, cluster, big) {
+      if (x < 8 || x > W - 8 || y < 10 || y > bottom) return;
+      nodes.push({
+        x: x, y: y, bx: x, by: y, c: cluster,
+        r: big ? 4 + Math.random() * 2 : 1 + Math.random() * 1.5,
+        big: !!big, ph: Math.random() * 6.283, sp: 0.15 + Math.random() * 0.25,
+        amp: 3 + Math.random() * 5, glow: 0, d: Math.random() * 420,
+      });
+    }
+
+    centers.forEach(function (p, ci) { push(p.x, p.y, ci, true); });
+    var per = Math.ceil((target - centers.length) / centers.length);
+    centers.forEach(function (p, ci) {
+      for (var i = 0; i < per; i++) {
+        var a = Math.random() * 6.283, d = 40 + Math.random() * 130;
+        push(p.x + Math.cos(a) * d, p.y + Math.sin(a) * d * 0.7, ci, false);
+      }
+    });
+    // немного одиночек, чтобы сеть не читалась как ровные розетки
+    for (var s = 0; s < 3; s++)
+      push(W * (0.30 + Math.random() * 0.62), bottom * Math.random(), -1, false);
+
+    /* Связи: каждый узел тянется к 2–3 ближайшим. Пара «i-j» запоминается
+       один раз, поэтому решётка не зарастает и треугольники не копятся. */
+    var seen = {};
+    nodes.forEach(function (n, i) {
+      var near = nodes.map(function (m, j) {
+        return { j: j, d: (m.x - n.x) * (m.x - n.x) + (m.y - n.y) * (m.y - n.y) };
+      }).filter(function (o) { return o.j !== i; })
+        .sort(function (a, b) { return a.d - b.d; })
+        .slice(0, n.big ? 3 : 2);
+      near.forEach(function (o) {
+        var key = Math.min(i, o.j) + ':' + Math.max(i, o.j);
+        if (seen[key] || o.d > 62500) return;       // длиннее 250 px не тянем
+        seen[key] = 1;
+        var a = nodes[i], b = nodes[o.j];
+        var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+        var nx = -(b.y - a.y), ny = b.x - a.x;
+        var len = Math.sqrt(nx * nx + ny * ny) || 1;
+        var bend = (Math.random() - 0.5) * Math.min(46, Math.sqrt(o.d) * 0.32);
+        edges.push({
+          a: i, b: o.j,
+          cx: mx + nx / len * bend, cy: my + ny / len * bend,
+          main: a.big || b.big, act: 0, d: Math.random() * 500,
+        });
+      });
+    });
+  }
+
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = cv.clientWidth; H = cv.clientHeight;
@@ -336,13 +412,14 @@ function plural(n, one, few, many) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ridge = [];
     for (var x = 0; x <= W; x += 5) ridge.push([x, ridgeY(x)]);
-    var n = Math.min(130, Math.floor(W / 11));
-    pts = [];
-    for (var i = 0; i < n; i++) pts.push({
+    var n = Math.min(90, Math.floor(W / 16));       // осадки
+    fall = [];
+    for (var i = 0; i < n; i++) fall.push({
       x: Math.random() * W, y: Math.random() * H * 0.86,
       vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.16,
       r: Math.random() * 1.5 + 0.5, s: Math.random(),
     });
+    createNetwork();
   }
 
   function mix(a, b, k) { return a.map(function (v, i) { return v + (b[i] - v) * k; }); }
@@ -368,42 +445,146 @@ function plural(n, one, few, many) {
     };
   }
 
+  // Края растворяем: слева и справа сеть уходит в ноль, текст не спорит с линиями.
+  function edgeMask(x) {
+    var l = Math.min(1, Math.max(0, (x / W - 0.16) / 0.20));
+    var r = Math.min(1, Math.max(0, (0.99 - x / W) / 0.12));
+    return Math.min(l, r);
+  }
+
+  function drift(now) {
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      var t = now / 1000 * n.sp + n.ph;
+      n.x = n.bx + Math.cos(t) * n.amp;
+      n.y = n.by + Math.sin(t * 0.78) * n.amp * 0.7;
+      if (!touch) {                                 // мягкая тяга к указателю
+        var dx = mouse.x - n.x, dy = mouse.y - n.y, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 130) {
+          var f = (1 - d / 130);
+          n.x += dx / (d || 1) * f * 4;
+          n.y += dy / (d || 1) * f * 4;
+          n.glow = Math.max(n.glow, f);
+        }
+      }
+      n.glow *= 0.94;
+    }
+  }
+
+  function drawEdges(now, appear) {
+    for (var i = 0; i < edges.length; i++) {
+      var e = edges[i], a = nodes[e.a], b = nodes[e.b];
+      var k = appear === 1 ? 1 : Math.min(1, Math.max(0, (appear * 1400 - 380 - e.d) / 520));
+      if (k <= 0) continue;
+      var m = Math.min(edgeMask(a.x), edgeMask(b.x));
+      if (m <= 0.01) continue;
+      var base = (e.main ? 0.20 : 0.11) * m;
+      var al = Math.min(0.65, base + e.act * 0.45);
+      ctx.strokeStyle = rgb(e.main ? C_EDGE : C_WEAK, al);
+      ctx.lineWidth = e.main ? 1.1 : 0.7;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      if (k < 1) {                                  // связи прорисовываются
+        var t = k, cx = a.x + (e.cx - a.x) * t, cy = a.y + (e.cy - a.y) * t;
+        var ex = a.x + (b.x - a.x) * t, ey = a.y + (b.y - a.y) * t;
+        ctx.quadraticCurveTo(cx, cy, ex, ey);
+      } else if (e.main) ctx.quadraticCurveTo(e.cx, e.cy, b.x, b.y);
+      else ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      e.act *= 0.93;
+    }
+  }
+
+  function drawNodes(appear) {
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      var k = appear === 1 ? 1 : Math.min(1, Math.max(0, (appear * 1400 - n.d) / 420));
+      if (k <= 0) continue;
+      var m = edgeMask(n.x);
+      if (m <= 0.01) continue;
+      if (n.big) {                                  // едва заметный ореол, без glow
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 3.1, 0, 6.283);
+        ctx.fillStyle = rgb(C_SIG, 0.05 * k * m + n.glow * 0.13);
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r * (1 + n.glow * 0.25), 0, 6.283);
+      ctx.fillStyle = rgb(C_NODE, (n.big ? 0.72 : 0.5) * k * m * (1 + n.glow * 0.5));
+      ctx.fill();
+    }
+  }
+
+  function drawSignals(dt) {
+    for (var i = signals.length - 1; i >= 0; i--) {
+      var s = signals[i], e = edges[s.e];
+      if (!e) { signals.splice(i, 1); continue; }
+      s.p += s.v * dt;
+      if (s.p >= 1) { signals.splice(i, 1); e.act = 1; continue; }
+      var a = nodes[e.a], b = nodes[e.b], t = s.p, u = 1 - t;
+      var x = u * u * a.x + 2 * u * t * e.cx + t * t * b.x;
+      var y = u * u * a.y + 2 * u * t * e.cy + t * t * b.y;
+      var m = edgeMask(x);
+      if (m <= 0.01) continue;
+      var fade = Math.sin(Math.PI * t);
+      ctx.beginPath();
+      ctx.arc(x, y, 5.5, 0, 6.283);
+      ctx.fillStyle = rgb(C_SIG, 0.16 * fade * m);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(x, y, 1.7, 0, 6.283);
+      ctx.fillStyle = rgb(C_SIG, 0.85 * fade * m);
+      ctx.fill();
+      e.act = Math.max(e.act, fade);
+    }
+  }
+
+  var nextSignal = 0;
+  function spawnSignal(now) {
+    if (now < nextSignal || signals.length >= 2 || !edges.length) return;
+    nextSignal = now + 2000 + Math.random() * 2000;
+    var tries = 0, e;
+    do { e = (Math.random() * edges.length) | 0; tries++; }
+    while (tries < 8 && edgeMask(nodes[edges[e].a].x) < 0.5);
+    signals.push({ e: e, p: 0, v: 0.6 + Math.random() * 0.5 });
+  }
+
+  var last = 0;
   function frame(now) {
-    var p = palette(now || performance.now());
+    now = now || performance.now();
+    var dt = last ? Math.min(0.05, (now - last) / 1000) : 0.016;
+    last = now;
+    var p = palette(now);
+    var appear = still ? 1 : Math.min(1, (now - born) / 1400);
 
     var g = ctx.createLinearGradient(0, 0, 0, H);   // небо
     g.addColorStop(0, rgb(p.sky0, 1));
     g.addColorStop(1, rgb(p.sky1, 1));
     ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 
-    var i, j, q;
-    for (i = 0; i < pts.length; i++) {              // осадки и частицы
-      var pt = pts[i];
+    // Осадки читаются как погода только в движении. В статике (reduced motion)
+    // редкие точки выглядели бы звёздами — а первый экран должен читаться
+    // как сеть, поэтому в неподвижном кадре слой осадков не рисуем.
+    for (var i = 0; still ? 0 : i < fall.length; i++) {   // осадки сезона
+      var pt = fall[i];
       if (!still) {
         if (p.fall === 'snow') { pt.x += pt.vx * 0.6; pt.y += 0.35 + pt.r * 0.35; }
         else if (p.fall === 'leaf') { pt.x += Math.sin(pt.y / 40 + pt.s * 6) * 0.5; pt.y += 0.28 + pt.r * 0.2; }
         else if (p.fall === 'warm') { pt.x += pt.vx; pt.y -= 0.06 + pt.r * 0.05; }
         else { pt.x += pt.vx * 0.8; pt.y += pt.vy * 0.5; }
-        var dx = pt.x - mouse.x, dy = pt.y - mouse.y, d2 = dx * dx + dy * dy;
-        if (d2 < 16900) { pt.x += dx / Math.sqrt(d2) * 0.7; pt.y += dy / Math.sqrt(d2) * 0.7; }
         if (pt.x < -10) pt.x = W + 10; if (pt.x > W + 10) pt.x = -10;
         if (pt.y > H * 0.9) pt.y = -10; if (pt.y < -12) pt.y = H * 0.86;
       }
       ctx.beginPath();
-      ctx.arc(pt.x, pt.y, pt.r * (p.fall === 'snow' ? 1.35 : 1), 0, 6.283);
-      ctx.fillStyle = rgb(p.star, 0.22 + pt.r * 0.28);
+      ctx.arc(pt.x, pt.y, pt.r * (p.fall === 'snow' ? 1.2 : 0.85), 0, 6.283);
+      ctx.fillStyle = rgb(p.star, 0.14 + pt.r * 0.16);
       ctx.fill();
     }
 
-    ctx.lineWidth = 1;                              // связи между частицами
-    for (i = 0; i < pts.length; i++) for (j = i + 1; j < pts.length; j++) {
-      var a = pts[i], b = pts[j];
-      var ddx = a.x - b.x, ddy = a.y - b.y, dd = ddx * ddx + ddy * ddy;
-      if (dd < 9000) {
-        ctx.strokeStyle = rgb(p.star, 0.1 * (1 - dd / 9000));
-        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-      }
-    }
+    if (!still) { drift(now); spawnSignal(now); }
+    drawEdges(now, appear);
+    if (!still) drawSignals(dt);
+    drawNodes(appear);
 
     ctx.beginPath();                                // склон
     ctx.moveTo(0, H);
@@ -437,7 +618,19 @@ function plural(n, one, few, many) {
     ctx.beginPath(); ctx.arc(peak[0], peak[1] - 4, 3.2, 0, 6.283);
     ctx.fillStyle = '#DA3433'; ctx.fill();
 
-    if (!still) requestAnimationFrame(frame);
+    if (!still && running) raf = requestAnimationFrame(frame);
+  }
+
+  function drawFrame() { frame(performance.now()); }   // одиночный кадр
+
+  function start() {
+    if (running || still) return;
+    running = true; last = 0; raf = requestAnimationFrame(frame);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
   }
 
   // переключатель сезонов: клик фиксирует сезон, повторный клик по нему — снимает
@@ -456,22 +649,37 @@ function plural(n, one, few, many) {
       [].forEach.call(bar.querySelectorAll('button'), function (x, j) {
         x.setAttribute('aria-pressed', manual && j === i ? 'true' : 'false');
       });
-      if (still) frame(performance.now());
+      if (still) drawFrame();
     });
     bar.appendChild(b);
   });
   host.appendChild(bar);
 
   host.addEventListener('pointermove', function (ev) {
+    if (ev.pointerType === 'touch') { touch = true; return; }
     var r = cv.getBoundingClientRect();
     mouse.x = ev.clientX - r.left; mouse.y = ev.clientY - r.top;
   });
   host.addEventListener('pointerleave', function () { mouse.x = mouse.y = -1e4; });
-  window.addEventListener('resize', function () { resize(); if (still) frame(performance.now()); });
+
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { resize(); drawFrame(); }, 160);
+  });
+
+  // считаем только пока первый экран на виду и вкладка активна
+  document.addEventListener('visibilitychange', function () {
+    document.hidden ? stop() : start();
+  });
 
   resize();
-  if (still) { idx = 2; frame(performance.now()); }   // без анимации показываем лето
-  else requestAnimationFrame(frame);
+  if (still) { idx = 2; drawFrame(); }               // без анимации показываем лето
+  else if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) {
+      en[0].isIntersecting ? start() : stop();
+    }, { threshold: 0 }).observe(cv);
+  } else start();
 })();
 
 /* Счётчики: числа набегают при появлении в кадре. Без JS в разметке нули,

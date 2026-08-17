@@ -625,21 +625,6 @@ section{padding:78px 0}
 @media(max-width:1080px){.hub-list{grid-template-columns:1fr}}
 @media(max-width:560px){.hub-card{grid-template-columns:1fr}.hub-ph{max-width:320px}}
 
-/* ---- Авторский блок на главной ---- */
-/* Раньше автор был одной строкой в первом экране. Здесь он получает лицо,
-   объяснение и три понятных следующих шага. */
-.author-home{display:grid;grid-template-columns:minmax(220px,320px) minmax(0,1fr);
-  gap:clamp(28px,4vw,56px);align-items:center}
-.author-home-ph{margin:0;border:1px solid var(--rule);padding:10px;background:var(--paper)}
-.author-home-ph img{width:100%;height:auto;display:block}
-.author-home-tx h2{font-size:clamp(28px,3.4vw,42px);margin:14px 0 16px}
-.author-home-tx .lede{margin:0 0 16px;max-width:52ch}
-.author-home-tx p{max-width:60ch;color:var(--ink-muted)}
-.author-home-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-@media(max-width:760px){.author-home{grid-template-columns:1fr}
-  .author-home-ph{max-width:320px}
-  .author-home-links .btn{flex:1 1 100%;justify-content:center}}
-
 /* ---- CTA-блоки ---- */
 .ctas{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .cta{background:var(--paper);padding:44px 36px;transition:background .2s}

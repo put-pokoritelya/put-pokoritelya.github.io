@@ -495,16 +495,13 @@ section{padding:78px 0}
    один красный акцент — тот же язык, что у хребта на первом экране.
    Работа без своей схемы на сайт не попадает: абстрактная картинка рядом
    с конкретным открытием врёт. */
-.works{list-style:none;counter-reset:d;display:grid;
+.works{list-style:none;display:grid;
   grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
   gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.works li{counter-increment:d;background:var(--paper);padding:26px;
+.works li{background:var(--paper);padding:26px;
   display:flex;flex-direction:column;min-width:0}
 .works figure{position:relative;border:1px solid var(--rule);background:var(--paper);
   aspect-ratio:16/10;margin-bottom:20px}
-.works figure::before{content:counter(d,decimal-leading-zero);position:absolute;
-  left:12px;top:10px;z-index:1;font-family:var(--mono);font-size:12.5px;font-weight:600;
-  letter-spacing:.1em;color:var(--accent)}
 .works canvas{width:100%;height:100%;max-width:100%;display:block}
 .d-area{display:block;font-family:var(--mono);font-size:12px;font-weight:600;
   letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:10px}

@@ -1,0 +1,69 @@
+{
+  "source": "https://put-pokoritelya.ru",
+  "tokens": {
+    "spacing": {
+      "scale": [4, 10, 16, 18, 26, 28, 78],
+      "base_unit": null,
+      "note": "No strict base unit; mixes gap and margin. Section rhythm ~78px."
+    },
+    "typography": {
+      "families": ["Prata", "Golos Text", "IBM Plex Mono"],
+      "scale": [
+        { "role": "display-h1", "size": "108px", "weight": "400", "family": "Prata", "letterSpacing": "-1.62px", "lineHeight": "1.02" },
+        { "role": "h2", "size": "48px", "weight": "400", "family": "Prata", "letterSpacing": "-1.06px" },
+        { "role": "h3", "size": "32px", "weight": "400", "family": "Prata", "letterSpacing": "-0.7px" },
+        { "role": "lede", "size": "19-22px", "weight": "400", "family": "Golos Text" },
+        { "role": "body", "size": "14-15px", "weight": "400", "family": "Golos Text" },
+        { "role": "label", "size": "12-13px", "weight": "600", "family": "IBM Plex Mono", "textTransform": "uppercase", "letterSpacing": "1.2-1.44px" }
+      ]
+    },
+    "colors": [
+      { "role": "background", "value": "#FBF9F5" },
+      { "role": "background-band", "value": "#F2F0ED" },
+      { "role": "background-band-deep", "value": "#E4E2DE" },
+      { "role": "hero-dark", "value": "#141D27" },
+      { "role": "text-primary", "value": "#1B1C1A" },
+      { "role": "text-muted", "value": "#474743" },
+      { "role": "text-on-dark", "value": "#AFC1D2" },
+      { "role": "accent", "value": "#B6171E" },
+      { "role": "accent-cta", "value": "#C42221" }
+    ],
+    "radius": ["0px"],
+    "shadows": [],
+    "image_ratios": [
+      { "usage": "episode-card", "ratio": "16:9" },
+      { "usage": "avatar-thumb", "ratio": "16:9" }
+    ],
+    "grid": { "max_width": "1240px", "columns": 3, "gutter": "1px" }
+  },
+  "taste": [
+    {
+      "name": "Print Flatness Over App Depth",
+      "trigger": "When deciding how episode, quote, and topic blocks should sit on the page",
+      "decision": "Gave everything hard 0px corners and zero shadow, dividing cells with a 1px hairline, over the rounded-card-with-drop-shadow surface most podcast/CMS templates ship with",
+      "reason": "A reader trusts a magazine differently than an app; sharp edges and flat ink say 'this is edited writing', not 'this is a feed to swipe'",
+      "evidence": ["radii: [] page-wide", "shadows: [] page-wide", "ol.works grid gap = 1px", "buttons border-radius:0"]
+    },
+    {
+      "name": "Three Typefaces as a Signage System",
+      "trigger": "When one page had to carry a monumental brand name, dense interview prose, and dozens of small meta labels",
+      "decision": "Assigned each a dedicated typeface — Prata display, Golos Text body, IBM Plex Mono labels — over the economy of one family in several weights",
+      "reason": "People navigate faster when form encodes function; an all-caps mono tag is read as a label before it is read as words, a Prata line as a title",
+      "evidence": ["Prata only in h1/h2/h3 (108/48/32px, wt 400)", "Golos 313 uses in body/nav", "Mono 179 uses at 12-13px, letter-spacing 1.2-1.44px", "no family used outside its role"]
+    },
+    {
+      "name": "One Dark Room, Then Daylight",
+      "trigger": "When choosing the site's overall value key",
+      "decision": "Lit a single dark navy hero with a constellation canvas, then dropped into warm cream for everything below, over committing to one consistent mode top-to-bottom",
+      "reason": "The dark opener reads as a night sky / title card matching the 'покоритель' frontier theme, and crossing into daylight physically signals 'the reading starts here'",
+      "evidence": ["#141D27 navy = 8.6% of area, hero only", "cream #FBF9F5 + bands #F2F0ED/#E4E2DE approx 89%", "hero body text shifts to cool #AFC1D2, unused elsewhere"]
+    },
+    {
+      "name": "Red Kept Scarce",
+      "trigger": "When a red-accented brand could have washed headers, borders, and section fills in red",
+      "decision": "Rationed red to rubric dashes, inline links, and the single primary button, leaving all structure in warm neutrals — over spending the brand color for raw visibility",
+      "reason": "An accent only means 'look here / act here' if it is rare; once red coats backgrounds nothing is emphasized and the page starts to shout",
+      "evidence": ["red as text 23x vs ink #1B1C1A 160x", "red background area approx 0.1%", "exactly one .btn-primary fill #C42221", "all section bands neutral"]
+    }
+  ]
+}

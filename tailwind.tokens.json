@@ -1,0 +1,91 @@
+{
+  "theme": {
+    "extend": {
+      "colors": {
+        "primary": "#1b1c1a",
+        "secondary": "#474743",
+        "tertiary": "#b6171e",
+        "tertiary-cta": "#c42221",
+        "neutral": "#fbf9f5",
+        "neutral-band": "#f2f0ed",
+        "neutral-band-deep": "#e4e2de",
+        "border-hairline": "#e4e2de",
+        "inverse": "#141d27",
+        "on-inverse": "#afc1d2"
+      },
+      "fontFamily": {
+        "display": [
+          "Prata"
+        ],
+        "h2": [
+          "Prata"
+        ],
+        "h3": [
+          "Prata"
+        ],
+        "lede": [
+          "Golos Text"
+        ],
+        "body": [
+          "Golos Text"
+        ],
+        "label": [
+          "IBM Plex Mono"
+        ]
+      },
+      "fontSize": {
+        "display": [
+          "108px",
+          {
+            "letterSpacing": "-1.62px",
+            "fontWeight": "400"
+          }
+        ],
+        "h2": [
+          "48px",
+          {
+            "letterSpacing": "-1.06px",
+            "fontWeight": "400"
+          }
+        ],
+        "h3": [
+          "32px",
+          {
+            "fontWeight": "400"
+          }
+        ],
+        "lede": [
+          "20px",
+          {
+            "fontWeight": "400"
+          }
+        ],
+        "body": [
+          "17px",
+          {
+            "fontWeight": "400"
+          }
+        ],
+        "label": [
+          "12px",
+          {
+            "letterSpacing": "1.44px",
+            "fontWeight": "600"
+          }
+        ]
+      },
+      "borderRadius": {
+        "none": "0px",
+        "full": "9999px"
+      },
+      "spacing": {
+        "xs": "8px",
+        "sm": "16px",
+        "md": "24px",
+        "lg": "32px",
+        "xl": "48px",
+        "2xl": "80px"
+      }
+    }
+  }
+}

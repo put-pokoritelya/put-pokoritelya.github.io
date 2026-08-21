@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#141D27">
 <title>Путь покорителя — подкаст и книга о людях, которые строят будущее</title>
 <meta name="description" content="Интервью с учёными, ректорами, инженерами и основателями технологических компаний. Подкаст и книга о науке, образовании, искусственном интеллекте и людях, которые строят будущее.">
 <meta name="google-site-verification" content="Nq27p0H_KRkqAWATA_ulSF_69PUK7R236WXHxVRLziI">
@@ -55,7 +56,11 @@
 <main id="main">
 
 <div class="hero-sky">
-  <canvas id="sky" aria-hidden="true"></canvas>
+  <video id="reel" class="hero-media" autoplay muted loop playsinline preload="metadata"
+         poster="assets/video/promo-poster.jpg" aria-hidden="true">
+    <source src="assets/video/promo-mobile.mp4" type="video/mp4" media="(max-width:760px)">
+    <source src="assets/video/promo.mp4" type="video/mp4">
+  </video>
   <div class="wrap hero-layout">
     <div class="hero-copy">
       <p class="rubric" data-rise="1">Подкаст и книга</p>
@@ -95,7 +100,7 @@ i.src=x.p;i.alt=x.n;c.querySelector('.summit-meta').textContent=x.m;
 c.querySelector('strong').textContent=x.n;c.querySelector('.summit-role').textContent=x.r;})();
 </script>
   </div>
-  <a class="hero-scroll" href="#vypuski">Листайте</a>
+  <div class="reel-ctrl"><button class="reel-play" type="button" aria-pressed="true" aria-label="Пауза">Пауза</button><button class="reel-sound" type="button" aria-pressed="false">Включить звук</button></div>
 </div>
 
 <div class="orgs">
@@ -114,18 +119,6 @@ c.querySelector('strong').textContent=x.n;c.querySelector('.summit-role').textCo
   <div class="stat"><b data-n="428">428</b><i>цитат в главах</i></div>
   <div class="stat"><b data-n="300">300</b><i>тезисов «возьми с собой»</i></div>
 </div></div>
-
-<section class="reel">
-  <video id="reel" muted loop playsinline preload="none"
-       poster="assets/video/promo-poster.jpg" aria-hidden="true">
-  <source src="assets/video/promo-mobile.mp4" type="video/mp4" media="(max-width:760px)">
-  <source src="assets/video/promo.mp4" type="video/mp4">
-</video>
-  <div class="wrap reel-copy">
-    <a class="btn btn-primary" href="vypuski/">Смотреть выпуски</a>
-  </div>
-  <div class="reel-ctrl"><button class="reel-play" type="button" aria-pressed="true" aria-label="Пауза">Пауза</button><button class="reel-sound" type="button" aria-pressed="false">Включить звук</button></div>
-</section>
 
 <section class="band" id="zachem"><div class="wrap">
   <div class="sec-head wide"><div><p class="rubric">Популяризация науки</p>
@@ -363,25 +356,32 @@ c.querySelector('strong').textContent=x.n;c.querySelector('.summit-role').textCo
     <div><p class="rubric">Голоса</p><h2>Что говорят герои</h2></div>
     <a class="link-more" href="citaty/">Все цитаты →</a>
   </div>
-  <ul class="voices" data-reveal><li>
-      <span class="org">AIRI</span>
-      <blockquote>Во втором классе мне сказали, что математика — не моё. Это очень сильно зацепило.</blockquote>
-      <a href="vypuski/andrey-kuznetsov/">
-        <span class="av"><img src="assets/photo/andrey-kuznetsov.jpg" alt="" loading="lazy" width="88" height="88"></span>
-        <span><b>Андрей Кузнецов</b><i>Директор лаборатории FusionBrain, AIRI (Сбер)</i></span>
-      </a></li><li>
-      <span class="org">МГУ</span>
-      <blockquote>Любой преподаватель должен заниматься научной деятельностью.</blockquote>
-      <a href="vypuski/aleksey-nikitin/">
-        <span class="av"><img src="assets/photo/aleksey-nikitin.jpg" alt="" loading="lazy" width="88" height="88"></span>
-        <span><b>Алексей Никитин</b><i>Доцент кафедры общей математики ВМК МГУ</i></span>
-      </a></li><li>
-      
-      <blockquote>Должно быть много разных входов в математику.</blockquote>
-      <a href="vypuski/nikolay-andreev/">
-        <span class="av"><img src="assets/photo/nikolay-andreev.jpg" alt="" loading="lazy" width="88" height="88"></span>
-        <span><b>Николай Андреев</b><i>Математик</i></span>
-      </a></li></ul>
+  <div class="voices">
+    <div class="vcol" style="--dur:30s"><ul>
+      <li><span class="org">Сколтех</span><blockquote>Вы — это и есть ваш главный научный проект.</blockquote><a href="vypuski/artem-oganov/"><span class="av"><img src="assets/photo/artem-oganov.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Артём Оганов</b><i>Кристаллограф, профессор РАН</i></span></a></li>
+      <li><blockquote>Математика — это наполовину язык, а наполовину способ мышления.</blockquote><a href="vypuski/aleksey-savvateev/"><span class="av"><img src="assets/photo/aleksey-savvateev.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Алексей Савватеев</b><i>Математик</i></span></a></li>
+      <li><span class="org">AIRI</span><blockquote>Во втором классе мне сказали, что математика — не моё. Это очень сильно зацепило.</blockquote><a href="vypuski/andrey-kuznetsov/"><span class="av"><img src="assets/photo/andrey-kuznetsov.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Андрей Кузнецов</b><i>Директор лаборатории FusionBrain, AIRI</i></span></a></li>
+      <li aria-hidden="true"><span class="org">Сколтех</span><blockquote>Вы — это и есть ваш главный научный проект.</blockquote><a href="vypuski/artem-oganov/" tabindex="-1"><span class="av"><img src="assets/photo/artem-oganov.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Артём Оганов</b><i>Кристаллограф, профессор РАН</i></span></a></li>
+      <li aria-hidden="true"><blockquote>Математика — это наполовину язык, а наполовину способ мышления.</blockquote><a href="vypuski/aleksey-savvateev/" tabindex="-1"><span class="av"><img src="assets/photo/aleksey-savvateev.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Алексей Савватеев</b><i>Математик</i></span></a></li>
+      <li aria-hidden="true"><span class="org">AIRI</span><blockquote>Во втором классе мне сказали, что математика — не моё. Это очень сильно зацепило.</blockquote><a href="vypuski/andrey-kuznetsov/" tabindex="-1"><span class="av"><img src="assets/photo/andrey-kuznetsov.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Андрей Кузнецов</b><i>Директор лаборатории FusionBrain, AIRI</i></span></a></li>
+    </ul></div>
+    <div class="vcol md" style="--dur:38s"><ul>
+      <li><span class="org">Минобрнауки</span><blockquote>Нужно всегда уметь учиться.</blockquote><a href="vypuski/olga-petrova/"><span class="av"><img src="assets/photo/olga-petrova.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Ольга Петрова</b><i>Заместитель министра науки и высшего образования РФ</i></span></a></li>
+      <li><blockquote>Если слишком внимательно слушать чужое мнение, можно вообще ничего не начать.</blockquote><a href="vypuski/aleksandr-tormasov/"><span class="av"><img src="assets/photo/aleksandr-tormasov.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Александр Тормасов</b><i>Профессор МФТИ</i></span></a></li>
+      <li><span class="org">ИПУ РАН</span><blockquote>Твой научный руководитель — это твой научный отец.</blockquote><a href="vypuski/yuriy-chehovich/"><span class="av"><img src="assets/photo/yuriy-chehovich.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Юрий Чехович</b><i>Завлабораторией ИПУ РАН</i></span></a></li>
+      <li aria-hidden="true"><span class="org">Минобрнауки</span><blockquote>Нужно всегда уметь учиться.</blockquote><a href="vypuski/olga-petrova/" tabindex="-1"><span class="av"><img src="assets/photo/olga-petrova.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Ольга Петрова</b><i>Заместитель министра науки и высшего образования РФ</i></span></a></li>
+      <li aria-hidden="true"><blockquote>Если слишком внимательно слушать чужое мнение, можно вообще ничего не начать.</blockquote><a href="vypuski/aleksandr-tormasov/" tabindex="-1"><span class="av"><img src="assets/photo/aleksandr-tormasov.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Александр Тормасов</b><i>Профессор МФТИ</i></span></a></li>
+      <li aria-hidden="true"><span class="org">ИПУ РАН</span><blockquote>Твой научный руководитель — это твой научный отец.</blockquote><a href="vypuski/yuriy-chehovich/" tabindex="-1"><span class="av"><img src="assets/photo/yuriy-chehovich.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Юрий Чехович</b><i>Завлабораторией ИПУ РАН</i></span></a></li>
+    </ul></div>
+    <div class="vcol lg" style="--dur:34s"><ul>
+      <li><span class="org">Сколтех</span><blockquote>Нужно поступать не куда, а к кому.</blockquote><a href="vypuski/aleksandr-kvashnin/"><span class="av"><img src="assets/photo/aleksandr-kvashnin.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Александр Квашнин</b><i>Профессор</i></span></a></li>
+      <li><blockquote>В науке всегда есть тот, у кого можно учиться.</blockquote><a href="vypuski/vladimir-maksimenko/"><span class="av"><img src="assets/photo/vladimir-maksimenko.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Владимир Максименко</b><i>Профессор</i></span></a></li>
+      <li><blockquote>Должно быть много разных входов в математику.</blockquote><a href="vypuski/nikolay-andreev/"><span class="av"><img src="assets/photo/nikolay-andreev.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Николай Андреев</b><i>Математик</i></span></a></li>
+      <li aria-hidden="true"><span class="org">Сколтех</span><blockquote>Нужно поступать не куда, а к кому.</blockquote><a href="vypuski/aleksandr-kvashnin/" tabindex="-1"><span class="av"><img src="assets/photo/aleksandr-kvashnin.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Александр Квашнин</b><i>Профессор</i></span></a></li>
+      <li aria-hidden="true"><blockquote>В науке всегда есть тот, у кого можно учиться.</blockquote><a href="vypuski/vladimir-maksimenko/" tabindex="-1"><span class="av"><img src="assets/photo/vladimir-maksimenko.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Владимир Максименко</b><i>Профессор</i></span></a></li>
+      <li aria-hidden="true"><blockquote>Должно быть много разных входов в математику.</blockquote><a href="vypuski/nikolay-andreev/" tabindex="-1"><span class="av"><img src="assets/photo/nikolay-andreev.jpg" alt="" loading="lazy" width="88" height="88"></span><span><b>Николай Андреев</b><i>Математик</i></span></a></li>
+    </ul></div>
+  </div>
 </div></section>
 
 <section class="band"><div class="wrap">

@@ -1,0 +1,81 @@
+{
+  "source": "https://www.quantamagazine.org",
+  "pages_analyzed": [
+    "https://www.quantamagazine.org/",
+    "https://www.quantamagazine.org/mathematics/",
+    "https://www.quantamagazine.org/archive/"
+  ],
+  "tokens": {
+    "spacing": {
+      "scale": [8, 16, 20, 32, 40, 48, 96],
+      "base_unit": 8,
+      "note": "~8px base rhythm; section gaps 32-96px; mixes gap and margin."
+    },
+    "typography": {
+      "families": ["Noe Display", "Merriweather", "Pangram"],
+      "scale": [
+        { "role": "section-title", "size": "45px", "weight": "700", "family": "Noe Display" },
+        { "role": "featured-headline", "size": "40px", "weight": "700", "family": "Noe Display" },
+        { "role": "list-headline", "size": "22px", "weight": "700", "family": "Noe Display" },
+        { "role": "ui-heading", "size": "22px", "weight": "700-800", "family": "Pangram" },
+        { "role": "body-dek", "size": "16-18px", "weight": "400", "family": "Merriweather" },
+        { "role": "byline-date", "size": "13px", "weight": "400", "family": "Pangram", "textTransform": "uppercase" },
+        { "role": "category-kicker", "size": "10px", "weight": "600", "family": "Pangram", "textTransform": "uppercase", "letterSpacing": "2px" }
+      ],
+      "note": "Two serifs + one sans, split by job: Noe Display = headlines/section titles, Merriweather = body/deks, Pangram = all UI chrome."
+    },
+    "colors": [
+      { "role": "surface", "value": "#FFFFFF" },
+      { "role": "surface-band", "value": "#EFEFEF" },
+      { "role": "ink / dark-surface", "value": "#1A1A1A" },
+      { "role": "text-muted", "value": "#6B6B6B" },
+      { "role": "text-muted-2", "value": "#767676" },
+      { "role": "text-faint", "value": "#999999" },
+      { "role": "accent", "value": "#FF8600" },
+      { "role": "text-on-dark", "value": "#FFFFFF" }
+    ],
+    "radius": ["0px", "50%"],
+    "shadows": ["0 2px 5px rgba(0,0,0,0.2)"],
+    "image_ratios": [
+      { "usage": "hero", "ratio": "2.36:1" },
+      { "usage": "list-thumbnail", "ratio": "16:9" }
+    ],
+    "grid": { "max_width": "~1200px", "columns": 3, "note": "list = single-column rows + right rail; homepage card-list 3-col" },
+    "motion": {
+      "easing": "cubic-bezier(0.09, 0.47, 0.18, 0.99)",
+      "durations": ["0.5s transform/opacity/background", "0.2s color/fill"],
+      "focus_visible": true,
+      "reduced_motion": false
+    }
+  },
+  "taste": [
+    {
+      "name": "Two Serifs and a Sans, Split by Job",
+      "trigger": "When a story index must show editorial headlines, readable prose, and dozens of small navigational labels on one screen",
+      "decision": "Ran three typefaces with hard role boundaries — Noe Display for headlines, Merriweather for body/deks, Pangram for all UI chrome — over one serif + one sans or a single superfamily",
+      "reason": "A reader should feel the difference between the writer's voice and the site's plumbing without thinking about it; a tracked 10px Pangram kicker is obviously a label, a Noe headline is obviously the story",
+      "evidence": ["headlines sampled as Noe Display (22/40/45px, wt 700)", "Merriweather dominant by count (558-647x)", "kickers/bylines/nav/sidebar heads all Pangram (10-22px, kicker letter-spacing 2px)", "consistent across home, /mathematics/, /archive/"]
+    },
+    {
+      "name": "Orange Is Reserved for Clickable / You-Are-Here",
+      "trigger": "When a page is a dense wall of equally-weighted headlines needing one signal for interactivity",
+      "decision": "Spent a single warm orange only on the interactive layer — active-nav underline, link/kicker underlines, logo 'magazine', social icons — over using color to rank or decorate content",
+      "reason": "If the accent also colored headings or backgrounds, 'clickable' would lose its meaning; scarcity is what lets one orange underline carry the entire wayfinding load",
+      "evidence": ["#FF8600 present 25-27x but only ~0.2% of surface", "the palette's only hue against pure neutrals #1A1A1A / #6B6B6B / #EFEFEF", "appears identically on all three pages"]
+    },
+    {
+      "name": "Photography Leads, Then Gets Out of the Way",
+      "trigger": "When choosing how much visual drama the chrome itself should carry",
+      "decision": "Front-loaded all spectacle into a full-bleed hero image and kept everything else on white with near-zero shadow and one accent — over a decorated gradient-and-shadow interface competing with the photos",
+      "reason": "Science imagery is the hook; a loud UI around it would fight the very thing meant to pull you in, and long reading needs a calm field",
+      "evidence": ["home hero 2.36:1 edge-to-edge", "#1A1A1A ~49% area on home vs white 35.9%", "section pages drop the image for a quiet textured #EFEFEF band", "shadows minimal/single-layer; cards: [] (rows, not decorated containers)"]
+    },
+    {
+      "name": "Square Photos, Round Only for Who and What",
+      "trigger": "When deciding the corner language for images versus icons",
+      "decision": "Kept every content image hard-cornered and reserved rounding entirely for small circles — avatars and social/action icons — over the ubiquitous rounded-thumbnail card look",
+      "reason": "A square un-styled photo reads as documentary evidence for the story; a circle reliably means 'a person, a brand, or an action', so shape itself becomes a legend",
+      "evidence": ["border-radius: 0 on all 16:9 thumbnails (520x292) and the newsletter input", "50% used 23x exclusively on icons/avatars", "no round-in-round nesting"]
+    }
+  ]
+}

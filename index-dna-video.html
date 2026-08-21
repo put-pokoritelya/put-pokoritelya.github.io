@@ -30,6 +30,20 @@ m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=
 (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
 ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});</script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111307580" width="1" height="1" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<meta name="robots" content="noindex">
+<style>
+/* ЧЕРНОВИК: ролик с ДНК вместо promo в первом экране.
+   Разметка не менялась — заменены только источники у существующего
+   <video id="reel">, поэтому пауза, звук и глушение при
+   prefers-reduced-motion продолжают работать из catalog.js.
+
+   Скрим ослаблен с 60% до 46%: ролик тёмный сам по себе, и под
+   прежней заливкой спираль почти не читалась. Кнопка звука скрыта —
+   звуковой дорожки в ролике нет. */
+.hero-sky::before{background:rgba(20,29,39,.46)}
+.reel-sound{display:none}
+@media(max-width:880px){.hero-sky::before{background:rgba(20,29,39,.62)}}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">К основному содержанию</a>
@@ -50,9 +64,9 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
 
 <div class="hero-sky">
   <video id="reel" class="hero-media" muted loop playsinline preload="none"
-         poster="assets/video/promo-poster.jpg" aria-hidden="true">
-    <source src="assets/video/promo-mobile.mp4" type="video/mp4" media="(max-width:760px)">
-    <source src="assets/video/promo.mp4" type="video/mp4">
+         poster="assets/video/dna-poster.jpg" aria-hidden="true">
+    <source src="assets/video/dna-mobile.mp4" type="video/mp4" media="(max-width:760px)">
+    <source src="assets/video/dna.mp4" type="video/mp4">
   </video>
   <div class="wrap hero-layout">
     <div class="hero-copy">

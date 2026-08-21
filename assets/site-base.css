@@ -140,13 +140,11 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
    декоративной смены погоды. Дальше по странице сайт снова «бумажный». */
 .hero-sky{position:relative;color:var(--paper);border-bottom:1px solid var(--rule);overflow:hidden;
   background:#141d27}
-.hero-sky canvas{position:absolute;inset:0;width:100%;height:100%}
-/* Подложка под текстом сохраняет контраст, не скрывая сеть и рельеф.
-   Затемнение слабеет слева направо, чтобы композиция осталась видна. */
+.hero-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+/* Плоский navy-скрим держит контраст текста над видео. Сплошная заливка,
+   не градиент, — печатная плоскость системы сохраняется. */
 .hero-sky::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(96deg,rgba(20,29,39,.95) 0%,rgba(20,29,39,.86) 34%,
-             rgba(20,29,39,.42) 58%,rgba(20,29,39,.12) 82%),
-             linear-gradient(to top,rgba(20,29,39,.6),transparent 42%)}
+  background:rgba(20,29,39,.6)}
 .hero-sky .wrap{position:relative;z-index:2;min-height:min(86vh,760px);
   padding-top:72px;padding-bottom:112px;max-width:1240px}
 .hero-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);gap:clamp(44px,7vw,100px);align-items:center}
@@ -519,9 +517,18 @@ section{padding:78px 0}
 @media(max-width:600px){.works li{padding:20px}}
 
 /* ---- голоса: карточки с цитатой, как ряд отзывов ---- */
-.voices{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
-  border:1px solid var(--rule);list-style:none}
-.voices li{background:var(--paper);padding:30px 28px;display:flex;flex-direction:column;gap:16px}
+.voices{display:flex;justify-content:center;gap:24px;list-style:none;max-height:740px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent,#000 16%,#000 84%,transparent);
+          mask-image:linear-gradient(to bottom,transparent,#000 16%,#000 84%,transparent)}
+/* Бегущие колонки: список в каждой продублирован ×2 в разметке, поэтому
+   translateY(-50%) даёт бесшовную петлю. Затухание по краям — mask
+   (прозрачность, не цветовой градиент). */
+.vcol{flex:1;max-width:340px;overflow:hidden}
+.vcol>ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:24px;
+  animation:vmarquee var(--dur,34s) linear infinite;will-change:transform}
+@keyframes vmarquee{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.voices li{background:var(--paper);border:1px solid var(--rule);
+  padding:26px 24px;display:flex;flex-direction:column;gap:14px}
 .voices .org{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--accent)}
 .voices blockquote{font-family:var(--serif);font-size:19px;line-height:1.42;flex:1}
@@ -538,8 +545,9 @@ section{padding:78px 0}
 .voices a:hover b{color:var(--accent)}
 .voices i{display:block;font-style:normal;font-size:12.5px;color:var(--ink-muted);
   margin-top:2px;line-height:1.35}
-@media(max-width:960px){.voices{grid-template-columns:1fr 1fr}}
-@media(max-width:640px){.voices{grid-template-columns:1fr}}
+@media(max-width:1024px){.vcol.lg{display:none}}
+@media(max-width:680px){.vcol.md{display:none}.vcol{max-width:none}}
+@media(prefers-reduced-motion:reduce){.vcol>ul{animation:none}}
 
 /* ---- герои ---- */
 .guests{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px;list-style:none}

@@ -30,6 +30,26 @@ m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=
 (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
 ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});</script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111307580" width="1" height="1" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<meta name="robots" content="noindex">
+<style>
+/* ЧЕРНОВИК: рендер ДНК картинкой в первом экране.
+   Один в один то, что на референсе, потому что это он и есть.
+
+   mix-blend-mode:screen превращает чёрный фон рендера в прозрачный —
+   свечение ложится на navy без видимого прямоугольника и без градиентной
+   маски. Источник вертикальный (720×1280), поэтому картинка стоит справа
+   в свою натуральную высоту, а не растягивается на всю ширину: апскейл
+   с 720 до 1920 дал бы мыло. */
+.hero-media,.reel-ctrl{display:none}
+.hero-sky::before{background:rgba(20,29,39,.30)}
+.hero-dna{position:absolute;top:0;right:0;height:100%;width:auto;max-width:52%;
+  object-fit:cover;object-position:center;z-index:0;pointer-events:none;
+  mix-blend-mode:screen;opacity:.95}
+@media(max-width:880px){
+  .hero-dna{max-width:100%;width:100%;opacity:.5}
+  .hero-sky::before{background:rgba(20,29,39,.55)}
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">К основному содержанию</a>
@@ -49,6 +69,11 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
 <main id="main">
 
 <div class="hero-sky">
+  <picture>
+    <source media="(max-width:880px)" srcset="assets/hero/dna-480.webp" type="image/webp">
+    <img class="hero-dna" src="assets/hero/dna.webp" alt="" aria-hidden="true"
+         width="720" height="1280" fetchpriority="high" decoding="async">
+  </picture>
   <video id="reel" class="hero-media" muted loop playsinline preload="none"
          poster="assets/video/promo-poster.jpg" aria-hidden="true">
     <source src="assets/video/promo-mobile.mp4" type="video/mp4" media="(max-width:760px)">

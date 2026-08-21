@@ -30,6 +30,29 @@ m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=
 (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
 ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});</script>
 <noscript><div><img src="https://mc.yandex.ru/watch/111307580" width="1" height="1" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<meta name="robots" content="noindex">
+<style>
+/* ЧЕРНОВИК: центрированная композиция первого экрана.
+   Только раскладка. Шрифты, цвета, скругления и скрим не тронуты —
+   всё наследуется из site-base.css. Файл нужен для сравнения рядом
+   с основным index.html и в продакшн не идёт. */
+.hero-layout{grid-template-columns:minmax(0,1fr);justify-items:center;gap:clamp(40px,5vw,64px)}
+.hero-copy{max-width:860px;text-align:center}
+.hero-sky .rubric{justify-content:center}
+.hero-sky h1{margin-top:26px}
+.hero-sky .hero-what{max-width:58ch;margin-left:auto;margin-right:auto}
+.creed{justify-content:center}
+.cta-row{justify-content:center}
+.summit-card{justify-self:center;align-self:center;max-width:520px;width:100%;text-align:left}
+.hero-sky .wrap{padding-bottom:128px}
+@media(max-width:880px){
+  .summit-card{justify-self:center}
+}
+@media(max-width:560px){
+  .hero-sky .cta-row{justify-items:center}
+  .creed span+span::before{margin:0 10px}
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">К основному содержанию</a>
@@ -59,8 +82,7 @@ ym(111307580,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webv
       <p class="rubric" data-rise="1">Подкаст и книга</p>
       <h1 data-rise="2"><span class="ln">Путь</span> <span class="ln">Покорителя</span></h1>
       <p class="hero-what" data-rise="3">Разговоры с людьми, которые развивают науку,
-        образование и технологии в России. И книга, в которой герои обращаются
-        к читателю сами — от первого лица, без вопросов ведущего и пересказа.</p>
+        образование и технологии в России. И книга, где герои говорят сами — от первого лица.</p>
       <p class="creed" data-rise="3"><span>Знание — мышление</span><span>Среда — человек</span><span>Дисциплина — характер</span><span>Ответственность — системы</span></p>
       <div class="cta-row" data-rise="4">
         <a class="btn btn-primary" href="vypuski/">Смотреть выпуски</a>

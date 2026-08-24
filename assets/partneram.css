@@ -1,16 +1,19 @@
 .partner-page{--partner-dark:#141d27;--partner-dark-2:#1d2a38;--partner-blue:#7cc7e0}
-.partner-page section{padding:clamp(64px,8vw,108px) 0}
+.partner-page section{padding:clamp(52px,6vw,84px) 0}
+.partner-page .partner-hero{padding:clamp(28px,3vw,44px) 0 clamp(32px,4vw,52px)}
 .partner-page .rubric{color:inherit}
 
 .partner-hero{position:relative;overflow:hidden;background:var(--partner-dark);color:var(--paper);border-bottom:1px solid rgba(124,199,224,.2)}
 .partner-hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(124,199,224,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,199,224,.06) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(90deg,transparent 6%,#000 42%,#000 100%)}
 .partner-hero::after{content:"";position:absolute;width:520px;height:520px;right:-180px;top:-190px;border:1px solid rgba(124,199,224,.16);border-radius:50%;box-shadow:0 0 0 90px rgba(124,199,224,.025),0 0 0 180px rgba(124,199,224,.018)}
-.partner-hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr);gap:clamp(50px,8vw,130px);align-items:end;min-height:690px}
-.partner-hero-copy{padding-top:24px}
+/* Высота первого экрана считается от окна, а не фиксируется: на ноутбуке
+   в поле зрения должны попадать кнопки, иначе страница выглядит как заставка. */
+.partner-hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr);gap:clamp(40px,6vw,110px);align-items:end;min-height:min(560px,68vh)}
+.partner-hero-copy{padding-top:16px}
 .partner-hero .rubric{color:#9fb3c8}
-.partner-hero h1{font-size:clamp(48px,6.8vw,92px);max-width:12ch;margin-top:30px;letter-spacing:-.035em}
-.partner-hero-lede{font-size:clamp(19px,2vw,25px);line-height:1.5;max-width:58ch;color:#d7e0e8;margin-top:34px;text-wrap:pretty}
-.partner-hero-note{font-size:16px;line-height:1.65;color:#9fb3c8;max-width:62ch;margin-top:18px}
+.partner-hero h1{font-size:clamp(36px,4.4vw,58px);max-width:19ch;margin-top:18px;line-height:1.06;letter-spacing:-.03em}
+.partner-hero-lede{font-size:clamp(18px,1.6vw,22px);line-height:1.5;max-width:58ch;color:#d7e0e8;margin-top:22px;text-wrap:pretty}
+.partner-hero-note{font-size:16px;line-height:1.6;color:#9fb3c8;max-width:62ch;margin-top:14px}
 .partner-hero .btn{border-color:rgba(251,249,245,.6);color:var(--paper)}
 .partner-hero .btn-primary{border-color:var(--accent-bright)}
 .partner-hero .btn-ghost{background:rgba(251,249,245,.04)}

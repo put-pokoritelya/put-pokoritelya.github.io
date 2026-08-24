@@ -1382,3 +1382,51 @@ function plural(n, one, few, many) {
   if (state.sort !== 'fam') order();
   apply(false);
 })();
+
+/* Измерение ключевых действий без персональных данных. Идентификаторы должны
+   быть заведены как JavaScript-события в Яндекс Метрике с теми же именами. */
+(function () {
+  var counter = 111842396;
+  var episodePlatforms = /(^|\.)(vk\.com|vkvideo\.ru|youtube\.com|youtu\.be|rutube\.ru|podster\.fm|music\.yandex\.ru|podcasts\.apple\.com)$/;
+
+  function send(goal, target) {
+    if (!goal || typeof window.ym !== 'function') return;
+    var params = { page: location.pathname };
+    if (target) params.destination = target;
+    window.ym(counter, 'reachGoal', goal, params);
+  }
+
+  function goalForLink(link) {
+    var url;
+    try { url = new URL(link.href, location.href); } catch (e) { return null; }
+
+    if (url.hostname === 't.me' || url.hostname === 'telegram.me') {
+      return ['telegram_click', url.hostname];
+    }
+    if (url.origin !== location.origin && episodePlatforms.test(url.hostname)) {
+      return ['watch_episode', url.hostname];
+    }
+    if (url.origin !== location.origin) return null;
+
+    var path = url.pathname.replace(/\/{2,}/g, '/');
+    if (/^\/s-chego-nachat\/?$/.test(path)) return ['start_route', path];
+    if (/^\/vypuski\/[^/]+\/?$/.test(path)) return ['episode_open', path];
+    if (/^\/kniga\/[^/]+\/?$/.test(path)) return ['chapter_open', path];
+    if (/^\/partneram\/?$/.test(path)) return ['partner_open', path];
+    if (/^\/stat-geroem\/?$/.test(path)) return ['hero_apply', path];
+    if (/^\/aleksandr-ermolchev\/?$/.test(path)) return ['author_open', path];
+    if (/^\/(media-kit|vystupleniya)\/?$/.test(path)) return ['media_kit_open', path];
+    return null;
+  }
+
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('a[href]');
+    if (!link) return;
+    var match = goalForLink(link);
+    if (match) send(match[0], match[1]);
+  }, true);
+
+  document.addEventListener('play', function (event) {
+    if (event.target && event.target.tagName === 'VIDEO') send('video_play');
+  }, true);
+})();

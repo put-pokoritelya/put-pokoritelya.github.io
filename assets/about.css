@@ -3,12 +3,12 @@
 .about-page ::selection{background:var(--accent-bright);color:#fff}
 .about-page a{text-underline-offset:4px}
 
-.about-hero{position:relative;overflow:hidden;background:var(--about-dark);color:var(--paper);border-bottom:1px solid rgba(124,199,224,.18)}
+.about-hero{position:relative;overflow:hidden;background:var(--about-dark);color:var(--paper);border-bottom:1px solid rgba(124,199,224,.18);padding:clamp(52px,6vw,84px) 0}
 .about-hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 78% 18%,rgba(124,199,224,.12) 0 1px,transparent 2px),radial-gradient(circle at 87% 36%,rgba(124,199,224,.18) 0 2px,transparent 3px),radial-gradient(circle at 69% 62%,rgba(124,199,224,.1) 0 1px,transparent 2px);background-size:210px 210px,270px 270px,330px 330px}
 .about-hero::after{content:"";position:absolute;right:-8vw;top:12%;width:48vw;height:1px;background:rgba(124,199,224,.14);transform:rotate(-22deg);box-shadow:0 100px 0 rgba(124,199,224,.1),0 200px 0 rgba(124,199,224,.07)}
-.about-hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:clamp(60px,9vw,140px);align-items:end;min-height:min(82vh,760px)}
-.about-hero-copy{padding-top:30px}.about-hero h1{font-size:clamp(52px,7.5vw,100px);line-height:1.02;max-width:12ch;letter-spacing:-.035em}.about-hero-copy>p{font-size:clamp(19px,2vw,24px);line-height:1.55;color:#cbd6df;max-width:56ch;margin-top:32px}
-.about-hero-actions{display:flex;align-items:center;gap:28px;flex-wrap:wrap;margin-top:38px}.about-text-link{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#cbd6df;text-decoration:none;border-bottom:1px solid rgba(124,199,224,.5);padding-bottom:5px}.about-text-link:hover{color:var(--signal)}
+.about-hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:clamp(60px,9vw,140px);align-items:center;min-height:0}
+.about-hero-copy{padding-top:0}.about-hero h1{font-size:clamp(50px,5.5vw,78px);line-height:1.04;max-width:16ch;letter-spacing:-.03em}.about-hero-copy>p{font-size:clamp(18px,1.7vw,22px);line-height:1.5;color:#cbd6df;max-width:56ch;margin-top:26px}
+.about-hero-actions{display:flex;align-items:center;gap:28px;flex-wrap:wrap;margin-top:30px}.about-text-link{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#cbd6df;text-decoration:none;border-bottom:1px solid rgba(124,199,224,.5);padding-bottom:5px}.about-text-link:hover{color:var(--signal)}
 .about-definition{border-top:2px solid var(--signal);padding:28px 0 0}.about-definition strong{display:block;font-family:var(--serif);font-size:clamp(24px,2.5vw,34px);font-weight:400;line-height:1.35}.about-definition>p{color:#aebdca;font-size:15px;line-height:1.65;margin-top:18px}.about-definition ol{list-style:none;margin-top:34px;border-top:1px solid rgba(251,249,245,.16)}.about-definition li{padding:13px 0;border-bottom:1px solid rgba(251,249,245,.16);font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#aebdca}.about-definition li::before{content:"";display:inline-block;width:20px;height:1px;background:var(--signal);vertical-align:middle;margin-right:12px}
 .about-hero a:focus-visible,.about-close a:focus-visible{outline-color:var(--signal)}
 
@@ -31,6 +31,6 @@
   .about-system-list article{grid-template-columns:minmax(190px,.65fr) 1fr}.about-system-list a{grid-column:2;justify-self:start}
 }
 @media(max-width:700px){
-  .about-page section{padding:58px 0}.about-hero-grid{padding-top:30px;padding-bottom:20px}.about-hero h1{font-size:clamp(44px,13vw,64px)}.about-hero-copy>p{font-size:18px}.about-hero-actions{display:grid;gap:18px}.about-hero-actions .btn{justify-content:center}.about-heading{margin-bottom:34px}.about-heading h2{font-size:clamp(34px,10vw,48px)}
+  .about-page section{padding:58px 0}.about-hero{padding:42px 0 54px}.about-hero-grid{padding:0 20px}.about-hero h1{font-size:clamp(42px,11.8vw,54px)}.about-hero-copy>p{font-size:18px}.about-hero-actions{display:grid;gap:18px}.about-hero-actions .btn{justify-content:center}.about-heading{margin-bottom:34px}.about-heading h2{font-size:clamp(34px,10vw,48px)}
   .about-system-list article{grid-template-columns:1fr;gap:16px}.about-system-list a{grid-column:1;margin-top:4px}.about-numbers{grid-template-columns:1fr 1fr}.about-portrait-line{grid-template-columns:1fr}.about-portrait-line img{aspect-ratio:16/10}.about-horizon article{grid-template-columns:1fr;gap:10px}.about-close-actions .btn{width:100%;justify-content:center}
 }

@@ -1,0 +1,44 @@
+name: Photo V2 rollback
+
+on:
+  push:
+    branches:
+      - photo-v2-rollback
+    paths:
+      - 'scripts/rollback_photo_v2.py'
+      - '.github/workflows/photo-v2-rollback.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rollback:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: photo-v2-rollback
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Restore original portrait references
+        run: python scripts/rollback_photo_v2.py
+
+      - name: Commit rollback
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add . ':!scripts/rollback_photo_v2.py' ':!.github/workflows/photo-v2-rollback.yml'
+          if git diff --cached --quiet; then
+            echo "No rollback changes"
+          else
+            git commit -m "Photo v2: restore original portrait references [rollback]"
+            git push origin HEAD:photo-v2-rollback
+          fi

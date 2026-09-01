@@ -1,0 +1,31 @@
+name: Disable soon photo filter
+on:
+  push:
+    paths:
+      - '.github/workflows/disable-soon-photo-filter.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show upcoming hero photos without global editorial filter
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('assets/site-base.css')
+          s=p.read_text()
+          marker='img[src*="assets/photo/"]{filter:var(--photo-tone)}'
+          replacement='img[src*="assets/photo/"]{filter:var(--photo-tone)}\nimg[src*="assets/photo/soon/"]{filter:none}'
+          if replacement in s:
+              raise SystemExit('Already patched')
+          if marker not in s:
+              raise SystemExit('Global photo filter rule not found; aborting safely')
+          p.write_text(s.replace(marker,replacement,1))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/site-base.css
+          git commit -m "Главная: показать оригинальные фото будущих героев без фильтра"
+          git push

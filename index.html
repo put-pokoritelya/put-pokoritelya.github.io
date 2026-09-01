@@ -71,16 +71,15 @@
       </div>
       <p data-rise="4" style="margin-top:18px;font-size:14px;color:#C9D4DF">Автор и ведущий — <a href="aleksandr-ermolchev/" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(201,212,223,.45)">Александр Ермольчев</a></p>
     </div>
-    <div class="summit-card" data-rise="4" aria-label="Скоро на канале: Сергей Самойленко">
+    <div class="summit-card" data-rise="4" aria-label="Скоро новые выпуски: Сергей Самойленко">
       <span class="summit-head">
-        <span class="summit-label">Скоро на канале</span>
-        <span aria-hidden="true">↗</span>
+        <span class="summit-badge">Скоро новые выпуски</span>
       </span>
       <span class="summit-photo"><img src="assets/photo/soon/sergey-samoylenko.jpg" alt="Сергей Самойленко" width="480" height="360" fetchpriority="high"></span>
       <span class="summit-meta">Уже записан · Студия МФТИ</span>
       <strong>Сергей Самойленко</strong>
       <span class="summit-role">Вулканолог, кандидат физико-математических наук</span>
-      <a class="summit-action" href="https://t.me/put_pokoritelya" target="_blank" rel="noopener noreferrer">Перейти в Telegram <span aria-hidden="true">↗</span></a>
+      <a class="summit-action" href="https://t.me/put_pokoritelya" target="_blank" rel="noopener noreferrer">Следите за выходом в Telegram <span aria-hidden="true">↗</span></a>
     </div>
     <script>
     (function(){
@@ -101,7 +100,7 @@
         var apply=function(){
           card.classList.add('is-switching');
           setTimeout(function(){
-            img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;role.textContent=g.r;card.setAttribute('aria-label','Скоро на канале: '+g.n);
+            img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;role.textContent=g.r;card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);
             requestAnimationFrame(function(){card.classList.remove('is-switching');});
           },180);
         };

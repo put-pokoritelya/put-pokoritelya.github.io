@@ -107,9 +107,10 @@
         };
         if(preload.complete){apply();}else{preload.onload=apply;}
       }
-      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-        setInterval(function(){i=(i+1)%guests.length;show(i);},7000);
-      }
+      function advance(){i=(i+1)%guests.length;show(i);}
+      /* Контент должен меняться даже при Reduce Motion; сама анимация при этом
+         отключается глобальными CSS-правилами accessibility. */
+      setTimeout(function(){advance();setInterval(advance,6000);},2500);
     })();
     </script>
   </div>

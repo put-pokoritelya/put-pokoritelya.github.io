@@ -859,7 +859,7 @@ section{padding:78px 0}
 /* ---- список глав ---- */
 .ch-list{list-style:none;border-top:1px solid var(--rule)}
 .ch-list li{border-bottom:1px solid var(--rule)}
-.ch-list a{display:grid;grid-template-columns:auto 1fr auto;gap:28px;align-items:baseline;
+.ch-list a{display:grid;grid-template-columns:56px 1fr auto;gap:28px;align-items:baseline;
   padding:26px 0;text-decoration:none;transition:padding .2s}
 .ch-list a:hover{padding-left:12px}
 .ch-list .n{font-family:var(--serif);font-size:32px;color:var(--accent);line-height:1}
@@ -1185,3 +1185,10 @@ html,body{overflow-x:hidden}
   letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
 @media(max-width:880px){.author-hero{grid-template-columns:1fr;gap:32px;padding:40px 20px 8px}
   .author-portrait{max-width:420px}}
+
+/* --- мобильные правки после аудита 02.09 --- */
+@media(max-width:560px){
+  .filters .search{flex:1 1 100%;min-width:0}
+  .ep-sec{margin-bottom:32px}
+  .ch-list a{grid-template-columns:44px 1fr auto;gap:14px}
+}

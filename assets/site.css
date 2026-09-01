@@ -1,4 +1,4 @@
-@import url('./site-base.css?v=20260901-mobile-safari-hotfix-2');
+@import url('./site-base.css?v=20260902-audit');
 
 /* У summit CTA базовый браузерный underline накладывался на border-bottom,
    из-за чего ссылка выглядела с двойной линией. Оставляем только фирменную

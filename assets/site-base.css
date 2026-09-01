@@ -1184,21 +1184,3 @@ html,body{overflow-x:hidden}
   letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted)}
 @media(max-width:880px){.author-hero{grid-template-columns:1fr;gap:32px;padding:40px 20px 8px}
   .author-portrait{max-width:420px}}
-
-/* --- Скоро: анонсы записанных выпусков --- */
-#skoro .sec-lede{margin-top:10px}
-.soon-grid{list-style:none;margin-top:30px;display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:34px 28px}
-.soon-card b{display:block;font-family:var(--serif);font-size:21px;font-weight:700;
-  line-height:1.2;margin-top:14px}
-.soon-card i{display:block;font-style:normal;font-size:13.5px;color:var(--ink-muted);
-  margin-top:5px;line-height:1.4}
-.soon-card p{font-size:14.5px;line-height:1.55;color:var(--ink-soft,var(--ink));
-  margin-top:10px}
-.soon-ph{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;
-  background:var(--paper-alt)}
-.soon-ph img{width:100%;height:100%;object-fit:cover;display:block}
-.soon-ph em{position:absolute;top:10px;left:10px;font-style:normal;
-  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;background:var(--accent);color:#fff;padding:4px 9px}
-@media(max-width:700px){.soon-grid{grid-template-columns:1fr;gap:30px}}

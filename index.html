@@ -82,6 +82,36 @@
       <span class="summit-role">Ректор Университета Иннополис</span>
       <a class="summit-action" href="https://t.me/put_pokoritelya" target="_blank" rel="noopener noreferrer">Перейти в Telegram <span aria-hidden="true">↗</span></a>
     </div>
+    <script>
+    (function(){
+      var card=document.querySelector('.summit-card');
+      if(!card)return;
+      var guests=[
+        {p:'assets/photo/soon/aleksandr-gasnikov.jpg',n:'Александр Гасников',r:'Ректор Университета Иннополис',m:'Уже записан · Студия МФТИ'},
+        {p:'assets/photo/soon/sergey-samoylenko.jpg',n:'Сергей Самойленко',r:'Вулканолог, кандидат физико-математических наук',m:'Уже записан · Студия МФТИ'},
+        {p:'assets/photo/soon/elena-mironenko.jpg',n:'Елена Мироненко',r:'Генеральный директор музея «АТОМ»',m:'Уже записана · Студия МФТИ'},
+        {p:'assets/photo/soon/alina-osmakova.jpg',n:'Алина Осьмакова',r:'Заместитель директора ФИЦ Биотехнологии РАН',m:'Уже записана · Студия МФТИ'},
+        {p:'assets/photo/soon/aleksey-egorov.jpg',n:'Алексей Егоров',r:'Журналист, автор и ведущий телеканала «Наука»',m:'Уже записан · Студия МФТИ'}
+      ];
+      guests.slice(1).forEach(function(g){var im=new Image();im.src=g.p;});
+      var i=0, img=card.querySelector('.summit-photo img'), meta=card.querySelector('.summit-meta'), name=card.querySelector('strong'), role=card.querySelector('.summit-role');
+      function show(next){
+        var g=guests[next], preload=new Image();
+        preload.src=g.p;
+        var apply=function(){
+          card.classList.add('is-switching');
+          setTimeout(function(){
+            img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;role.textContent=g.r;card.setAttribute('aria-label','Скоро на канале: '+g.n);
+            requestAnimationFrame(function(){card.classList.remove('is-switching');});
+          },180);
+        };
+        if(preload.complete){apply();}else{preload.onload=apply;}
+      }
+      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        setInterval(function(){i=(i+1)%guests.length;show(i);},7000);
+      }
+    })();
+    </script>
   </div>
   <a class="hero-scroll" href="#zachem">Листайте</a>
 </div>

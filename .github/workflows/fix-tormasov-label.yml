@@ -1,0 +1,31 @@
+name: Fix Tormasov label
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-tormasov-label.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch label
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          s2=s.replace('<span class="summit-label">Новый разговор</span>','<span class="summit-label">Разговор</span>',1)
+          old='"n": "Александр Тормасов", "r": "Профессор", "m": "Сезон 2 · Выпуск 20 · 50 мин", "new": 1'
+          new='"n": "Александр Тормасов", "r": "Профессор", "m": "Сезон 2 · Выпуск 20 · 50 мин", "new": 0'
+          s2=s2.replace(old,new,1)
+          if s2==s:
+              raise SystemExit('Nothing changed; aborting safely')
+          p.write_text(s2)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Главная: Тормасов — обычный разговор"
+          git push

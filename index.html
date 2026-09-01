@@ -90,8 +90,8 @@
 (function(){var b=document.getElementById('summit-pool'),c=document.querySelector('.summit-card');
 if(!b||!c)return;var p;try{p=JSON.parse(b.textContent)}catch(e){return}
 if(!p||p.length<2)return;var sn=p.filter(function(e){return e.soon}),old=p.filter(function(e){return !e.soon});var src=(sn.length&&Math.random()<.5)?sn:old;var x=src[Math.floor(Math.random()*src.length)],i=c.querySelector('.summit-photo img');
-if(!i)return;c.href=x.u;c.setAttribute('aria-label','Выпуск: '+x.n);
-c.querySelector('.summit-label').textContent=x.soon?'Скоро на канале':(x.new?'Новый разговор':'Разговор');var act=c.querySelector('.summit-action');if(act&&x.soon){act.childNodes[0].textContent='Премьера скоро ';}
+if(!i)return;if(x.soon){c.removeAttribute('href');c.style.cursor='default';c.setAttribute('aria-label','Скоро на канале: '+x.n);}else{c.href=x.u;c.style.cursor='';c.setAttribute('aria-label','Выпуск: '+x.n);}
+var label=c.querySelector('.summit-label');label.textContent=x.soon?'Скоро на канале':(x.new?'Новый разговор':'Разговор');var act=c.querySelector('.summit-action');if(act&&x.soon){act.childNodes[0].textContent='Перейти в Telegram ';act.style.cursor='pointer';act.setAttribute('role','link');act.setAttribute('tabindex','0');var go=function(e){e.preventDefault();e.stopPropagation();window.open('https://t.me/put_pokoritelya','_blank','noopener');};act.addEventListener('click',go);act.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){go(e);}});}
 i.src=x.p;i.alt=x.n;c.querySelector('.summit-meta').textContent=x.m;
 c.querySelector('strong').textContent=x.n;c.querySelector('.summit-role').textContent=x.r;})();
 </script>

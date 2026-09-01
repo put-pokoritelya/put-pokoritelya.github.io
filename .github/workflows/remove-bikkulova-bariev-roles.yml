@@ -1,0 +1,85 @@
+name: Remove Bikkulova and Bariev roles
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-bikkulova-bariev-roles.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove current roles from visible metadata
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          people = [
+              {
+                  'name': 'Гульнара Биккулова',
+                  'roles': ['Директор Университета НЕЙМАРК', 'Директор университета НЕЙМАРК'],
+                  'data_search_old': 'гульнара биккулова директор университета неймарк ответственность',
+                  'data_search_new': 'гульнара биккулова ответственность',
+                  'data_q_old': 'гульнара биккулова директор университета неймарк неймарк',
+                  'data_q_new': 'гульнара биккулова неймарк',
+              },
+              {
+                  'name': 'Искандер Бариев',
+                  'roles': ['Директор Университета Иннополис'],
+                  'data_search_old': 'искандер бариев директор университета иннополис ответственность',
+                  'data_search_new': 'искандер бариев ответственность',
+                  'data_q_old': 'искандер бариев директор университета иннополис иннополис',
+                  'data_q_new': 'искандер бариев иннополис',
+              },
+          ]
+
+          text_exts = {'.html', '.json', '.xml'}
+          changed = []
+
+          for p in Path('.').rglob('*'):
+              if not p.is_file() or p.suffix.lower() not in text_exts:
+                  continue
+              try:
+                  s = p.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              old = s
+
+              for person in people:
+                  name = person['name']
+                  s = s.replace(person['data_search_old'], person['data_search_new'])
+                  s = s.replace(person['data_q_old'], person['data_q_new'])
+
+                  for role in person['roles']:
+                      # Видимые строки должности в карточках, указателе и на странице выпуска.
+                      s = s.replace(f'<span class="role">{role}</span>', '')
+                      s = s.replace(f'<span class="gn-r">{role}</span>', '')
+                      s = s.replace(f'<p class="ep-role">{role}</p>', '')
+                      s = s.replace(f'      <p class="ep-role">{role}</p>\n', '')
+
+                      # Schema.org: имя остаётся, jobTitle удаляется.
+                      s = s.replace(f', "jobTitle": "{role}"', '')
+
+                      # Если имя и должность были слиты в одной строке оглавления/подписи.
+                      s = s.replace(f'{name} · {role}', name)
+
+                      # Глобальный поисковый индекс: поле должности оставляем пустым.
+                      s = s.replace(f'"t":"{name}","s":"{role}"', f'"t":"{name}","s":""')
+
+              if s != old:
+                  p.write_text(s, encoding='utf-8')
+                  changed.append(str(p))
+
+          print('Changed files:')
+          print('\n'.join(changed))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Убрать должности Гульнары Биккуловой и Искандера Бариева"
+            git push
+          fi

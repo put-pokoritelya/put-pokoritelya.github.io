@@ -1,0 +1,29 @@
+name: Fix soon card links
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-soon-card-links.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch upcoming cards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old="if(!i)return;c.href=x.u;c.setAttribute('aria-label','Выпуск: '+x.n);\nc.querySelector('.summit-label').textContent=x.soon?'Скоро на канале':(x.new?'Новый разговор':'Разговор');var act=c.querySelector('.summit-action');if(act&&x.soon){act.childNodes[0].textContent='Премьера скоро ';}"
+          new="if(!i)return;if(x.soon){c.removeAttribute('href');c.style.cursor='default';c.setAttribute('aria-label','Скоро на канале: '+x.n);}else{c.href=x.u;c.style.cursor='';c.setAttribute('aria-label','Выпуск: '+x.n);}\nvar label=c.querySelector('.summit-label');label.textContent=x.soon?'Скоро на канале':(x.new?'Новый разговор':'Разговор');var act=c.querySelector('.summit-action');if(act&&x.soon){act.childNodes[0].textContent='Перейти в Telegram ';act.style.cursor='pointer';act.setAttribute('role','link');act.setAttribute('tabindex','0');var go=function(e){e.preventDefault();e.stopPropagation();window.open('https://t.me/put_pokoritelya','_blank','noopener');};act.addEventListener('click',go);act.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){go(e);}});}"
+          if old not in s:
+              raise SystemExit('Target block not found; aborting safely')
+          p.write_text(s.replace(old,new,1))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Главная: карточки будущих выпусков без ссылки, CTA ведёт в Telegram"
+          git push

@@ -1,0 +1,80 @@
+name: Remove Prohorenko Feofanov Arbuzov roles
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-prohorenko-feofanov-arbuzov-roles.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove roles everywhere
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          people = [
+              ('Ксения Прохоренко', 'Директор Единого центра карьеры'),
+              ('Владислав Феофанов', 'Руководитель спецпроектов АНО «ЦУРС», Минспорта НО'),
+              ('Виталий Арбузов', 'Генеральный директор INPRO.digital'),
+          ]
+
+          text_exts = {'.html', '.json', '.xml'}
+          changed = []
+
+          for p in Path('.').rglob('*'):
+              if not p.is_file() or p.suffix.lower() not in text_exts:
+                  continue
+              try:
+                  s = p.read_text(encoding='utf-8')
+              except UnicodeDecodeError:
+                  continue
+              old = s
+
+              for name, role in people:
+                  # Основные визуальные подписи должности.
+                  for tag in (
+                      f'<span class="role">{role}</span>',
+                      f'<span class="gn-r">{role}</span>',
+                      f'<p class="ep-role">{role}</p>',
+                      f'<i>{role}</i>',
+                      f'<span class="r">{role}</span>',
+                  ):
+                      s = s.replace(tag, '')
+
+                  # Schema.org / поисковый индекс / оглавление.
+                  s = s.replace(f', "jobTitle": "{role}"', '')
+                  s = s.replace(f'"t":"{name}","s":"{role}"', f'"t":"{name}","s":""')
+                  s = s.replace(f'{name} · {role}', name)
+
+                  # Убираем должность из описаний, если она использована как вводная перед тире.
+                  s = s.replace(f'{role} — ', '')
+
+                  # Убираем должность только из поисковых data-* атрибутов, не трогая произвольный текст.
+                  role_l = role.lower()
+                  def clean_attr(m):
+                      val = m.group(2)
+                      val = val.replace(role_l, '')
+                      val = re.sub(r'\s{2,}', ' ', val).strip()
+                      return m.group(1) + val + m.group(3)
+                  s = re.sub(r'((?:data-search|data-q)=")([^"]*)(")', clean_attr, s)
+
+              if s != old:
+                  p.write_text(s, encoding='utf-8')
+                  changed.append(str(p))
+
+          print('Changed files:')
+          print('\n'.join(changed))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Убрать должности Прохоренко, Феофанова и Арбузова"
+            git push
+          fi

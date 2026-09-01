@@ -1,5 +1,12 @@
 @import url('./site-base.css?v=20260901-mobile-safari-hotfix-2');
 
+/* У summit CTA базовый браузерный underline накладывался на border-bottom,
+   из-за чего ссылка выглядела с двойной линией. Оставляем только фирменную
+   нижнюю границу из site-base.css. */
+.summit-action {
+  text-decoration: none !important;
+}
+
 /* Mobile Safari hotfix — 01.09.2026
    На iPhone первый экран иногда оставался только тёмным canvas: элементы
    hero сохраняли стартовые opacity/transform, а compositing canvas + animation

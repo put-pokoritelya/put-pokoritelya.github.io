@@ -1018,7 +1018,7 @@ html,body{overflow-x:hidden}
   text-transform:uppercase;color:var(--ink-muted);margin-top:16px;min-height:1em}
 .gn-list{list-style:none;margin-top:8px;border-top:1px solid var(--rule)}
 .gn{border-bottom:1px solid var(--rule)}
-.gn a{display:grid;grid-template-columns:44px minmax(0,1.1fr) minmax(0,1.4fr) auto 18px;
+.gn a{display:grid;grid-template-columns:44px minmax(0,1.1fr) minmax(0,1.4fr) 104px 18px;
   gap:18px;align-items:center;padding:13px 0;text-decoration:none;
   transition:padding-left .18s,background-color .18s}
 .gn a:hover{padding-left:10px;background:var(--paper-alt)}

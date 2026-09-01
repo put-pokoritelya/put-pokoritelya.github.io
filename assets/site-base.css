@@ -37,6 +37,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
   font-synthesis:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img{max-width:100%;height:auto;display:block}
 img[src*="assets/photo/"]{filter:var(--photo-tone)}
+img[src*="assets/photo/soon/"]{filter:none}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--navy);outline-offset:3px}
 

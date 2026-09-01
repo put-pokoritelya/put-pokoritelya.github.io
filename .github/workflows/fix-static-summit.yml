@@ -1,0 +1,31 @@
+name: Fix static summit card
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-static-summit.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make summit card deterministic
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text()
+          pattern=r'''    <a class="summit-card"[\s\S]*?</a>\n    <script type="application/json" id="summit-pool">[\s\S]*?</script><script>[\s\S]*?</script>'''
+          replacement='''    <div class="summit-card" data-rise="4" aria-label="Скоро на канале: Александр Гасников">\n      <span class="summit-head">\n        <span class="summit-label">Скоро на канале</span>\n        <span aria-hidden="true">↗</span>\n      </span>\n      <span class="summit-photo"><img src="assets/photo/soon/aleksandr-gasnikov.jpg" alt="Александр Гасников" width="480" height="360" fetchpriority="high"></span>\n      <span class="summit-meta">Уже записан · Студия МФТИ</span>\n      <strong>Александр Гасников</strong>\n      <span class="summit-role">Ректор Университета Иннополис</span>\n      <a class="summit-action" href="https://t.me/put_pokoritelya" target="_blank" rel="noopener noreferrer">Перейти в Telegram <span aria-hidden="true">↗</span></a>\n    </div>'''
+          s2,n=re.subn(pattern,replacement,s,count=1)
+          if n!=1:
+              raise SystemExit(f'Expected one summit block, replaced {n}; aborting safely')
+          p.write_text(s2)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Главная: убрать JS-ротацию карточки первого экрана"
+          git push

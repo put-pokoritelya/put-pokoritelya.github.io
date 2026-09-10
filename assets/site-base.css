@@ -223,7 +223,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
    Задаём его служебным ссылкам и кнопкам, у которых своей высоты не хватало. */
 @media(pointer:coarse){
   .nav a,.menu-panel a,.link-more,.chip,.tags a,.ftr .pl a,.seasons button,
-  .reel-play,.reel-sound,.menu-btn{min-height:44px;display:inline-flex;align-items:center}
+  .reel-sound,.menu-btn{min-height:44px;display:inline-flex;align-items:center}
   .gu a,.card a,.summit-card{min-height:44px}
 }
 .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;font-family:var(--mono);
@@ -393,20 +393,18 @@ section{padding:78px 0}
   padding-top:72px;padding-bottom:80px}
 .reel .btn{border-color:var(--accent-bright);background:var(--accent-bright);color:#fff}
 .reel .btn:hover{background:var(--paper);border-color:var(--paper);color:var(--ink)}
-/* Управление роликом: пауза и звук — две отдельные кнопки. Автозапуск без
-   возможности остановить движение — барьер доступности (WCAG 2.2.2). */
+/* Кнопка звука поверх ролика. */
 .reel-ctrl{position:absolute;right:32px;bottom:26px;z-index:3;display:flex;gap:10px}
-.reel-play,.reel-sound{cursor:pointer;
+.reel-sound{cursor:pointer;
   font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;
   text-transform:uppercase;padding:13px 18px;min-height:44px;color:rgba(251,249,245,.8);
   background:rgba(20,29,39,.5);border:1px solid rgba(251,249,245,.22);
   backdrop-filter:blur(4px);transition:color .2s,border-color .2s}
-.reel-play:hover{color:var(--paper);border-color:rgba(251,249,245,.55)}
 .reel-sound:hover{color:var(--paper);border-color:rgba(251,249,245,.55)}
 .reel-sound[aria-pressed="true"]{background:var(--accent-bright);border-color:var(--accent-bright);color:#fff}
 @media(max-width:600px){.reel-copy{min-height:min(60vh,420px);padding-top:52px;padding-bottom:76px}
   .reel-ctrl{right:20px;left:20px;bottom:20px;justify-content:center}
-  .reel-play,.reel-sound{flex:1;text-align:center;padding:13px 10px}}
+  .reel-sound{flex:1;text-align:center;padding:13px 10px}}
 
 /* ---- книга, которую можно листать ----
    Обложка и восемь разворотов на CSS-трансформациях: страница поворачивается

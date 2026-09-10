@@ -852,46 +852,41 @@ function plural(n, one, few, many) {
   var v = document.getElementById('reel');
   if (!v) return;
   var btn = document.querySelector('.reel-sound');
-  var play = document.querySelector('.reel-play');
   var sec = document.querySelector('.reel');
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var loaded = false, byUser = false;           // byUser: пользователь сам поставил паузу
-
-  // Кнопка паузы. Автозапуск без остановки — барьер доступности: движение
-  // нельзя выключить. Пауза, поставленная руками, сильнее автоматики —
-  // наблюдатель ниже не станет перезапускать ролик при возврате в кадр.
-  function mark() {
-    if (!play) return;
-    var on = !v.paused;
-    play.textContent = on ? 'Пауза' : 'Смотреть';
-    play.setAttribute('aria-pressed', String(on));
-    play.setAttribute('aria-label', on ? 'Пауза' : 'Воспроизвести');
-  }
-  if (play) play.addEventListener('click', function () {
-    if (v.paused) {
-      byUser = false;
-      if (!loaded) { v.load(); loaded = true; }
-      v.play().then(function () { blocked(false); mark(); }, function () { blocked(true); });
-    } else {
-      byUser = true; v.pause(); mark();
-    }
-  });
-  v.addEventListener('play', mark);
-  v.addEventListener('pause', mark);
+  var loaded = false;
 
   if (btn) btn.addEventListener('click', function () {
-    if (v.paused) {                              // ролик стоит — сначала запускаем
-      if (!loaded) { v.load(); loaded = true; }
-      v.muted = false;
-      v.play().then(function () { blocked(false); }, function () {});
+    if (!loaded) { v.load(); loaded = true; }
+    v.muted = !v.muted;
+    v.volume = 1;
+    syncSound();
+
+    // На Safari звук разрешается только как прямое следствие клика. Поэтому
+    // play() вызывается в том же обработчике, даже если ролик был остановлен
+    // браузером при прокрутке или в режиме энергосбережения.
+    if (v.paused) {
+      var promise = v.play();
+      if (promise && promise.then) {
+        promise.then(function () { blocked(false); }, function () {
+          v.muted = true;
+          syncSound();
+          blocked(true);
+        });
+      }
     } else {
-      v.muted = !v.muted;
+      blocked(false);
     }
-    btn.setAttribute('aria-pressed', String(!v.muted));
-    if (!v.paused) blocked(false);
   });
 
-  if (still) { if (btn) btn.hidden = true; if (play) play.hidden = true; return; }
+  function syncSound() {
+    if (!btn) return;
+    btn.setAttribute('aria-pressed', String(!v.muted));
+    btn.textContent = v.muted ? 'Включить звук' : 'Выключить звук';
+  }
+  v.addEventListener('volumechange', syncSound);
+
+  if (still) { if (btn) btn.hidden = true; return; }
 
   // Браузер вправе отказать в автовоспроизведении: режим энергосбережения на
   // iPhone, экономия трафика, настройки сайта. Раньше в этом случае оставался
@@ -914,7 +909,7 @@ function plural(n, one, few, many) {
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(function (es) {
       es.forEach(function (e) {
-        if (e.isIntersecting) { if (!byUser) start(); }
+        if (e.isIntersecting) start();
         else if (!v.paused) v.pause();
       });
     }, { rootMargin: '200px' }).observe(v);

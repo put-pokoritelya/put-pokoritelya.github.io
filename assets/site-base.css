@@ -1198,3 +1198,7 @@ html,body{overflow-x:hidden}
 .gu .av img[src$="andrey-kuznetsov.jpg"],.gn-av img[src$="andrey-kuznetsov.jpg"]{object-position:41% center}
 .gu .av img[src$="yuriy-chehovich.jpg"],.gn-av img[src$="yuriy-chehovich.jpg"]{object-position:57% center}
 .gu .av img[src$="vasiliy-golubev.jpg"],.gn-av img[src$="vasiliy-golubev.jpg"]{object-position:42% center}
+
+/* Временно скрытые герои (ждут согласования): место в сетке сохраняется. */
+[data-hold]{visibility:hidden;pointer-events:none}
+[data-hold] *{visibility:hidden}

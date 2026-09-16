@@ -888,7 +888,7 @@ section{padding:78px 0}
 @media(hover:none){.q-act{opacity:1}}
 
 /* ---- именной указатель героев ---- */
-.gi-alpha{display:flex;flex-wrap:wrap;gap:4px;margin-top:26px}
+.gi-alpha{display:flex;flex-wrap:wrap;gap:6px;margin-top:26px}
 .gi-alpha a{font-family:var(--mono);font-weight:600;font-size:14px;width:44px;height:44px;
   display:flex;align-items:center;justify-content:center;text-decoration:none;
   border:1px solid var(--rule);
@@ -993,7 +993,7 @@ section{padding:78px 0}
   .sec-head h2,.sec-head h1{font-size:26px}
   .ch-head h1,.ep-hero h1{font-size:26px}
   .ch-bg{font-size:70vw}
-  .gi-alpha a{width:40px;height:40px}
+  .gi-alpha a{width:44px;height:44px}
 }
 
 /* Ничто не должно вызывать горизонтальную прокрутку */
@@ -1311,3 +1311,31 @@ html,body{overflow-x:hidden}
 .hero-sky .watch-on a{color:var(--paper)}
 .watch-on a:hover{border-color:var(--paper)}
 @media(max-width:600px){.watch-on{gap:0 14px;font-size:11px}}
+
+/* Пауза для бегущей строки. WCAG 2.2.2: движение дольше пяти секунд обязано
+   иметь способ остановки. Наведения мало — на телефоне его нет. */
+.ticker{position:relative}
+.ticker-stop{position:absolute;right:0;top:0;bottom:0;z-index:2;padding:0 14px;
+  border:0;border-left:1px solid var(--rule);background:var(--paper);cursor:pointer;
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-muted)}
+.ticker-stop:hover{color:var(--ink)}
+.ticker[data-paused] .ticker-row{animation-play-state:paused}
+@media(max-width:600px){.ticker-stop{padding:0 10px;font-size:9px}}
+
+/* Пальцевые цели: 44px — размер, в который попадают с первого раза.
+   Чипы — основной способ сузить каталог, алфавит — основной способ
+   прыгнуть по указателю. */
+.chip{min-height:44px}
+
+/* Группы фильтров подписаны. Раньше две строки чипов выглядели одинаково,
+   и «Наука» с «YouTube» читались как один список; скринридер слышал восемь
+   переключателей подряд без указания, к чему они относятся. */
+fieldset.filters{border:0;padding:0;margin:0 0 12px}
+.filters-l{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-muted);padding:0;margin-bottom:10px}
+
+/* Заголовок для перехода по структуре: в каталогах уровень прыгал с h1 на h3.
+   Виден только скринридеру — визуально список уже подписан заголовком страницы. */
+.skip-h{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);
+  clip-path:inset(50%);white-space:nowrap}

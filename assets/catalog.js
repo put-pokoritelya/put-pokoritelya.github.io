@@ -66,25 +66,34 @@ function plural(n, one, few, many) {
     return true;
   }
 
-  function apply(pushUrl) {
+  function apply(mode) {
     var shown = 0;
     cards.forEach(function (c) {
       var ok = matches(c);
       c.hidden = !ok;
       if (ok) shown++;
     });
-    count.textContent = shown ? shown + ' ' + plural(shown, 'выпуск', 'выпуска', 'выпусков') : '';
+    /* Карточек 56, а выпусков 55: выпуск 23 совместный и показан двумя
+   героями. Поэтому счётчик считает записи каталога, а не выпуски. */
+    count.textContent = shown ? shown + ' ' + plural(shown, 'запись', 'записи', 'записей') : '';
     var empty = document.getElementById('empty');
     if (empty) empty.hidden = shown > 0;
 
-    if (pushUrl !== false) {
+    /* Нажатие чипа кладётся в историю: «Назад» должен снимать последний
+       фильтр, а не выбрасывать со страницы вместе со всей выборкой.
+       Ввод в поиск заменяет запись — иначе история засоряется посимвольно. */
+    if (mode !== false) {
       var p = new URLSearchParams();
       if (state.topics.length) p.set('tema', state.topics.join(','));
       if (state.plats.length) p.set('gde', state.plats.join(','));
       if (state.book) p.set('kniga', '1');
       if (state.q) p.set('q', state.q);
       var qs = p.toString();
-      history.replaceState(null, '', qs ? '?' + qs : location.pathname);
+      var url = qs ? '?' + qs : location.pathname;
+      /* Без сверки повторное нажатие плодило бы одинаковые записи в истории. */
+      if (url !== (location.search || location.pathname)) {
+        history[mode === 'replace' ? 'replaceState' : 'pushState'](null, '', url);
+      }
     }
   }
 
@@ -108,18 +117,18 @@ function plural(n, one, few, many) {
       if (b.dataset.topic) toggle(state.topics, b.dataset.topic);
       else if (b.dataset.plat) toggle(state.plats, b.dataset.plat);
       else state.book = !state.book;
-      syncChips(); apply();
+      syncChips(); apply('push');
     });
   });
 
   if (search) {
-    search.addEventListener('input', function () { state.q = search.value.trim(); apply(); });
+    search.addEventListener('input', function () { state.q = search.value.trim(); apply('replace'); });
   }
 
   if (reset) {
     reset.addEventListener('click', function () {
       state = { topics: [], plats: [], book: false, q: '' };
-      syncChips(); apply();
+      syncChips(); apply('push');
       if (search) search.focus();
     });
   }
@@ -1282,7 +1291,7 @@ function plural(n, one, few, many) {
     return true;
   }
 
-  function apply(push) {
+  function apply(mode) {
     var shown = 0;
     rows.forEach(function (r) {
       var ok = matches(r);
@@ -1298,14 +1307,17 @@ function plural(n, one, few, many) {
     if (alpha) alpha.hidden = !clean;
     if (reset) reset.hidden = clean && state.sort === 'fam';
 
-    if (push !== false) {
+    if (mode !== false) {
       var p = new URLSearchParams();
       if (state.q) p.set('q', state.q);
       if (state.s.length) p.set('sezon', state.s.join(','));
       if (state.ch) p.set('kniga', '1');
       if (state.sort !== 'fam') p.set('sort', state.sort);
       var qs = p.toString();
-      history.replaceState(null, '', qs ? '?' + qs : location.pathname);
+      var url = qs ? '?' + qs : location.pathname;
+      if (url !== (location.search || location.pathname)) {
+        history[mode === 'replace' ? 'replaceState' : 'pushState'](null, '', url);
+      }
     }
   }
 
@@ -1329,7 +1341,7 @@ function plural(n, one, few, many) {
         var v = k.slice(1), i = state.s.indexOf(v);
         if (i > -1) state.s.splice(i, 1); else state.s.push(v);
       }
-      apply();
+      apply('push');
     });
   });
 
@@ -1339,14 +1351,14 @@ function plural(n, one, few, many) {
       sorts.forEach(function (x) {
         x.setAttribute('aria-pressed', x === b ? 'true' : 'false');
       });
-      order(); apply();
+      order(); apply('push');
     });
   });
 
   if (search) {
     search.addEventListener('input', function () {
       state.q = search.value.trim().toLowerCase();
-      apply();
+      apply('replace');
     });
   }
 
@@ -1358,26 +1370,33 @@ function plural(n, one, few, many) {
       sorts.forEach(function (b) {
         b.setAttribute('aria-pressed', b.dataset.gs === 'fam' ? 'true' : 'false');
       });
-      order(); apply();
+      order(); apply('push');
     });
   }
 
-  // Состояние из адреса: ссылку с фильтром можно переслать.
-  var p = new URLSearchParams(location.search);
-  if (p.get('q') && search) { search.value = p.get('q'); state.q = p.get('q').toLowerCase(); }
-  if (p.get('sezon')) state.s = p.get('sezon').split(',');
-  if (p.get('kniga')) state.ch = true;
-  if (p.get('sort')) state.sort = p.get('sort');
-  filters.forEach(function (b) {
-    var k = b.dataset.gf;
-    var on = k === 'ch' ? state.ch : state.s.indexOf(k.slice(1)) > -1;
-    b.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
-  sorts.forEach(function (b) {
-    b.setAttribute('aria-pressed', b.dataset.gs === state.sort ? 'true' : 'false');
-  });
-  if (state.sort !== 'fam') order();
-  apply(false);
+  // Состояние из адреса: ссылку с фильтром можно переслать, а «Назад» —
+  // вернуться к предыдущей выборке, а не уйти со страницы.
+  function fromUrl() {
+    var p = new URLSearchParams(location.search);
+    state = { s: [], ch: false, q: '', sort: 'fam' };
+    if (p.get('q')) { state.q = p.get('q').toLowerCase(); }
+    if (search) search.value = p.get('q') || '';
+    if (p.get('sezon')) state.s = p.get('sezon').split(',');
+    if (p.get('kniga')) state.ch = true;
+    if (p.get('sort')) state.sort = p.get('sort');
+    filters.forEach(function (b) {
+      var k = b.dataset.gf;
+      var on = k === 'ch' ? state.ch : state.s.indexOf(k.slice(1)) > -1;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    sorts.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.dataset.gs === state.sort ? 'true' : 'false');
+    });
+    order();
+    apply(false);
+  }
+  window.addEventListener('popstate', fromUrl);
+  fromUrl();
 })();
 
 /* Измерение ключевых действий без персональных данных. Идентификаторы должны
@@ -1482,4 +1501,18 @@ function plural(n, one, few, many) {
   track.addEventListener('scroll', sync, { passive: true });
   window.addEventListener('resize', sync);
   sync();
+})();
+
+/* Остановка бегущей строки. Состояние живёт на контейнере, анимацию гасит CSS. */
+(function () {
+  var ticker = document.querySelector('.ticker');
+  var btn = ticker && ticker.querySelector('.ticker-stop');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var paused = ticker.hasAttribute('data-paused');
+    if (paused) ticker.removeAttribute('data-paused');
+    else ticker.setAttribute('data-paused', '');
+    btn.setAttribute('aria-pressed', paused ? 'false' : 'true');
+    btn.textContent = paused ? 'Остановить строку' : 'Запустить строку';
+  });
 })();

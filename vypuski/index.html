@@ -56,17 +56,20 @@
 <section><div class="wrap">
   <p class="rubric">Медиатека</p>
   <div class="sec-head"><div><h1>55 разговоров о будущем</h1></div></div>
-  <div class="filters">
+  <fieldset class="filters">
+  <legend class="filters-l">Поиск и тема</legend>
   <label class="skip" for="q">Поиск по выпускам</label>
   <input class="search" id="q" type="search" placeholder="Поиск по имени, должности, теме…">
   <button class="chip" type="button" data-topic="Наука" aria-pressed="false">Наука</button><button class="chip" type="button" data-topic="Среда" aria-pressed="false">Среда</button><button class="chip" type="button" data-topic="Дисциплина" aria-pressed="false">Дисциплина</button><button class="chip" type="button" data-topic="Ответственность" aria-pressed="false">Ответственность</button>
-</div>
-<div class="filters">
+</fieldset>
+<fieldset class="filters">
+  <legend class="filters-l">Где смотреть</legend>
   <button class="chip" type="button" data-plat="vk" aria-pressed="false">VK Video</button><button class="chip" type="button" data-plat="youtube" aria-pressed="false">YouTube</button><button class="chip" type="button" data-plat="rutube" aria-pressed="false">Rutube</button>
   <button class="chip" type="button" data-book="1" aria-pressed="false">Есть глава книги</button>
   <button class="chip chip-reset" type="button" id="reset">Сбросить</button>
-</div>
+</fieldset>
 <p class="count" id="count" role="status"></p>
+  <h2 class="skip-h">Список выпусков</h2>
   <ul class="grid" id="list"><li class="card" data-topics="Наука"
     data-plats="vk,youtube,rutube"
     data-book="1" data-search="александр тормасов профессор наука">

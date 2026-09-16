@@ -12,6 +12,7 @@
   --accent:#B6171E;        /* тёмный красный для мелкого текста: контраст 4.5:1 на бумаге */
   --accent-bright:#C42221; /* акцентный красный: затемнён — белый текст на нём 5.4:1 */
   --navy:#1C1B1B; --rule:#E4E2DE;--head-h:68px;
+  --focus:var(--navy);
   /* Три функциональных шрифта. Prata — выразительная кириллическая антиква
      для заголовков, имён и цитат. Golos Text — нейтральный гротеск для
      длинного чтения и интерфейса. IBM Plex Mono — служебные метки, номера
@@ -40,7 +41,12 @@ img[src*="assets/photo/"]{filter:var(--photo-tone)}
 img[src*="assets/photo/soon/"]{filter:none}
 img[src*="assets/photo/orig/"]{filter:none}
 a{color:inherit}
-:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+/* Цвет кольца фокуса — токен, а не константа. На бумаге это чернила (16:1),
+   на тёмных поверхностях — бумага: прежний --navy #1C1B1B на фоне #141d27
+   давал 1.01:1, то есть кольца не было видно вовсе. WCAG 2.4.11 требует 3:1. */
+.hero-sky,.reel,.ep-cover,.ep-pull{--focus:var(--paper)}
+.skip:focus,.prevnext a:focus-visible{--focus:var(--paper)}
 
 .wrap{max-width:1240px;margin:0 auto;padding:0 32px}
 .wrap-narrow{max-width:820px;margin:0 auto;padding:0 32px}
@@ -76,17 +82,6 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .bignum{font-family:var(--serif);color:var(--navy);opacity:.11;line-height:1;pointer-events:none;user-select:none}
 
 /* ---- шапка ---- */
-/* Полоса «в разработке»: стоит над липкой шапкой и уезжает вместе со страницей,
-   не отъедая высоту первого экрана при скролле. */
-  font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;padding:9px 20px;line-height:1.4}
-
-/* Плашка «Сайт в разработке»: над шапкой, не липкая — уезжает при скролле,
-   не отъедая высоту первого экрана. */
-.wipbar{background:var(--ink);color:var(--paper);text-align:center;
-  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;padding:9px 20px;line-height:1.4}
-@media(max-width:600px){.wipbar{font-size:10px;letter-spacing:.05em;padding:8px 14px}}
 .hdr{position:sticky;top:0;z-index:50;background:rgba(251,249,245,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;height:var(--head-h);gap:24px}
 .logo{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:-.022em;
@@ -767,7 +762,8 @@ section{padding:78px 0}
   .ch-side{padding-left:0;padding-top:44px;margin-top:44px;border-top:1px solid var(--rule)}}
 
 /* Буквица: первая полоса главы должна выглядеть как первая полоса книги. */
-.drop-cap::first-letter{float:left;font-family:var(--serif);font-weight:700;
+/* вес убран: у Prata одно начертание, см. комментарий к h1-h4 */
+.drop-cap::first-letter{float:left;font-family:var(--serif);
   font-size:4.4em;line-height:.8;padding:6px 12px 0 0;color:var(--ink)}
 .ch-main section{margin-bottom:32px}
 .ch-main h2{font-size:26px;margin:0 0 12px}
@@ -1301,3 +1297,17 @@ html,body{overflow-x:hidden}
 .ep-h .n{align-self:center;display:inline-flex;align-items:center;justify-content:center;
   min-width:32px;height:26px;padding:0 7px;border:1px solid var(--accent);
   color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.08em}
+
+/* ---- где смотреть: площадки в первом экране ---- */
+/* До этого единственная ссылка на площадку жила в подвале, и вопрос
+   «где это смотреть» решался не с первого экрана. Высота 44px — палец
+   попадает в ссылку с первого раза. */
+.watch-on{display:flex;flex-wrap:wrap;align-items:center;gap:0 18px;margin-top:20px;
+  font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase}
+.watch-on>span{color:#8FA2B5}
+.watch-on a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;
+  border-bottom:1px solid rgba(251,249,245,.35);transition:border-color .2s,color .2s}
+.hero-sky .watch-on a{color:var(--paper)}
+.watch-on a:hover{border-color:var(--paper)}
+@media(max-width:600px){.watch-on{gap:0 14px;font-size:11px}}

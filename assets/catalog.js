@@ -23,13 +23,15 @@ function plural(n, one, few, many) {
   filter.setAttribute('id', 'photo-tone-warm-editorial');
   filter.setAttribute('color-interpolation-filters', 'sRGB');
   matrix.setAttribute('type', 'matrix');
+  /* Значения держим равными assets/photo-tone.svg — это его копия для Safari.
+     Меняешь тон там, меняй и здесь, иначе правка внешнего файла не видна. */
   matrix.setAttribute('values',
-    '0.73 0.27 0 0 0  0.28 0.29 0.43 0 0  0 0.33 0.67 0 0.005  0 0 0 1 0');
+    '0.838 0.162 0 0 0  0.168 0.574 0.258 0 0  0 0.198 0.802 0 0.003  0 0 0 1 0');
   filter.appendChild(matrix);
   svg.appendChild(filter);
   document.body.appendChild(svg);
   document.documentElement.style.setProperty('--photo-tone',
-    'url("#photo-tone-warm-editorial") saturate(.91) contrast(1.1) brightness(.995) sepia(.035)');
+    'url("#photo-tone-warm-editorial") saturate(.946) contrast(1.06) brightness(.997) sepia(.021)');
 })();
 
 /* Фильтры каталога. Карточки уже отрендерены в HTML — JS только прячет лишние,

@@ -58,7 +58,12 @@
   <h1 style="font-size:clamp(28px,4vw,44px)">Такой страницы нет</h1>
   <p style="color:var(--ink-muted);margin-top:14px">Возможно, выпуск переехал или адрес набран с опечаткой.</p>
   <div class="cta-row" style="justify-content:center">
-    <a class="btn btn-primary" href="/vypuski/">Все выпуски</a>
+    <form class="nf-search" action="/poisk/" method="get" role="search">
+  <label class="skip" for="nf-q">Поиск по сайту</label>
+  <input class="search" id="nf-q" name="q" type="search" placeholder="Поиск по имени, должности, теме…">
+  <button class="chip" type="submit">Найти</button>
+</form>
+<a class="btn btn-primary" href="/vypuski/">Все выпуски</a>
     <a class="btn btn-ghost" href="/kniga/">Книга</a>
   </div>
 </div></section>

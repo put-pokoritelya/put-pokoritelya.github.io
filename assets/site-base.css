@@ -32,7 +32,16 @@
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0;padding:0}
 html{scroll-behavior:smooth;color-scheme:light}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+/* Уважение к reduced-motion — это замена движения, а не потеря отклика.
+   Прежнее правило гасило вообще все переходы, и человек переставал видеть,
+   что кнопка отозвалась на нажатие. Теперь снимается перемещение, а смена
+   цвета и прозрачности остаётся — коротко, без анимации. */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-property:color,background-color,border-color,outline-color,opacity!important;
+    transition-duration:.08s!important;scroll-behavior:auto!important}
+}
 
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;
   font-synthesis:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -70,11 +79,7 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 /* Служебная метка: моноширинный капс с красным квадратом слева. Один приём
    на весь сайт — рубрики разделов, номера, подписи под схемами. */
 .mono,.rubric,.side-h,.qa-n,.kicker,.ch-by,.card .no,
-.metric-card h3,.takebox h3,.dossier .tag,.dossier .role,.next-card>span,
-.gi-meta,.sr-kind,.ep-meta,.ep-h .n,
-.side-quotes cite,.quote-band cite,.tags,.prevnext .dir,.stat i,.ftr .pl,
-.colophon,.ch-list .soon,.progress-label,.orgs{font-family:var(--mono)}
-
+.metric-card h3,.takebox h3,.dossier .tag,.dossier .role,
 .rubric{display:flex;align-items:center;gap:10px;font-size:13px;text-transform:uppercase;
   letter-spacing:.14em;color:var(--ink-muted);font-weight:600}
 .rubric::before{content:'';flex:none;width:18px;height:1px;background:var(--accent-bright)}
@@ -155,7 +160,9 @@ h1,h2,h3,h4{text-wrap:balance;scroll-margin-top:88px}
 .hero-copy{min-width:0}
 .hero-sky .rubric{color:#9FB3C8}
 
-.hero-sky h1{font-size:clamp(50px,8vw,108px);line-height:1.02;letter-spacing:-.015em;margin-top:30px}
+/* Крупный кегль требует более плотной выключки, а не более редкой:
+   на 108px прежние -.015em были слабее, чем -.022em у заголовков вдвое мельче. */
+.hero-sky h1{font-size:clamp(50px,8vw,108px);line-height:1.02;letter-spacing:-.032em;margin-top:30px}
 .hero-sky .lede{color:#C9D4DF;font-size:clamp(17px,1.6vw,21px);max-width:52ch;margin-top:26px;text-wrap:pretty}
 /* Что это вообще такое — одной фразой, сразу под названием. */
 .hero-what{font-size:clamp(16px,1.6vw,19px);line-height:1.6;max-width:46ch;margin-top:24px}
@@ -701,14 +708,6 @@ section{padding:78px 0}
 .side-quotes p::after{content:'»';color:var(--accent-bright)}
 .side-quotes cite{display:block;font-style:normal;font-size:12px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink-muted);margin-top:11px}
-.next-card{border:1px solid var(--rule);background:var(--paper-alt);padding:24px}
-.next-card>span{font-size:13px;font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--ink-muted)}
-.next-card a{display:block;text-decoration:none;margin-top:14px}
-.next-card b{display:block;font-family:var(--serif);font-size:21px;line-height:1.2}
-.next-card a:hover b{color:var(--accent)}
-.next-card i{display:block;font-style:normal;font-size:14px;color:var(--ink-muted);margin-top:7px}
-.next-card .arw{display:block;margin-top:16px;font-size:19px;line-height:1}
 .prevnext{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border-top:1px solid var(--rule)}
 .prevnext a{background:var(--paper);padding:32px;text-decoration:none;transition:background .2s}
 .prevnext a:hover{background:var(--paper-alt)}
@@ -1339,3 +1338,8 @@ fieldset.filters{border:0;padding:0;margin:0 0 12px}
    Виден только скринридеру — визуально список уже подписан заголовком страницы. */
 .skip-h{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);
   clip-path:inset(50%);white-space:nowrap}
+
+/* Поиск на 404. На сайте из 125 страниц самое полезное после «не нашлось» —
+   строка поиска, а не только две ссылки в разделы. */
+.nf-search{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:26px 0 30px;max-width:52ch}
+.nf-search .search{flex:1;min-width:220px}

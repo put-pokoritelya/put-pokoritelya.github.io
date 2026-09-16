@@ -1425,3 +1425,59 @@ function plural(n, one, few, many) {
     if (event.target && event.target.tagName === 'VIDEO') send('video_play');
   }, true);
 })();
+
+/* Лента свежих выпусков на главной: стрелки листают её на одну карточку
+   и показывают позицию. Прокрутка пальцем и колесом работает без скрипта —
+   стрелки нужны только мыши без горизонтального колеса. */
+(function () {
+  var track = document.querySelector('[data-rail-track]');
+  if (!track) return;
+  var nav = document.querySelector('.rail-nav');
+  var pos = nav && nav.querySelector('[data-rail-pos]');
+  var prev = nav && nav.querySelector('[data-rail="prev"]');
+  var next = nav && nav.querySelector('[data-rail="next"]');
+
+  function step() {
+    var card = track.firstElementChild;
+    if (!card) return track.clientWidth;
+    /* ширина карточки вместе с зазором до соседней */
+    var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    return card.getBoundingClientRect().width + gap;
+  }
+
+  function sync() {
+    var max = track.scrollWidth - track.clientWidth;
+    var left = track.scrollLeft;
+    if (prev) prev.disabled = left < 4;
+    if (next) next.disabled = left > max - 4;
+    if (pos) {
+      var total = track.children.length;
+      var visible = Math.max(1, Math.floor(track.clientWidth / step()));
+      var first = Math.min(total, Math.round(left / step()) + 1);
+      var last = Math.min(total, first + visible - 1);
+      /* У правого края последняя карточка видна целиком — считаем от конца,
+         иначе счётчик застревает на «3–5 / 6», когда шестая уже на экране. */
+      if (left >= max - 4) { last = total; first = Math.max(1, total - visible + 1); }
+      pos.textContent = first === last
+        ? '[ ' + first + ' / ' + total + ' ]'
+        : '[ ' + first + '\u2013' + last + ' / ' + total + ' ]';
+    }
+  }
+
+  /* Плавная программная прокрутка (scrollBy с behavior:'smooth', равно как и
+     scroll-behavior в стилях) на этом контейнере в части движков молча не
+     срабатывает — лента остаётся на месте. Двигаем scrollLeft напрямую:
+     карточка встаёт на место сразу, доводку делает scroll-snap. */
+  function shift(dir) {
+    track.scrollLeft += dir * step();
+    /* snap доводит позицию асинхронно: сверяемся по ходу и после остановки */
+    setTimeout(sync, 400);
+    setTimeout(sync, 900);
+  }
+
+  if (prev) prev.addEventListener('click', function () { shift(-1); });
+  if (next) next.addEventListener('click', function () { shift(1); });
+  track.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+})();

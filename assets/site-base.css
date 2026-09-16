@@ -1220,3 +1220,84 @@ html,body{overflow-x:hidden}
 .yt button span{width:0;height:0;margin-left:4px;
   border-left:17px solid var(--paper);
   border-top:10px solid transparent;border-bottom:10px solid transparent}
+
+/* ================================================================
+   Обновление 16.09.2026. Перенесены механики с lamalama.com, а не
+   его оформление: лента с прокруткой вместо плитки, моноширинное
+   управление стрелками, превью по наведению в длинном списке и
+   заливка карточки-перехода. Бумага, Prata и чертёжная рамка в 1px
+   остаются прежними — тёмный фон референса сюда не переносится.
+   ================================================================ */
+
+/* ---- рельс: карточки едут вбок, как полоса кейсов ---- */
+/* Плитка требует высоты страницы, лента — нет. Шесть свежих выпусков
+   помещаются в один экран, а листание остаётся жестом, а не кликом. */
+.rail{list-style:none;display:flex;gap:24px;margin-top:8px;padding-bottom:20px;
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+  scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+.rail>.card{flex:0 0 clamp(236px,26vw,312px);scroll-snap-align:start}
+.rail::-webkit-scrollbar{height:3px}
+.rail::-webkit-scrollbar-track{background:var(--rule)}
+.rail::-webkit-scrollbar-thumb{background:var(--ink)}
+
+/* Управление лентой живёт в шапке секции рядом с «все выпуски»:
+   две стрелки и позиция в скобках — та же служебная метка, что и всюду. */
+.rail-nav{display:flex;align-items:center;gap:12px}
+.rail-pos{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;
+  color:var(--ink-muted);min-width:9ch;text-align:center;font-variant-numeric:tabular-nums}
+.rail-btn{width:40px;height:40px;flex:none;border:1px solid var(--rule);background:var(--paper);
+  color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1;cursor:pointer;
+  transition:background .18s,color .18s,border-color .18s}
+.rail-btn:hover:not(:disabled){background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rail-btn:disabled{color:var(--rule);cursor:default}
+@media(max-width:640px){.rail-btn,.rail-pos{display:none}}
+
+/* ---- бегущая строка имён над подвалом ---- */
+/* Колонтитул, который читается на ходу: масштаб проекта одной строкой.
+   Лента продублирована — вторая копия въезжает там, где кончается первая. */
+.ticker{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  background:var(--paper);overflow:hidden;padding:15px 0}
+.ticker a{display:block;text-decoration:none}
+.ticker-row{display:flex;width:max-content;animation:ticker 90s linear infinite}
+.ticker:hover .ticker-row,.ticker a:focus-visible .ticker-row{animation-play-state:paused}
+.ticker span{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;padding-right:24px}
+.ticker span::after{content:'·';margin-left:24px;color:var(--accent-bright)}
+.ticker a:hover span{color:var(--ink)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* Без анимации лента превращается в обычную прокручиваемую строку. */
+@media(prefers-reduced-motion:reduce){.ticker{overflow-x:auto}}
+
+/* ---- список героев: портрет вырастает под курсором ---- */
+/* В списке аватар работает иконкой, но лицо в 44px не разглядеть.
+   Наведение разворачивает его в превью трансформацией — строка не съезжает. */
+/* Превью уходит вверх, за пределы своей строки: выросши на месте, оно
+   закрыло бы собственное имя. Сверху оно ложится на соседей — так и надо,
+   это слой поверх списка, а не часть строки. */
+@media(hover:hover) and (min-width:900px){
+  .gn:hover{position:relative;z-index:3}
+  .gn-av{transform-origin:left bottom;
+    transition:transform .24s cubic-bezier(.2,.7,.3,1),box-shadow .24s,outline-color .24s;
+    outline:0 solid var(--paper)}
+  .gn a:hover .gn-av{transform:translateY(-46px) scale(2.6);
+    outline:2px solid var(--paper);box-shadow:0 20px 44px rgba(20,17,15,.26)}
+}
+
+/* ---- переход к соседнему выпуску заливается чернилами ---- */
+/* Карточка внизу выпуска — последний экран разговора. Заливка снизу вверх
+   показывает, что это переход, а не просто ссылка. */
+.prevnext a{position:relative;overflow:hidden}
+.prevnext a::after{content:'';position:absolute;inset:0;background:var(--ink);z-index:0;
+  transform:translateY(101%);transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+.prevnext a:hover::after,.prevnext a:focus-visible::after{transform:translateY(0)}
+.prevnext a>*{position:relative;z-index:1}
+.prevnext a:hover,.prevnext a:focus-visible{background:var(--paper)}
+/* Голубой — цвет метки на тёмном, красный на чернилах не читается. */
+.prevnext a:hover .dir,.prevnext a:focus-visible .dir{color:var(--signal)}
+.prevnext a:hover b,.prevnext a:hover .r,
+.prevnext a:focus-visible b,.prevnext a:focus-visible .r{color:var(--paper)}
+
+/* ---- номер раздела выпуска — в рамке, как поле бланка ---- */
+.ep-h .n{align-self:center;display:inline-flex;align-items:center;justify-content:center;
+  min-width:32px;height:26px;padding:0 7px;border:1px solid var(--accent);
+  color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.08em}

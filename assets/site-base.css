@@ -446,7 +446,7 @@ section{padding:78px 0}
 .c-rubric,.c-year,.c-bottom span{font-family:var(--mono);font-size:9.5px;font-weight:600;
   letter-spacing:.14em;text-transform:uppercase;color:rgba(251,249,245,.55)}
 .c-mid{margin:auto 0}
-.leaf-cover strong{display:block;font-family:var(--serif);font-weight:700;
+.leaf-cover strong{display:block;font-family:var(--serif);
   font-size:clamp(26px,4.6vw,44px);line-height:1.04;letter-spacing:-.015em}
 .c-rule{display:block;width:46px;height:2px;background:var(--accent-bright);margin:16px 0 14px}
 .c-sub{font-size:12.5px;line-height:1.5;color:rgba(251,249,245,.7);max-width:26ch}
@@ -461,7 +461,7 @@ section{padding:78px 0}
 
 .l-part{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:var(--accent)}
-.l-num{font-family:var(--serif);font-weight:700;font-size:44px;line-height:1;
+.l-num{font-family:var(--serif);font-size:44px;line-height:1;
   color:var(--rule);margin:6px 0 14px}
 .book3d h3{font-size:clamp(18px,2.2vw,23px);line-height:1.2;margin-bottom:12px}
 .l-guest{font-family:var(--serif);font-size:17px}
@@ -491,7 +491,7 @@ section{padding:78px 0}
 .why{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
   background:var(--rule);border:1px solid var(--rule)}
 .why li{background:var(--paper);padding:28px 24px;display:flex;flex-direction:column}
-.why b{font-family:var(--serif);font-weight:700;font-size:clamp(30px,3.6vw,44px);
+.why b{font-family:var(--serif);font-size:clamp(30px,3.6vw,44px);
   line-height:1;color:var(--accent);margin-bottom:16px}
 .why p{font-size:15px;line-height:1.55;flex:1;margin-bottom:16px}
 .why a{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;
@@ -737,7 +737,7 @@ section{padding:78px 0}
 /* Номер главы висит гигантской подложкой — так делают на шмуцтитулах:
    цифра работает как ориентир, но не мешает чтению. */
 .ch-bg{position:fixed;top:14%;left:50%;transform:translateX(-50%);z-index:-1;
-  font-family:var(--serif);font-weight:700;font-size:40vw;line-height:1;
+  font-family:var(--serif);font-size:40vw;line-height:1;
   color:var(--ink);opacity:.032;pointer-events:none;user-select:none}
 
 .ch-head{padding:52px 0 40px;border-bottom:1px solid var(--rule)}
@@ -788,20 +788,20 @@ section{padding:78px 0}
   border-bottom:1px solid var(--ink);padding-bottom:9px;margin-bottom:22px;font-family:var(--sans)}
 .side-list{list-style:none;display:grid;gap:18px}
 .side-list li{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
-.side-list .n{font-family:var(--serif);font-weight:700;font-size:15px;color:var(--accent);line-height:1.6}
+.side-list .n{font-family:var(--serif);font-size:15px;color:var(--accent);line-height:1.6}
 .side-list p{font-size:14px;line-height:1.55;color:var(--ink-muted)}
 
 /* нумерованный перечень в основной колонке (страницы заявок) */
 .supports{list-style:none;counter-reset:s;max-width:72ch}
 .supports li{counter-increment:s;display:flex;gap:20px;padding:16px 0;border-bottom:1px solid var(--rule)}
-.supports li::before{content:counter(s,decimal-leading-zero);font-family:var(--serif);font-weight:700;
+.supports li::before{content:counter(s,decimal-leading-zero);font-family:var(--serif);
   color:var(--accent);flex:none;width:2.2em;font-size:17px}
 
 /* Метрика — единственный тёмный прямоугольник на странице, поэтому его видно */
 .metric-card{background:var(--ink);color:var(--paper);padding:26px}
 .metric-card h3{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.12em;
   text-transform:uppercase;color:rgba(251,249,245,.62)}
-.metric-card .score{font-family:var(--serif);font-weight:700;font-size:clamp(40px,4.4vw,54px);
+.metric-card .score{font-family:var(--serif);font-size:clamp(40px,4.4vw,54px);
   line-height:1;color:var(--accent-bright);margin:14px 0 18px}
 .metric-card ul{list-style:none;font-size:13.5px;line-height:1.55;color:rgba(251,249,245,.8);
   border-top:1px solid rgba(251,249,245,.22);padding-top:16px;display:grid;gap:11px}
@@ -836,7 +836,7 @@ section{padding:78px 0}
 
 .final-q{background:var(--accent-bright);color:#fff;padding:76px 0;text-align:center;
   border-top:1px solid var(--ink)}
-.final-q p{font-family:var(--serif);font-weight:700;font-size:clamp(24px,3.4vw,38px);
+.final-q p{font-family:var(--serif);font-size:clamp(24px,3.4vw,38px);
   line-height:1.28;max-width:24ch;margin:0 auto}
 .final-q span{display:block;font-size:12px;font-weight:600;letter-spacing:.14em;
   text-transform:uppercase;margin-bottom:24px}
@@ -911,8 +911,27 @@ section{padding:78px 0}
 .tl-col:hover .tl-pop,.tl-col:focus-within .tl-pop{opacity:1;visibility:visible}
 .tl-pop a{color:var(--paper);text-decoration:none;white-space:nowrap}
 .tl-pop a:hover{color:#FF7A73}
-@media(max-width:760px){.tl{height:220px;gap:5px}.tl-n{font-size:12px}.tl-m{font-size:9px}
-  .tl-pop{display:none}}
+/* На узком экране диаграмма из двенадцати столбцов нечитаема, а прятать
+   всплывающий список — значит отнимать у мобильного посетителя данные,
+   которые есть у десктопного. Поэтому она разворачивается в список:
+   месяц, число выпусков, герои. Ничего не пропадает. */
+@media(max-width:760px){
+  .tl{display:block;height:auto;padding-top:0;border-top:1px solid var(--rule)}
+  .tl-col{height:auto;position:static;flex-direction:row;align-items:baseline;
+    justify-content:flex-start;flex-wrap:wrap;gap:0 10px;
+    padding:13px 0;border-bottom:1px solid var(--rule)}
+  .tl-bar{display:none}
+  .tl-m{order:1;margin:0;min-width:7ch;text-align:left;font-weight:600;color:var(--ink);font-size:11px}
+  .tl-m b{display:inline;margin-left:5px}
+  .tl-n{order:2;margin:0;font-family:var(--mono);font-size:11px;font-weight:600;
+    letter-spacing:.06em;color:var(--accent)}
+  .tl-pop{order:3;flex-basis:100%;position:static;transform:none;margin-top:6px;
+    opacity:1;visibility:visible;background:none;color:inherit;padding:0;min-width:0;
+    box-shadow:none;display:flex;flex-wrap:wrap;gap:2px 14px;font-size:14px}
+  .tl-pop a{color:var(--ink);white-space:normal;
+    border-bottom:1px solid var(--rule);padding-bottom:1px}
+  .tl-pop a:hover{color:var(--accent);border-color:var(--accent)}
+}
 
 /* ---- результаты поиска ---- */
 .sr{list-style:none;margin-top:24px;border-top:1px solid var(--rule)}
@@ -1022,7 +1041,7 @@ html,body{overflow-x:hidden}
   justify-content:center;background:linear-gradient(150deg,var(--navy),#33322f);
   font-family:var(--serif);font-size:15px;color:rgba(251,249,245,.4)}
 .gn-av img{width:100%;height:100%;object-fit:cover}
-.gn-n{font-family:var(--serif);font-size:19px;font-weight:700;line-height:1.2;min-width:0}
+.gn-n{font-family:var(--serif);font-size:19px;line-height:1.2;min-width:0}
 .gn a:hover .gn-n{color:var(--accent)}
 .gn-r{font-size:13.5px;color:var(--ink-muted);line-height:1.4;min-width:0}
 .gn-m{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;
@@ -1116,7 +1135,7 @@ html,body{overflow-x:hidden}
   justify-content:center}
 .spread .snum{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.14em;
   text-transform:uppercase;color:var(--accent);margin-bottom:14px}
-.spread .st{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);font-weight:700;
+.spread .st{font-family:var(--serif);font-size:clamp(20px,2.2vw,26px);
   line-height:1.22;color:var(--ink)}
 .spread .sl{display:block;width:38px;height:2px;background:var(--accent);margin:16px 0 0}
 .spread .sg{display:block;font-family:var(--mono);font-size:12px;font-weight:600;

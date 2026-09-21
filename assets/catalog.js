@@ -45,11 +45,25 @@ function plural(n, one, few, many) {
   var search = document.getElementById('q');
   var count = document.getElementById('count');
   var reset = document.getElementById('reset');
+  var sortSel = document.getElementById('sort');
+  var orgSel = document.getElementById('org');
 
-  var state = { topics: [], plats: [], book: false, q: '' };
+  /* Исходный порядок — хронологический, он же вёрстка. Держим его копией,
+     чтобы «сначала новые» возвращало ровно его, а не пересортировку по дате:
+     у части выпусков даты нет, и они должны остаться там, где стояли. */
+  var natural = cards.slice();
+
+  var state = { topics: [], plats: [], book: false, q: '', sort: 'date', org: '' };
 
   function matches(card) {
     if (state.book && card.dataset.book !== '1') return false;
+    /* Организация — «связан с», а не «место работы сейчас»: берётся из
+       биографии героя, поэтому у одного человека их может быть несколько.
+       Разделитель «|», а не запятая: в названиях встречаются запятые. */
+    if (state.org) {
+      var o = (card.dataset.orgs || '').split('|');
+      if (o.indexOf(state.org) === -1) return false;
+    }
     if (state.topics.length) {
       var t = card.dataset.topics.split(',');
       if (!state.topics.some(function (x) { return t.indexOf(x) > -1; })) return false;
@@ -66,6 +80,27 @@ function plural(n, one, few, many) {
     return true;
   }
 
+  /* Порядок карточек. Длительность есть не у всех (15 из 57 без неё) —
+     такие уезжают в конец при сортировке по минутам, а не притворяются
+     нулевыми: ноль поставил бы их первыми в «сначала короткие». */
+  function reorder() {
+    var order = natural;
+    if (state.sort === 'short' || state.sort === 'long') {
+      var sign = state.sort === 'short' ? 1 : -1;
+      order = natural.slice().sort(function (a, b) {
+        var x = parseInt(a.dataset.min, 10), y = parseInt(b.dataset.min, 10);
+        var nx = isNaN(x), ny = isNaN(y);
+        if (nx && ny) return 0;
+        if (nx) return 1;
+        if (ny) return -1;
+        return (x - y) * sign;
+      });
+    }
+    var frag = document.createDocumentFragment();
+    order.forEach(function (c) { frag.appendChild(c); });
+    list.appendChild(frag);
+  }
+
   function apply(mode) {
     var shown = 0;
     cards.forEach(function (c) {
@@ -73,6 +108,7 @@ function plural(n, one, few, many) {
       c.hidden = !ok;
       if (ok) shown++;
     });
+    reorder();
     /* Карточек 56, а выпусков 55: выпуск 23 совместный и показан двумя
    героями. Поэтому счётчик считает записи каталога, а не выпуски. */
     count.textContent = shown ? shown + ' ' + plural(shown, 'запись', 'записи', 'записей') : '';
@@ -88,6 +124,8 @@ function plural(n, one, few, many) {
       if (state.plats.length) p.set('gde', state.plats.join(','));
       if (state.book) p.set('kniga', '1');
       if (state.q) p.set('q', state.q);
+      if (state.sort !== 'date') p.set('poryadok', state.sort);
+      if (state.org) p.set('org', state.org);
       var qs = p.toString();
       var url = qs ? '?' + qs : location.pathname;
       /* Без сверки повторное нажатие плодило бы одинаковые записи в истории. */
@@ -105,6 +143,8 @@ function plural(n, one, few, many) {
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     if (search) search.value = state.q;
+    if (sortSel) sortSel.value = state.sort;
+    if (orgSel) orgSel.value = state.org;
   }
 
   function toggle(arr, v) {
@@ -125,9 +165,21 @@ function plural(n, one, few, many) {
     search.addEventListener('input', function () { state.q = search.value.trim(); apply('replace'); });
   }
 
+  if (sortSel) {
+    sortSel.addEventListener('change', function () {
+      state.sort = sortSel.value; apply('push');
+    });
+  }
+
+  if (orgSel) {
+    orgSel.addEventListener('change', function () {
+      state.org = orgSel.value; apply('push');
+    });
+  }
+
   if (reset) {
     reset.addEventListener('click', function () {
-      state = { topics: [], plats: [], book: false, q: '' };
+      state = { topics: [], plats: [], book: false, q: '', sort: 'date', org: '' };
       syncChips(); apply('push');
       if (search) search.focus();
     });
@@ -140,6 +192,16 @@ function plural(n, one, few, many) {
     state.plats = (p.get('gde') || '').split(',').filter(Boolean);
     state.book = p.get('kniga') === '1';
     state.q = p.get('q') || '';
+    var s = p.get('poryadok');
+    state.sort = (s === 'short' || s === 'long') ? s : 'date';
+    /* Значение из адреса сверяется со списком в разметке: чужой ?org=
+       не должен обнулять выдачу без объяснений. */
+    var o = p.get('org') || '';
+    var known = !o;
+    if (o && orgSel) {
+      known = [].some.call(orgSel.options, function (x) { return x.value === o; });
+    }
+    state.org = known ? o : '';
     syncChips(); apply(false);
   }
   window.addEventListener('popstate', fromUrl);

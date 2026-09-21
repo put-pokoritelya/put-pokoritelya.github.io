@@ -282,6 +282,22 @@ section{padding:78px 0}
 .search{flex:1;min-width:230px;font:inherit;font-size:15px;padding:10px 2px;
   border:0;border-bottom:1px solid var(--ink);
   background:transparent;color:var(--ink)}
+/* Порядок выдачи. Нативный <select>: своя выпадашка стоила бы клавиатурной
+   навигации и поведения на тач-устройствах, которые у нативного уже есть.
+   Оформление подтянуто к чипам — моноширинный капс, прямые углы. */
+.sortbar{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.sort-l{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-muted)}
+.sort{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;padding:9px 32px 9px 12px;min-height:44px;
+  border:1px solid var(--rule);border-radius:0;cursor:pointer;
+  /* Фон и цвет заданы явно, не transparent: при appearance:none и системной
+     тёмной теме Windows список опций иначе рисуется тёмным по тёмному. */
+  background-color:var(--paper);color:var(--ink);
+  touch-action:manipulation;-webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0h10L5 6z' fill='%23474743'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center}
+.sort:hover{border-color:var(--ink)}
 .count{font-size:13px;color:var(--ink-muted);margin:14px 0 26px}
 .empty{padding:56px 0;text-align:center;color:var(--ink-muted)}
 

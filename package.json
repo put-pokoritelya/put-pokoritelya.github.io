@@ -1,9 +1,0 @@
-{
-  "name": "put-pokoritelya-site",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Статический сайт «Путь Покорителя». Сборки нет: GitHub Pages отдаёт файлы напрямую.",
-  "devDependencies": {
-    "esbuild": "^0.25.0"
-  }
-}

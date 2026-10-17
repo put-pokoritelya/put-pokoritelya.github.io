@@ -1216,7 +1216,7 @@ html,body{overflow-x:hidden}
   opacity:.82;transition:opacity .3s ease}
 .yt:hover img,.yt:focus-within img{opacity:.64}
 .yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.yt button{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+.yt button{position:absolute;left:50%;top:74%;transform:translate(-50%,-50%);
   display:flex;align-items:center;gap:12px;padding:12px 20px 12px 14px;border:0;border-radius:14px;
   background:rgba(30,30,32,.9);color:#fff;cursor:pointer;white-space:nowrap;
   box-shadow:0 8px 24px rgba(0,0,0,.28);transition:transform .2s ease,background .2s ease}
@@ -1227,7 +1227,7 @@ html,body{overflow-x:hidden}
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3CclipPath id='r'%3E%3Crect width='40' height='40' rx='11'/%3E%3C/clipPath%3E%3Cg clip-path='url(%23r)'%3E%3Crect width='40' height='40' fill='%23FF3347'/%3E%3Crect width='12' height='40' fill='%230077FF'/%3E%3C/g%3E%3Cpath d='M16 12.5v15l12-7.5z' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat}
 .yt button::after{content:"VK Видео";font:600 22px/1 "Golos Text",system-ui,sans-serif;letter-spacing:-.01em}
 @media(max-width:560px){.yt button{gap:9px;padding:9px 15px 9px 10px;border-radius:11px}
-  .yt button span{width:30px;height:30px;flex-basis:30px} .yt button::after{font-size:17px}}
+  .yt button{top:78%} .yt button span{width:30px;height:30px;flex-basis:30px} .yt button::after{font-size:17px}}
 
 /* ================================================================
    Обновление 16.09.2026. Перенесены механики с lamalama.com, а не

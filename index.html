@@ -78,7 +78,7 @@
         <span class="summit-badge">Скоро новые выпуски</span>
       </span>
       <span class="summit-photo"><img src="assets/photo/soon/aleksandr-gasnikov.jpg" alt="Александр Гасников" width="480" height="360" fetchpriority="high"></span>
-      <span class="summit-meta">Выпуск 26 октября · Студия МФТИ</span>
+      <span class="summit-meta">Выпуск 26 октября 2026 · Студия МФТИ</span>
       <strong>Александр Гасников</strong>
       <span class="summit-role">Ректор Университета Иннополис, математик</span>
       <a class="summit-action" href="https://t.me/put_pokoritelya" target="_blank" rel="noopener noreferrer">Следите за выходом в Telegram <span aria-hidden="true">↗</span></a>
@@ -108,7 +108,7 @@
       var today=new Date(); today.setHours(0,0,0,0);
       var guests=all.filter(function(g){return new Date(g.d+'T00:00:00')>=today;});
       if(!guests.length){card.hidden=true;return;}
-      guests.forEach(function(g){var x=g.d.split('-');g.m='Выпуск '+(+x[2])+' '+M[x[1]-1]+' · Студия МФТИ';});
+      guests.forEach(function(g){var x=g.d.split('-');g.m='Выпуск '+(+x[2])+' '+M[x[1]-1]+' '+x[0]+' · Студия МФТИ';});
       guests.slice(1).forEach(function(g){var im=new Image();im.src=g.p;});
       var i=0, img=card.querySelector('.summit-photo img'), meta=card.querySelector('.summit-meta'), name=card.querySelector('strong'), role=card.querySelector('.summit-role');
       function put(g){img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;role.textContent=g.r;card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);}

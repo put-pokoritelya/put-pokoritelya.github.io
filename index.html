@@ -73,48 +73,59 @@
       <p class="watch-on" data-rise="4"><span>Смотреть и слушать</span><a href="https://vkvideo.ru/playlist/-229636815_1" rel="noopener">VK Video</a><a href="https://t.me/put_pokoritelya" rel="noopener">Telegram</a></p>
       <p data-rise="4" style="margin-top:18px;font-size:14px;color:#C9D4DF">Автор и ведущий — <a href="aleksandr-ermolchev/" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(201,212,223,.45)">Александр Ермольчев</a></p>
     </div>
-    <div class="summit-card" data-rise="4" aria-label="Скоро новые выпуски: Сергей Самойленко">
+    <div class="summit-card" data-rise="4" aria-label="Скоро новые выпуски: Александр Гасников">
       <span class="summit-head">
         <span class="summit-badge">Скоро новые выпуски</span>
       </span>
-      <span class="summit-photo"><img src="assets/photo/soon/sergey-samoylenko.jpg" alt="Сергей Самойленко" width="480" height="360" fetchpriority="high"></span>
-      <span class="summit-meta">Уже записан · Студия МФТИ</span>
-      <strong>Сергей Самойленко</strong>
-      <span class="summit-role">Вулканолог, кандидат физико-математических наук</span>
+      <span class="summit-photo"><img src="assets/photo/soon/aleksandr-gasnikov.jpg" alt="Александр Гасников" width="480" height="360" fetchpriority="high"></span>
+      <span class="summit-meta">Выпуск 26 октября · Студия МФТИ</span>
+      <strong>Александр Гасников</strong>
+      <span class="summit-role">Ректор Университета Иннополис, математик</span>
       <a class="summit-action" href="https://t.me/put_pokoritelya" target="_blank" rel="noopener noreferrer">Следите за выходом в Telegram <span aria-hidden="true">↗</span></a>
     </div>
     <script>
     (function(){
       var card=document.querySelector('.summit-card');
       if(!card)return;
-      var guests=[
-        {p:'assets/photo/soon/sergey-samoylenko.jpg',n:'Сергей Самойленко',r:'Вулканолог, кандидат физико-математических наук',m:'Уже записан · Студия МФТИ'},
-        {p:'assets/photo/soon/elena-mironenko.jpg',n:'Елена Мироненко',r:'Генеральный директор музея «АТОМ»',m:'Уже записана · Студия МФТИ'},
-        {p:'assets/photo/soon/aleksandr-gasnikov.jpg',n:'Александр Гасников',r:'Ректор Университета Иннополис',m:'Уже записан · Студия МФТИ'},
-        {p:'assets/photo/soon/aleksey-egorov.jpg',n:'Алексей Егоров',r:'Журналист, автор и ведущий телеканала «Наука»',m:'Уже записан · Студия МФТИ'},
-        {p:'assets/photo/soon/alina-osmakova.jpg',n:'Алина Осьмакова',r:'Заместитель директора ФИЦ Биотехнологии РАН',m:'Уже записана · Студия МФТИ'},
-        {p:'assets/photo/soon/sergey-polischuk.jpg',n:'Сергей Полищук',r:'Культуролог, психолог, медиапедагог',m:'Уже записан · Студия МФТИ'},
-        {p:'assets/photo/soon/ayrat-bagautdinov.jpg',n:'Айрат Багаутдинов',r:'Историк инженерии, основатель проекта «Глазами инженера»',m:'Уже записан · Студия МФТИ'},
-        {p:'assets/photo/soon/aleksandr-pushnoy.jpg',n:'Александр Пушной',r:'Физик по образованию, музыкант, ведущий программы «Галилео»',m:'Уже записан · Студия МФТИ'}
+      /* d — дата выхода выпуска. Прошедшие даты скрываются сами, порядок — по дате. */
+      var all=[
+        {d:'2026-10-26',p:'assets/photo/soon/aleksandr-gasnikov.jpg',n:'Александр Гасников',r:'Ректор Университета Иннополис, математик'},
+        {d:'2026-10-30',p:'assets/photo/soon/sergey-samoylenko.jpg',n:'Сергей Самойленко',r:'Вулканолог, физик, популяризатор науки'},
+        {d:'2026-11-02',p:'assets/photo/soon/elena-mironenko.jpg',n:'Елена Мироненко',r:'Генеральный директор музея «АТОМ»'},
+        {d:'2026-11-06',p:'assets/photo/soon/dmitriy-livanov.jpg',n:'Дмитрий Ливанов',r:'Ректор МФТИ'},
+        {d:'2026-11-09',p:'assets/photo/soon/alina-osmakova.jpg',n:'Алина Осьмакова',r:'ФИЦ биотехнологии РАН, научные коммуникации'},
+        {d:'2026-11-13',p:'assets/photo/soon/vladimir-voloshin.jpg',n:'Владимир Волошин',r:'Сооснователь IRONSTAR и ROSA RUN'},
+        {d:'2026-11-16',p:'assets/photo/soon/anna-stepanova.jpg',n:'Анна Степанова',r:'Образовательные проекты VK'},
+        {d:'2026-11-20',p:'assets/photo/soon/aleksandr-pushnoy.jpg',n:'Александр Пушной',r:'Физик по образованию, музыкант, ведущий «Галилео»'},
+        {d:'2026-11-23',p:'assets/photo/soon/aleksey-egorov.jpg',n:'Алексей Егоров',r:'Журналист, ведущий телеканала «Наука»'},
+        {d:'2026-11-27',p:'assets/photo/soon/sergey-polischuk.jpg',n:'Сергей Полищук',r:'Культуролог, психолог, медиапедагог'},
+        {d:'2026-11-30',p:'assets/photo/soon/ayrat-bagautdinov.jpg',n:'Айрат Багаутдинов',r:'Историк инженерии, проект «Глазами инженера»'},
+        {d:'2026-12-04',p:'assets/photo/soon/aleksey-savvateev.jpg',n:'Алексей Савватеев',r:'Математик, популяризатор науки'},
+        {d:'2026-12-07',p:'assets/photo/soon/ekaterina-filippova.jpg',n:'Екатерина Филиппова',r:'САО РАН, популяризатор астрономии'},
+        {d:'2026-12-11',p:'assets/photo/soon/ilya-osokin.jpg',n:'Илья Осокин',r:'Робототехник, преподаватель МФТИ'}
       ];
+      var M=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+      var today=new Date(); today.setHours(0,0,0,0);
+      var guests=all.filter(function(g){return new Date(g.d+'T00:00:00')>=today;});
+      if(!guests.length){card.hidden=true;return;}
+      guests.forEach(function(g){var x=g.d.split('-');g.m='Выпуск '+(+x[2])+' '+M[x[1]-1]+' · Студия МФТИ';});
       guests.slice(1).forEach(function(g){var im=new Image();im.src=g.p;});
       var i=0, img=card.querySelector('.summit-photo img'), meta=card.querySelector('.summit-meta'), name=card.querySelector('strong'), role=card.querySelector('.summit-role');
+      function put(g){img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;role.textContent=g.r;card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);}
+      put(guests[0]);
       function show(next){
         var g=guests[next], preload=new Image();
         preload.src=g.p;
         var apply=function(){
           card.classList.add('is-switching');
-          setTimeout(function(){
-            img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;role.textContent=g.r;card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);
-            requestAnimationFrame(function(){card.classList.remove('is-switching');});
-          },180);
+          setTimeout(function(){put(g);requestAnimationFrame(function(){card.classList.remove('is-switching');});},180);
         };
         if(preload.complete){apply();}else{preload.onload=apply;}
       }
       function advance(){i=(i+1)%guests.length;show(i);}
       /* Контент должен меняться даже при Reduce Motion; сама анимация при этом
          отключается глобальными CSS-правилами accessibility. */
-      setTimeout(function(){advance();setInterval(advance,6000);},2500);
+      if(guests.length>1)setTimeout(function(){advance();setInterval(advance,5000);},2500);
     })();
     </script>
   </div>

@@ -588,6 +588,13 @@ section{padding:78px 0}
 @media(max-width:1024px){.vcol.lg{display:none}}
 @media(max-width:680px){.vcol.md{display:none}.vcol{max-width:none}}
 @media(prefers-reduced-motion:reduce){.vcol>ul{animation:none}}
+.voices>li{flex:1 1 0;min-width:0;max-width:340px}
+/* мобильный: карточки в столбик на всю ширину, без обрезки и затухания */
+@media(max-width:760px){
+  .voices{flex-direction:column;align-items:stretch;max-height:none;overflow:visible;gap:16px;
+    -webkit-mask-image:none;mask-image:none}
+  .voices>li{max-width:none;flex:none;padding:22px 20px}
+}
 
 /* ---- герои ---- */
 .guests{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px;list-style:none}

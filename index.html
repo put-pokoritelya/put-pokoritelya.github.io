@@ -77,9 +77,9 @@
       <span class="summit-head">
         <span class="summit-badge">Скоро новые выпуски</span>
       </span>
-      <span class="summit-photo"><img src="assets/photo/soon/aleksandr-gasnikov.jpg" alt="Александр Гасников" width="480" height="360" fetchpriority="high"></span>
+      <a class="summit-photo summit-link" href="vypuski/aleksandr-gasnikov/#novyy-vypusk" tabindex="-1" aria-hidden="true" style="display:block"><img src="assets/photo/soon/aleksandr-gasnikov.jpg" alt="Александр Гасников" width="480" height="360" fetchpriority="high"></a>
       <span class="summit-meta">Выпуск 26 октября 2026 · Студия МФТИ</span>
-      <strong>Александр Гасников</strong>
+      <strong><a class="summit-link" href="vypuski/aleksandr-gasnikov/#novyy-vypusk" style="color:inherit;text-decoration:none">Александр Гасников</a></strong>
       <span class="summit-role">Ректор Университета Иннополис, математик</span>
       <a class="summit-action" href="https://t.me/put_pokoritelya" target="_blank" rel="noopener noreferrer">Следите за выходом в Telegram <span aria-hidden="true">↗</span></a>
     </div>
@@ -89,20 +89,20 @@
       if(!card)return;
       /* d — дата выхода выпуска. Прошедшие даты скрываются сами, порядок — по дате. */
       var all=[
-        {d:'2026-10-26',p:'assets/photo/soon/aleksandr-gasnikov.jpg',n:'Александр Гасников',r:'Ректор Университета Иннополис, математик'},
-        {d:'2026-10-30',p:'assets/photo/soon/sergey-samoylenko.jpg',n:'Сергей Самойленко',r:'Вулканолог, физик, популяризатор науки'},
-        {d:'2026-11-02',p:'assets/photo/soon/elena-mironenko.jpg',n:'Елена Мироненко',r:'Генеральный директор музея «АТОМ»'},
-        {d:'2026-11-06',p:'assets/photo/soon/dmitriy-livanov.jpg',n:'Дмитрий Ливанов',r:'Ректор МФТИ'},
-        {d:'2026-11-09',p:'assets/photo/soon/alina-osmakova.jpg',n:'Алина Осьмакова',r:'ФИЦ биотехнологии РАН, научные коммуникации'},
-        {d:'2026-11-13',p:'assets/photo/soon/vladimir-voloshin.jpg',n:'Владимир Волошин',r:'Сооснователь IRONSTAR и ROSA RUN'},
-        {d:'2026-11-16',p:'assets/photo/soon/anna-stepanova.jpg',n:'Анна Степанова',r:'Образовательные проекты VK'},
-        {d:'2026-11-20',p:'assets/photo/soon/aleksandr-pushnoy.jpg',n:'Александр Пушной',r:'Физик по образованию, музыкант, ведущий «Галилео»'},
-        {d:'2026-11-23',p:'assets/photo/soon/aleksey-egorov.jpg',n:'Алексей Егоров',r:'Журналист, ведущий телеканала «Наука»'},
-        {d:'2026-11-27',p:'assets/photo/soon/sergey-polischuk.jpg',n:'Сергей Полищук',r:'Культуролог, психолог, медиапедагог'},
-        {d:'2026-11-30',p:'assets/photo/soon/ayrat-bagautdinov.jpg',n:'Айрат Багаутдинов',r:'Историк инженерии, проект «Глазами инженера»'},
-        {d:'2026-12-04',p:'assets/photo/soon/aleksey-savvateev.jpg',n:'Алексей Савватеев',r:'Математик, популяризатор науки'},
-        {d:'2026-12-07',p:'assets/photo/soon/ekaterina-filippova.jpg',n:'Екатерина Филиппова',r:'САО РАН, популяризатор астрономии'},
-        {d:'2026-12-11',p:'assets/photo/soon/ilya-osokin.jpg',n:'Илья Осокин',r:'Робототехник, преподаватель МФТИ'}
+        {u:'vypuski/aleksandr-gasnikov/#novyy-vypusk',d:'2026-10-26',p:'assets/photo/soon/aleksandr-gasnikov.jpg',n:'Александр Гасников',r:'Ректор Университета Иннополис, математик'},
+        {u:'vypuski/sergey-samoylenko/',d:'2026-10-30',p:'assets/photo/soon/sergey-samoylenko.jpg',n:'Сергей Самойленко',r:'Вулканолог, физик, популяризатор науки'},
+        {u:'vypuski/elena-mironenko/',d:'2026-11-02',p:'assets/photo/soon/elena-mironenko.jpg',n:'Елена Мироненко',r:'Генеральный директор музея «АТОМ»'},
+        {u:'vypuski/dmitriy-livanov/',d:'2026-11-06',p:'assets/photo/soon/dmitriy-livanov.jpg',n:'Дмитрий Ливанов',r:'Ректор МФТИ'},
+        {u:'vypuski/alina-osmakova/',d:'2026-11-09',p:'assets/photo/soon/alina-osmakova.jpg',n:'Алина Осьмакова',r:'ФИЦ биотехнологии РАН, научные коммуникации'},
+        {u:'vypuski/vladimir-voloshin/',d:'2026-11-13',p:'assets/photo/soon/vladimir-voloshin.jpg',n:'Владимир Волошин',r:'Сооснователь IRONSTAR и ROSA RUN'},
+        {u:'vypuski/anna-stepanova/',d:'2026-11-16',p:'assets/photo/soon/anna-stepanova.jpg',n:'Анна Степанова',r:'Образовательные проекты VK'},
+        {u:'vypuski/aleksandr-pushnoy/',d:'2026-11-20',p:'assets/photo/soon/aleksandr-pushnoy.jpg',n:'Александр Пушной',r:'Физик по образованию, музыкант, ведущий «Галилео»'},
+        {u:'vypuski/aleksey-egorov/',d:'2026-11-23',p:'assets/photo/soon/aleksey-egorov.jpg',n:'Алексей Егоров',r:'Журналист, ведущий телеканала «Наука»'},
+        {u:'vypuski/sergey-polischuk/',d:'2026-11-27',p:'assets/photo/soon/sergey-polischuk.jpg',n:'Сергей Полищук',r:'Культуролог, психолог, медиапедагог'},
+        {u:'vypuski/ayrat-bagautdinov/',d:'2026-11-30',p:'assets/photo/soon/ayrat-bagautdinov.jpg',n:'Айрат Багаутдинов',r:'Историк инженерии, проект «Глазами инженера»'},
+        {u:'vypuski/aleksey-savvateev/#novyy-vypusk',d:'2026-12-04',p:'assets/photo/soon/aleksey-savvateev.jpg',n:'Алексей Савватеев',r:'Математик, популяризатор науки'},
+        {u:'vypuski/ekaterina-filippova/',d:'2026-12-07',p:'assets/photo/soon/ekaterina-filippova.jpg',n:'Екатерина Филиппова',r:'САО РАН, популяризатор астрономии'},
+        {u:'vypuski/ilya-osokin/',d:'2026-12-11',p:'assets/photo/soon/ilya-osokin.jpg',n:'Илья Осокин',r:'Робототехник, преподаватель МФТИ'}
       ];
       var M=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
       var today=new Date(); today.setHours(0,0,0,0);
@@ -110,9 +110,9 @@
       if(!guests.length){card.hidden=true;return;}
       guests.forEach(function(g){var x=g.d.split('-');g.m='Выпуск '+(+x[2])+' '+M[x[1]-1]+' '+x[0]+' · Студия МФТИ';});
       guests.slice(1).forEach(function(g){var im=new Image();im.src=g.p;});
-      var i=0, img=card.querySelector('.summit-photo img'), meta=card.querySelector('.summit-meta'), name=card.querySelector('strong'), role=card.querySelector('.summit-role');
-      function put(g){img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;role.textContent=g.r;card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);}
-      put(guests[0]);
+      var i=0, img=card.querySelector('.summit-photo img'), meta=card.querySelector('.summit-meta'), name=card.querySelector('strong a')||card.querySelector('strong'), role=card.querySelector('.summit-role');
+      function put(g){img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;if(name.tagName==='A')name.href=g.u;var a=card.querySelector('a.summit-photo');if(a)a.href=g.u;role.textContent=g.r;card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);}
+      put(guests[0]);var ph=card.querySelector('a.summit-photo');
       function show(next){
         var g=guests[next], preload=new Image();
         preload.src=g.p;

@@ -81,7 +81,7 @@
       <span class="summit-meta">Выпуск 26 октября 2026 · Студия МФТИ</span>
       <strong><a class="summit-link" href="vypuski/sergey-samoylenko/" style="color:inherit;text-decoration:none">Сергей Самойленко</a></strong>
       <span class="summit-role">Вулканолог, физик, популяризатор науки</span>
-      <a class="summit-action" href="https://t.me/put_pokoritelya" target="_blank" rel="noopener noreferrer">Следите за выходом в Telegram <span aria-hidden="true">↗</span></a>
+      <a class="summit-action" href="https://vkvideo.ru/video-932_456240940" target="_blank" rel="noopener noreferrer">Смотреть выпуск в VK Видео <span aria-hidden="true">↗</span></a>
     </div>
     <script>
     (function(){
@@ -89,8 +89,8 @@
       if(!card)return;
       /* d — дата выхода выпуска. Прошедшие даты скрываются сами, порядок — по дате. */
       var all=[
+        {u:'vypuski/sergey-samoylenko/',d:'2026-10-26',p:'assets/photo/soon/sergey-samoylenko.jpg',n:'Сергей Самойленко',r:'Вулканолог, физик, популяризатор науки',v:'https://vkvideo.ru/video-932_456240940'},
         {u:'vypuski/aleksandr-gasnikov/#novyy-vypusk',d:'2026-10-30',p:'assets/photo/soon/aleksandr-gasnikov.jpg',n:'Александр Гасников',r:'Ректор Университета Иннополис, математик'},
-        {u:'vypuski/sergey-samoylenko/',d:'2026-10-26',p:'assets/photo/soon/sergey-samoylenko.jpg',n:'Сергей Самойленко',r:'Вулканолог, физик, популяризатор науки'},
         {u:'vypuski/elena-mironenko/',d:'2026-11-02',p:'assets/photo/soon/elena-mironenko.jpg',n:'Елена Мироненко',r:'Генеральный директор музея «АТОМ»'},
         {u:'vypuski/dmitriy-livanov/',d:'2026-11-06',p:'assets/photo/soon/dmitriy-livanov.jpg?v=20261024b',n:'Дмитрий Ливанов',r:'Ректор МФТИ'},
         {u:'vypuski/alina-osmakova/',d:'2026-11-09',p:'assets/photo/soon/alina-osmakova.jpg',n:'Алина Осьмакова',r:'ФИЦ биотехнологии РАН, научные коммуникации'},
@@ -108,10 +108,11 @@
       var today=new Date(); today.setHours(0,0,0,0);
       var guests=all.filter(function(g){return new Date(g.d+'T00:00:00')>=today;});
       if(!guests.length){card.hidden=true;return;}
+      guests.sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0;});
       guests.forEach(function(g){var x=g.d.split('-');g.m='Выпуск '+(+x[2])+' '+M[x[1]-1]+' '+x[0]+' · Студия МФТИ';});
       guests.slice(1).forEach(function(g){var im=new Image();im.src=g.p;});
       var i=0, img=card.querySelector('.summit-photo img'), meta=card.querySelector('.summit-meta'), name=card.querySelector('strong a')||card.querySelector('strong'), role=card.querySelector('.summit-role');
-      function put(g){img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;if(name.tagName==='A')name.href=g.u;var a=card.querySelector('a.summit-photo');if(a)a.href=g.u;role.textContent=g.r;card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);}
+      function put(g){img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;if(name.tagName==='A')name.href=g.u;var a=card.querySelector('a.summit-photo');if(a)a.href=g.u;role.textContent=g.r;var act=card.querySelector('.summit-action');if(act){act.href=g.v||'https://t.me/put_pokoritelya';act.firstChild.nodeValue=g.v?'Смотреть выпуск в VK Видео ':'Следите за выходом в Telegram ';}card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);}
       put(guests[0]);var ph=card.querySelector('a.summit-photo');
       function show(next){
         var g=guests[next], preload=new Image();

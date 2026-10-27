@@ -78,7 +78,7 @@
         <span class="summit-badge">Скоро новые выпуски</span>
       </span>
       <a class="summit-photo summit-link" href="vypuski/sergey-samoylenko/" tabindex="-1" aria-hidden="true" style="display:block"><img src="assets/photo/soon/sergey-samoylenko.jpg" alt="Сергей Самойленко" width="480" height="360" fetchpriority="high"></a>
-      <span class="summit-meta">Выпуск 26 октября 2026 · Студия МФТИ</span>
+      <span class="summit-meta">Вышел 26 октября 2026 · Студия МФТИ</span>
       <strong><a class="summit-link" href="vypuski/sergey-samoylenko/" style="color:inherit;text-decoration:none">Сергей Самойленко</a></strong>
       <span class="summit-role">Вулканолог, физик, популяризатор науки</span>
       <a class="summit-action" href="https://vkvideo.ru/video-932_456240940" target="_blank" rel="noopener noreferrer">Смотреть выпуск в VK Видео <span aria-hidden="true">↗</span></a>
@@ -106,10 +106,11 @@
       ];
       var M=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
       var today=new Date(); today.setHours(0,0,0,0);
-      var guests=all.filter(function(g){return new Date(g.d+'T00:00:00')>=today;});
+      /* Последний вышедший выпуск (есть v — ссылка на VK) стоит первым, дальше анонсы по дате. */
+      var out=all.filter(function(g){return g.v;}).sort(function(a,b){return a.d<b.d?1:-1;}).slice(0,1);
+      var guests=out.concat(all.filter(function(g){return !g.v&&new Date(g.d+'T00:00:00')>=today;}).sort(function(a,b){return a.d<b.d?-1:1;}));
       if(!guests.length){card.hidden=true;return;}
-      guests.sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0;});
-      guests.forEach(function(g){var x=g.d.split('-');g.m='Выпуск '+(+x[2])+' '+M[x[1]-1]+' '+x[0]+' · Студия МФТИ';});
+      guests.forEach(function(g){var x=g.d.split('-');g.m=(g.v?'Вышел ':'Выпуск ')+(+x[2])+' '+M[x[1]-1]+' '+x[0]+' · Студия МФТИ';});
       guests.slice(1).forEach(function(g){var im=new Image();im.src=g.p;});
       var i=0, img=card.querySelector('.summit-photo img'), meta=card.querySelector('.summit-meta'), name=card.querySelector('strong a')||card.querySelector('strong'), role=card.querySelector('.summit-role');
       function put(g){img.src=g.p;img.alt=g.n;meta.textContent=g.m;name.textContent=g.n;if(name.tagName==='A')name.href=g.u;var a=card.querySelector('a.summit-photo');if(a)a.href=g.u;role.textContent=g.r;var act=card.querySelector('.summit-action');if(act){act.href=g.v||'https://t.me/put_pokoritelya';act.firstChild.nodeValue=g.v?'Смотреть выпуск в VK Видео ':'Следите за выходом в Telegram ';}card.setAttribute('aria-label','Скоро новые выпуски: '+g.n);}

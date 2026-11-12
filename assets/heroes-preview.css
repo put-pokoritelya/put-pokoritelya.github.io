@@ -1,12 +1,14 @@
-/* Render the filtered portrait at preview size, then shrink the resting icon.
-   Enlarging a filtered 44px parent can reuse a blurred raster in Safari.
-   Keep the existing 44px grid cell and the same 2.6x preview placement. */
+/* A separate, unscaled image prevents Safari from enlarging a cached
+   thumbnail/filter surface. Both images reuse the same source URL. */
+.gn-av .gn-preview { display: none; }
+
 @media (hover: hover) and (min-width: 900px) {
   .gn-av:has(img) {
     position: relative;
     overflow: visible;
     background: none;
     transition: none;
+    transform: none;
     outline: none;
   }
 
@@ -16,26 +18,20 @@
     box-shadow: none;
   }
 
-  .gn-av img {
+  .gn-av img.gn-preview {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 46px;
     width: 114.4px;
     height: 114.4px;
     max-width: none;
-    transform-origin: left bottom;
-    transform: scale(.3846153846);
-    transition: transform .14s ease-out;
-    outline: 0 solid var(--paper);
-  }
-
-  .gn a:hover .gn-av img {
-    transform: translateY(-46px) scale(1);
+    transform: none;
+    transition: none;
     outline: 2px solid var(--paper);
     box-shadow: 0 20px 44px rgba(20,17,15,.26);
+    pointer-events: none;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .gn-av img { transition: none; }
+  .gn a:hover .gn-av > img:not(.gn-preview) { visibility: hidden; }
+  .gn a:hover .gn-preview { display: block; }
 }

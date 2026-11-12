@@ -1,37 +1,34 @@
-/* A separate, unscaled image prevents Safari from enlarging a cached
-   thumbnail/filter surface. Both images reuse the same source URL. */
-.gn-av .gn-preview { display: none; }
-
+/* The list stays still; one unscaled preview lives outside all rows. */
 @media (hover: hover) and (min-width: 900px) {
-  .gn-av:has(img) {
-    position: relative;
-    overflow: visible;
-    background: none;
-    transition: none;
-    transform: none;
-    outline: none;
+  .gn a, .gn a:hover {
+    padding-left: 0;
+    transition: background-color .18s;
   }
-
-  .gn a:hover .gn-av:has(img) {
+  .gn:hover { position: static; z-index: auto; }
+  .gn-av, .gn a:hover .gn-av {
     transform: none;
+    transition: none;
     outline: none;
     box-shadow: none;
   }
-
-  .gn-av img.gn-preview {
-    position: absolute;
-    left: 0;
-    bottom: 46px;
-    width: 114.4px;
-    height: 114.4px;
-    max-width: none;
-    transform: none;
-    transition: none;
-    outline: 2px solid var(--paper);
-    box-shadow: 0 20px 44px rgba(20,17,15,.26);
-    pointer-events: none;
-  }
-
-  .gn a:hover .gn-av > img:not(.gn-preview) { visibility: hidden; }
-  .gn a:hover .gn-preview { display: block; }
+}
+.gn-preview-layer {
+  position: fixed;
+  z-index: 100;
+  width: 116px;
+  height: 116px;
+  pointer-events: none;
+  background: var(--paper);
+  outline: 2px solid var(--paper);
+  box-shadow: 0 20px 44px rgba(20,17,15,.26);
+}
+.gn-preview-layer[hidden] { display: none; }
+.gn-preview-layer img {
+  display: block;
+  width: 116px;
+  height: 116px;
+  max-width: none;
+  object-fit: cover;
+  transform: none;
+  transition: none;
 }

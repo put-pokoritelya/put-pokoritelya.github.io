@@ -8,7 +8,9 @@
       var f = document.createElement('iframe');
       if (box.dataset.vk) {
         var p = box.dataset.vk.split('_');
-        f.src = 'https://vkvideo.ru/video_ext.php?oid=' + p[0] + '&id=' + p[1] + '&hd=2&autoplay=1';
+        var host = box.dataset.vkHash ? 'https://vk.ru' : 'https://vkvideo.ru';
+        f.src = host + '/video_ext.php?oid=' + p[0] + '&id=' + p[1] +
+          (box.dataset.vkHash ? '&hash=' + encodeURIComponent(box.dataset.vkHash) + '&hd=4' : '&hd=2') + '&autoplay=1';
         f.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock';
       } else {
         f.src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.yt + '?autoplay=1&rel=0&hl=ru';

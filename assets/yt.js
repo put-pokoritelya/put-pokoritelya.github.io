@@ -2,11 +2,14 @@
    До клика на странице лежит обычная картинка, а не тяжёлый плеер.
    Основной плеер — VK Video (data-vk="oid_id"); data-yt оставлен как запасной. */
 (function () {
-  document.querySelectorAll('.yt[data-vk], .yt[data-yt]').forEach(function (box) {
+  document.querySelectorAll('.yt[data-vk], .yt[data-yt], .yt[data-rutube]').forEach(function (box) {
     box.addEventListener('click', function () {
       if (box.querySelector('iframe')) return;
       var f = document.createElement('iframe');
-      if (box.dataset.vk) {
+      if (box.dataset.rutube) {
+        f.src = 'https://rutube.ru/play/embed/' + box.dataset.rutube + '?autoplay=true';
+        f.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture';
+      } else if (box.dataset.vk) {
         var p = box.dataset.vk.split('_');
         var host = box.dataset.vkHash ? 'https://vk.ru' : 'https://vkvideo.ru';
         f.src = host + '/video_ext.php?oid=' + p[0] + '&id=' + p[1] +

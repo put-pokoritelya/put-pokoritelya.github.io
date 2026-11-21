@@ -94,8 +94,8 @@
         {u:'vypuski/elena-mironenko/',d:'2026-11-05',p:'assets/photo/soon/elena-mironenko.jpg',n:'Елена Мироненко',r:'Генеральный директор музея «АТОМ»',v:'https://vkvideo.ru/video-932_456240952?t=21s'},
         {u:'vypuski/dmitriy-livanov/',d:'2026-11-06',p:'assets/photo/soon/dmitriy-livanov.jpg?v=20261024b',n:'Дмитрий Ливанов',r:'Ректор МФТИ',v:'https://vkvideo.ru/video-932_456240954'},
         {u:'vypuski/alina-osmakova/',d:'2026-11-10',p:'assets/photo/soon/alina-osmakova.jpg',n:'Алина Осьмакова',r:'Заместитель директора ФИЦ биотехнологии РАН',v:'https://vkvideo.ru/video-932_456240955'},
-        {u:'vypuski/vladimir-voloshin/',d:'2026-11-16',p:'assets/photo/soon/vladimir-voloshin.jpg?v=20261024b',n:'Владимир Волошин',r:'Сооснователь IRONSTAR и ROSA RUN'},
-        {u:'vypuski/anna-stepanova/',d:'2026-11-20',p:'assets/photo/soon/anna-stepanova.jpg',n:'Анна Степанова',r:'Образовательные проекты VK'},
+        {u:'vypuski/vladimir-voloshin/',d:'2026-11-20',p:'assets/photo/soon/vladimir-voloshin.jpg?v=20261024b',n:'Владимир Волошин',r:'Сооснователь IRONSTAR и ROSA RUN',v:'https://vkvideo.ru/video-932_456240966'},
+        {u:'vypuski/anna-stepanova/',d:'2026-11-20',p:'assets/photo/soon/anna-stepanova.jpg',n:'Анна Степанова',r:'Образовательные проекты VK',v:'https://vkvideo.ru/video-932_456240967'},
         {u:'vypuski/aleksandr-pushnoy/',d:'2026-11-23',p:'assets/photo/soon/aleksandr-pushnoy.jpg',n:'Александр Пушной',r:'Физик по образованию, музыкант, ведущий «Галилео»'},
         {u:'vypuski/aleksey-egorov/',d:'2026-11-14',p:'assets/photo/soon/aleksey-egorov.jpg',n:'Алексей Егоров',r:'Журналист, ведущий телеканала «Наука»',v:'https://vkvideo.ru/video-932_456240958'},
         {u:'vypuski/sergey-polischuk/',d:'2026-11-13',p:'assets/photo/soon/sergey-polischuk.jpg',n:'Сергей Полищук',r:'Культуролог, психолог, медиапедагог',v:'https://vkvideo.ru/video-932_456240957'},
@@ -108,7 +108,7 @@
       var today=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
       /* Ссылка может быть подготовлена заранее: выпуск считается вышедшим только с даты выхода. */
       all.forEach(function(g){g.released=!!g.v&&g.d<=today;});
-      var out=all.filter(function(g){return g.released;}).sort(function(a,b){return a.d<b.d?1:-1;}).slice(0,1);
+      var out=all.filter(function(g){return g.released;}).sort(function(a,b){return b.d.localeCompare(a.d)||(b.v||'').localeCompare(a.v||'');}).slice(0,1);
       var guests=out.concat(all.filter(function(g){return !g.released&&g.d>=today;}).sort(function(a,b){return a.d<b.d?-1:1;}));
       if(!guests.length){card.hidden=true;return;}
       guests.forEach(function(g){
@@ -169,7 +169,14 @@
       <a class="link-more" href="vypuski/">Все выпуски &#8594;</a>
     </div>
   </div>
-  <ul class="rail" data-rail-track tabindex="0" role="list" aria-label="Последние выпуски"><li class="card" data-topics="Наука" data-plats="vk,rutube" data-book="0" data-search="алексей егоров наука журналист телеведущий научпоп научный туризм своими глазами">
+  <ul class="rail" data-rail-track tabindex="0" role="list" aria-label="Последние выпуски">
+<li class="card" data-topics="Наука" data-plats="vk,rutube" data-book="0" data-search="анна степанова заместитель вице-президента по образовательным проектам vk искусственный интеллект в образовании, роль учителя, наставничество, партнёрство vk с вузами, олимпиады и научно-популярные путешествия.">
+<a href="vypuski/anna-stepanova/"><span class="ph"><img src="assets/photo/anna-stepanova-s3.jpg" alt="" loading="lazy" width="480" height="360"></span>
+<span class="tx"><span class="no">СЕЗОН 3 · ВЫПУСК 09</span><h3>Анна Степанова</h3><span class="role">Заместитель вице-президента по образовательным проектам VK</span><span class="tags"><span>20 ноября 2026</span><span>Наука</span></span></span></a></li>
+<li class="card" data-topics="Наука" data-plats="vk,rutube" data-book="0" data-search="владимир волошин предприниматель, сооснователь ironstar и rosa run спортивные сообщества, наставничество, нейтринная лаборатория в приэльбрусье, промышленный туризм и сотрудничество учёных с предпринимателями.">
+<a href="vypuski/vladimir-voloshin/"><span class="ph"><img src="assets/photo/vladimir-voloshin-s3.jpg" alt="" loading="lazy" width="480" height="360"></span>
+<span class="tx"><span class="no">СЕЗОН 3 · ВЫПУСК 08</span><h3>Владимир Волошин</h3><span class="role">Предприниматель, сооснователь IRONSTAR и ROSA RUN</span><span class="tags"><span>20 ноября 2026</span><span>Наука</span></span></span></a></li>
+<li class="card" data-topics="Наука" data-plats="vk,rutube" data-book="0" data-search="алексей егоров наука журналист телеведущий научпоп научный туризм своими глазами">
 <a href="vypuski/aleksey-egorov/"><span class="ph"><img src="assets/photo/aleksey-egorov-s3.jpg" alt="" loading="lazy" width="480" height="360"></span>
 <span class="tx"><span class="no">СЕЗОН 3 · ВЫПУСК 07</span><h3>Алексей Егоров</h3><span class="role">Журналист, ведущий телеканала «Наука»</span><span class="tags"><span>14 ноября 2026</span><span>Наука</span></span></span></a></li>
 <li class="card" data-topics="Наука" data-plats="vk,rutube" data-book="0" data-search="сергей полищук космос астрономия телескоп пермь психология научный туризм">
